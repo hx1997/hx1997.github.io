@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      记一次（失败的）广东天翼校园安卓客户端逆向 | Goulash 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HX">
+    
+    
+
+    <meta name="description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
+背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次（失败的）广东天翼校园安卓客户端逆向 | Goulash">
+<meta property="og:url" content="https://hx1997.github.io/2017/03/31/reverse-esurfing/index.html">
+<meta property="og:site_name" content="Goulash">
+<meta property="og:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
+背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，">
+<meta property="og:image" content="https://hx1997.github.io/./esurfing.png">
+<meta property="og:updated_time" content="2017-03-31T14:13:08.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次（失败的）广东天翼校园安卓客户端逆向 | Goulash">
+<meta name="twitter:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
+背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，">
+<meta name="twitter:image" content="https://hx1997.github.io/./esurfing.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">Goulash</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">记一次（失败的）广东天翼校园安卓客户端逆向</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-03-31" class="post-meta__date date">2017-03-31</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>本文同时发表于知乎专栏：<a href="https://zhuanlan.zhihu.com/p/26120989" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26120989</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 <a href="https://zh.wikipedia.org/wiki/CHAP" target="_blank" rel="external">CHAP</a> 协议进行认证。2016 年 10 月后，电信再次更新算法，原先的 challenge + login + heartbeat 模式似乎不好用了，POST challenge 会返回 spec is in black list。</p>
+<p>尝试对 PC 和安卓客户端抓包未果后（其实是有果的，但是数据包的数据都是哈希过的，无从得知原文），我决定对安卓「掌上大学」客户端进行逆向。</p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p><a href="http://sourceforge.net/projects/dex2jar/" target="_blank" rel="external">dex2jar</a>（apk 反编译为 jar）</p>
+<p><a href="http://jd.benow.ca/" target="_blank" rel="external">JD-GUI</a>（Java 反编译器）</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>首先从 <a href="http://zsteduapp.10000.gd.cn/EsurfingClient/GetClient.aspx%3FareaCode%3Dzd%26osType%3DandroidPhone%26dialType%3Dportal" target="_blank" rel="external">http://zsteduapp.10000.gd.cn/EsurfingClient/GetClient.aspx?areaCode=zd&amp;osType=androidPhone&amp;dialType=portal</a> 下载安卓客户端 apk，并准备好工具解压，然后运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">d2j-dex2jar APKPATH</div></pre></td></tr></table></figure>
+<p>其中 APKPATH 为客户端 apk 路径，Windows 下操作需要在 d2j-dex2jar 后加 .bat。</p>
+<p>运行 JD-GUI，将反编译出的 .jar 文件拖进去，就可以看到反编译的 Java 代码了。</p>
+<p>想到安卓客户端登录时会显示「通讯中，请稍后」（原文如此）字样，直接在代码中搜索该字符串，很容易定位到少数几个类，并且显然（。） GDLoginActivity.class 对我们很有用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">loginAction() -&gt; tologin()（这个方法似乎反编译失败了，只能看字节码） -&gt; GDLoginUtils.class 中的方法</div></pre></td></tr></table></figure>
+<p>转到 GDLoginUtils.class，该类中有几个方法名引人注目：DoTicket()、DoLogin()、DoPcLogin()，这些方法又分别调用了一些 BuildXXXPackage() 的方法，目测是用来构造要发送的数据的，Ticket 的包需要发送 MAC 地址、Hostname、UA、ClientId、客户端 IPv4 地址、客户端 IPv6 地址、客户端运行平台、当前时间戳，Login 的包则要发送 UA、ClientId、用户名、密码、verify（验证码？）、ticket、当前时间戳。构造完这些数据后，在 DoXX() 方法中又调用了名为 zsmEncrypt() 的某种神秘加密算法加密，最后再计算加密结果的 MD5 值，并将该值写进 HTTP 请求头部的 CDC-Checksum field 中，和其他一些信息（如学校 ID）一起 POST 到电信服务器上。</p>
+<p>至此，联系抓包看到的请求（/ticket.cgi、/auth.cgi、/keep.cgi）我们可以猜想：原来的 challenge + login + heartbeat 模式，相当于现在的 ticket + auth + keep 模式。</p>
+<p>IP 地址、MAC、UA、甚至 HTTP 请求里的学校 ID 这些信息都不难自己写代码构造，难的是经过那个神秘加密算法加密后的内容，如果不了解这个算法，我们就构造不出来了。</p>
+<p>Google 搜索「libzsm.so」（代码中有该字符串），找到看雪大神的一篇文章：<a href="http://m.pediy.com/showthread.php%3Ft%3D214510" target="_blank" rel="external">【原创】记掌上大学天翼校园的逆向分析 - 看雪安全论坛</a>，看完后，我就放弃了继续逆向的想法。</p>
+<p>你问我为啥？我不会反汇编 Linux 的动态链接库（微笑）。</p>
+<p>最后，放张反编译后的部分代码图吧。</p>
+<p><img src="./esurfing.png" alt=""></p>
+
+  </section>
+
+  
+
+<section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'hx1997'; 
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">Powered by <a href="https://hexo.io/">Hexo</a> | Theme by <a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
