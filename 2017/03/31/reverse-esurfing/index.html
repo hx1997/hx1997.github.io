@@ -25,7 +25,7 @@
 <meta property="og:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
 背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，">
 <meta property="og:image" content="https://hx1997.github.io/./esurfing.png">
-<meta property="og:updated_time" content="2017-03-31T14:13:08.406Z">
+<meta property="og:updated_time" content="2017-03-31T14:15:35.548Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次（失败的）广东天翼校园安卓客户端逆向 | Goulash">
 <meta name="twitter:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
@@ -189,7 +189,7 @@ classes that you can use:
 <p>转到 GDLoginUtils.class，该类中有几个方法名引人注目：DoTicket()、DoLogin()、DoPcLogin()，这些方法又分别调用了一些 BuildXXXPackage() 的方法，目测是用来构造要发送的数据的，Ticket 的包需要发送 MAC 地址、Hostname、UA、ClientId、客户端 IPv4 地址、客户端 IPv6 地址、客户端运行平台、当前时间戳，Login 的包则要发送 UA、ClientId、用户名、密码、verify（验证码？）、ticket、当前时间戳。构造完这些数据后，在 DoXX() 方法中又调用了名为 zsmEncrypt() 的某种神秘加密算法加密，最后再计算加密结果的 MD5 值，并将该值写进 HTTP 请求头部的 CDC-Checksum field 中，和其他一些信息（如学校 ID）一起 POST 到电信服务器上。</p>
 <p>至此，联系抓包看到的请求（/ticket.cgi、/auth.cgi、/keep.cgi）我们可以猜想：原来的 challenge + login + heartbeat 模式，相当于现在的 ticket + auth + keep 模式。</p>
 <p>IP 地址、MAC、UA、甚至 HTTP 请求里的学校 ID 这些信息都不难自己写代码构造，难的是经过那个神秘加密算法加密后的内容，如果不了解这个算法，我们就构造不出来了。</p>
-<p>Google 搜索「libzsm.so」（代码中有该字符串），找到看雪大神的一篇文章：<a href="http://m.pediy.com/showthread.php%3Ft%3D214510" target="_blank" rel="external">【原创】记掌上大学天翼校园的逆向分析 - 看雪安全论坛</a>，看完后，我就放弃了继续逆向的想法。</p>
+<p>Google 搜索「libzsm.so」（代码中有该字符串），找到看雪大神的一篇文章：<a href="http://m.pediy.com/showthread.php?t=214510" target="_blank" rel="external">【原创】记掌上大学天翼校园的逆向分析 - 看雪安全论坛</a>，看完后，我就放弃了继续逆向的想法。</p>
 <p>你问我为啥？我不会反汇编 Linux 的动态链接库（微笑）。</p>
 <p>最后，放张反编译后的部分代码图吧。</p>
 <p><img src="./esurfing.png" alt=""></p>
