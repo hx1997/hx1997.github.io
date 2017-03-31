@@ -16,20 +16,20 @@
     
     
 
-    <meta name="description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
-背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，">
+    <meta name="description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/261…
+背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，原先的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次（失败的）广东天翼校园安卓客户端逆向 | Goulash">
 <meta property="og:url" content="https://hx1997.github.io/2017/03/31/reverse-esurfing/index.html">
 <meta property="og:site_name" content="Goulash">
-<meta property="og:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
-背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，">
+<meta property="og:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/261…
+背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，原先的">
 <meta property="og:image" content="https://hx1997.github.io/./esurfing.png">
-<meta property="og:updated_time" content="2017-03-31T14:37:24.040Z">
+<meta property="og:updated_time" content="2017-03-31T14:40:02.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次（失败的）广东天翼校园安卓客户端逆向 | Goulash">
-<meta name="twitter:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
-背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，">
+<meta name="twitter:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/261…
+背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，原先的">
 <meta name="twitter:image" content="https://hx1997.github.io/./esurfing.png">
     
     
@@ -175,7 +175,7 @@ classes that you can use:
   </header>
 
   <section id="post-content" class="article-content post">
-    <p>本文同时发表于知乎专栏：<a href="https://zhuanlan.zhihu.com/p/26120989" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26120989</a></p>
+    <p>本文同时发表于知乎专栏：<a href="https://zhuanlan.zhihu.com/p/26120989" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/261…</a></p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 <a href="https://zh.wikipedia.org/wiki/CHAP" target="_blank" rel="external">CHAP</a> 协议进行认证。2016 年 10 月后，电信再次更新算法，原先的 challenge + login + heartbeat 模式似乎不好用了，POST challenge 会返回 spec is in black list。</p>
 <p>尝试对 PC 和安卓客户端抓包未果后（其实是有果的，但是数据包的数据都是哈希过的，无从得知原文），我决定对安卓「掌上大学」客户端进行逆向。</p>
 <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p><a href="http://sourceforge.net/projects/dex2jar/" target="_blank" rel="external">dex2jar</a>（apk 反编译为 jar）</p>
