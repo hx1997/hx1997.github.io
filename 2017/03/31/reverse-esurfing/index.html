@@ -25,7 +25,7 @@
 <meta property="og:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
 背景GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 CHAP 协议进行认证。2016 年 10 月后，电信再次更新算法，">
 <meta property="og:image" content="https://hx1997.github.io/./esurfing.png">
-<meta property="og:updated_time" content="2017-03-31T14:23:43.490Z">
+<meta property="og:updated_time" content="2017-03-31T14:37:24.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次（失败的）广东天翼校园安卓客户端逆向 | Goulash">
 <meta name="twitter:description" content="本文同时发表于知乎专栏：https://zhuanlan.zhihu.com/p/26120989
@@ -180,7 +180,7 @@ classes that you can use:
 <p>尝试对 PC 和安卓客户端抓包未果后（其实是有果的，但是数据包的数据都是哈希过的，无从得知原文），我决定对安卓「掌上大学」客户端进行逆向。</p>
 <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p><a href="http://sourceforge.net/projects/dex2jar/" target="_blank" rel="external">dex2jar</a>（apk 反编译为 jar）</p>
 <p><a href="http://jd.benow.ca/" target="_blank" rel="external">JD-GUI</a>（Java 反编译器）</p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>首先从 <a href="http://zsteduapp.10000.gd.cn/EsurfingClient/GetClient.aspx%3FareaCode%3Dzd%26osType%3DandroidPhone%26dialType%3Dportal" target="_blank" rel="external">http://zsteduapp.10000.gd.cn/EsurfingClient/GetClient.aspx?areaCode=zd&amp;osType=androidPhone&amp;dialType=portal</a> 下载安卓客户端 apk，并准备好工具解压，然后运行</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>首先从 <a href="http://zsteduapp.10000.gd.cn/EsurfingClient/GetClient.aspx%3FareaCode%3Dzd%26osType%3DandroidPhone%26dialType%3Dportal" target="_blank" rel="external">http://zsteduapp.10000.gd.cn/E…</a> 下载安卓客户端 apk，并准备好工具解压，然后运行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">d2j-dex2jar APKPATH</div></pre></td></tr></table></figure>
 <p>其中 APKPATH 为客户端 apk 路径，Windows 下操作需要在 d2j-dex2jar 后加 .bat。</p>
 <p>运行 JD-GUI，将反编译出的 .jar 文件拖进去，就可以看到反编译的 Java 代码了。</p>
