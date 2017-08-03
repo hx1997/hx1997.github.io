@@ -18,38 +18,32 @@
 
     <meta name="description" content="使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。
 
-每个方程中，左端都是未知量 $x_1, x_2, ...$ 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
-含 $n$ 个未知量的线性方程组称为 $n$ 元线性方程组，它的一般形式是
-$$\begin {equation}
-
-&amp;NegativeMediumSpace;&amp;Tab;\left\{
-
-&amp;Nega">
+每个方程中，左端都是未知量 \(x_1, x_2, \cdots\) 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
+含 \(n\) 个未知量的线性方程组称为 \(\boldsymbol{n}\) 元线性方程组，它的一般形式是
+\[
+\begin {equation}
+    \left\{">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《线性代数》笔记（1） | Goulash">
 <meta property="og:url" content="https://hx1997.github.io/2017/07/30/Linear-Algebra-Notes-1/index.html">
 <meta property="og:site_name" content="Goulash">
 <meta property="og:description" content="使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。
 
-每个方程中，左端都是未知量 $x_1, x_2, ...$ 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
-含 $n$ 个未知量的线性方程组称为 $n$ 元线性方程组，它的一般形式是
-$$\begin {equation}
-
-&amp;NegativeMediumSpace;&amp;Tab;\left\{
-
-&amp;Nega">
-<meta property="og:updated_time" content="2017-08-03T13:50:53.432Z">
+每个方程中，左端都是未知量 \(x_1, x_2, \cdots\) 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
+含 \(n\) 个未知量的线性方程组称为 \(\boldsymbol{n}\) 元线性方程组，它的一般形式是
+\[
+\begin {equation}
+    \left\{">
+<meta property="og:updated_time" content="2017-08-03T15:40:08.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《线性代数》笔记（1） | Goulash">
 <meta name="twitter:description" content="使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。
 
-每个方程中，左端都是未知量 $x_1, x_2, ...$ 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
-含 $n$ 个未知量的线性方程组称为 $n$ 元线性方程组，它的一般形式是
-$$\begin {equation}
-
-&amp;NegativeMediumSpace;&amp;Tab;\left\{
-
-&amp;Nega">
+每个方程中，左端都是未知量 \(x_1, x_2, \cdots\) 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
+含 \(n\) 个未知量的线性方程组称为 \(\boldsymbol{n}\) 元线性方程组，它的一般形式是
+\[
+\begin {equation}
+    \left\{">
     
     
     
@@ -201,74 +195,61 @@ classes that you can use:
   <section id="post-content" class="article-content post">
     <p>使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。</p>
 <hr>
-<p>每个方程中，左端都是未知量 <span>$x_1, x_2, ...$</span><!-- Has MathJax --> 的<em>一次</em>齐次式，右端是常数，像这样的方程组称为<strong>线性方程组</strong>.</p>
-<p>含 <span>$n$</span><!-- Has MathJax --> 个未知量的线性方程组称为 <strong><span>$n$</span><!-- Has MathJax --> 元线性方程组</strong>，它的一般形式是</p>
-<span>$$\begin {equation}
-
-&NegativeMediumSpace;&Tab;\left\{
-
-&NegativeMediumSpace;&Tab;&Tab;\begin {array}{l}
-
-&NegativeMediumSpace;&Tab;&Tab;&Tab;a_{11} x_1+a_{12} x_2+\cdots+a_{1n} x_n=b_1, \\
-
-&NegativeMediumSpace;&Tab;&Tab;&Tab;a_{21} x_1+a_{22} x_2+\cdots+a_{2n} x_n=b_2, \\
-
-&NegativeMediumSpace;&Tab;&Tab;&Tab;\vdots \\
-
-&NegativeMediumSpace;&Tab;&Tab;&Tab;a_{s1} x_1+a_{s2} x_2+\cdots+a_{sn} x_n=b_s.
-
-&NegativeMediumSpace;&Tab;&Tab;\end {array}
-
-&NegativeMediumSpace;&Tab;\right.
-
-\end {equation}$$</span><!-- Has MathJax -->
-<p><strong>定义 1</strong>　由 <span>$s \cdot m$</span><!-- Has MathJax --> 个数排成 <span>$s$</span><!-- Has MathJax --> 行、<span>$m$</span><!-- Has MathJax --> 列的一张表称为一个 <span>$s \times m$</span><!-- Has MathJax --> <strong>矩阵</strong>，其中的每一个数称为这个矩阵的一个<strong>元素</strong>，第 <span>$i$</span><!-- Has MathJax --> 行与第 <span>$j$</span><!-- Has MathJax --> 列交叉位置的元素称为矩阵的 <strong><span>$(i,j)$</span><!-- Has MathJax --> 元</strong>.</p>
+<p>每个方程中，左端都是未知量 <span class="math inline">\(x_1, x_2, \cdots\)</span> 的<em>一次</em>齐次式，右端是常数，像这样的方程组称为<strong>线性方程组</strong>.</p>
+<p>含 <span class="math inline">\(n\)</span> 个未知量的线性方程组称为 <strong><span class="math inline">\(\boldsymbol{n}\)</span> 元线性方程组</strong>，它的一般形式是</p>
+<p><span class="math display">\[
+\begin {equation}
+    \left\{
+        \begin {array}{c}
+            a_{11} x_{1} &amp; + &amp; a_{12} x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{1n} x_{n} &amp; = &amp; b_{1}, \\
+            a_{21} x_{1} &amp; + &amp; a_{22} x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{2n} x_{n} &amp; = &amp; b_{2}, \\
+            \vdots &amp; &amp; \vdots &amp; &amp; \ddots &amp; &amp; \vdots &amp; &amp; \vdots \\
+            a_{s1} x_{1} &amp; + &amp; a_{s2} x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{sn} x_{n} &amp; = &amp; b_{s}.
+        \end {array}
+    \right.
+\end {equation}
+\]</span></p>
+<p><strong>定义 1</strong>　由 <span class="math inline">\(s \cdot m\)</span> 个数排成 <span class="math inline">\(s\)</span> 行、<span class="math inline">\(m\)</span> 列的一张表称为一个 <span class="math inline">\(s \times m\)</span> <strong>矩阵</strong>，其中的每一个数称为这个矩阵的一个<strong>元素</strong>，第 <span class="math inline">\(i\)</span> 行与第 <span class="math inline">\(j\)</span> 列交叉位置的元素称为矩阵的 <strong><span class="math inline">\(\boldsymbol{(i,j)}\)</span> 元</strong>.</p>
 <p>对于一个线性方程组，可以只写出它的系数和常数项，并且把它们按照原来的次序排成一个矩阵，这个矩阵称为线性方程组的<strong>增广矩阵</strong>. 而只列出系数的表称为方程组的<strong>系数矩阵</strong>. 例如，线性方程组 (1) 的增广矩阵和系数矩阵依次是：</p>
-<span>$$\begin {bmatrix}
-
-&NegativeMediumSpace;&Tab;a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; b_1 \\
-
-&NegativeMediumSpace;&Tab;a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} &amp; b_2 \\
-
-&NegativeMediumSpace;&Tab;\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
-
-&NegativeMediumSpace;&Tab;a_{s1} &amp; a_{s2} &amp; \cdots &amp; a_{sn} &amp; b_s \\
-
-\end {bmatrix}$$</span><!-- Has MathJax -->
-<span>$$\begin {bmatrix}
-
-&NegativeMediumSpace;&Tab;a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
-
-&NegativeMediumSpace;&Tab;a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
-
-&NegativeMediumSpace;&Tab;\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-
-&NegativeMediumSpace;&Tab;a_{s1} &amp; a_{s2} &amp; \cdots &amp; a_{sn} \\
-
-\end {bmatrix}$$</span><!-- Has MathJax -->
-<p>元素全为 0 的矩阵称为<strong>零矩阵</strong>，简记作 <strong>0</strong>. 如果一个矩阵 <strong>A</strong> 的行数与列数相等，则称它为<strong>方阵</strong>. m 行 m 列的方阵也称为 <strong>m 阶矩阵</strong>.</p>
+<p><span class="math display">\[
+\begin {bmatrix}
+    a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; b_1 \\
+    a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} &amp; b_2 \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+    a_{s1} &amp; a_{s2} &amp; \cdots &amp; a_{sn} &amp; b_s \\
+\end {bmatrix}
+\]</span></p>
+<p><span class="math display">\[
+\begin {bmatrix}
+    a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+    a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    a_{s1} &amp; a_{s2} &amp; \cdots &amp; a_{sn} \\
+\end {bmatrix}
+\]</span></p>
+<p>元素全为 <span class="math inline">\(0\)</span> 的矩阵称为<strong>零矩阵</strong>，简记作 <span class="math inline">\(\boldsymbol{0}\)</span>. 如果一个矩阵 <span class="math inline">\(\boldsymbol{A}\)</span> 行数与列数相等，则称它为<strong>方阵</strong>. <span class="math inline">\(m\)</span> 行 <span class="math inline">\(m\)</span> 列的方阵也称为 <strong><span class="math inline">\(\boldsymbol{m}\)</span> 阶矩阵</strong>.</p>
 <p>矩阵的<strong>初等行变换</strong>有三种：</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>把一行的倍数加到另一行上；</li>
 <li>互换两行的位置；</li>
 <li>用一个非零数乘某一行.</li>
 </ol>
 <p>它们分别对应线性方程组的三种<strong>初等变换</strong>：</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>把一个方程的倍数加到另一个方程上；</li>
 <li>互换两个方程的位置；</li>
 <li>用一个非零数乘某一个方程.</li>
 </ol>
 <p>具有如下特点的矩阵称为<strong>行阶梯形矩阵</strong>：</p>
-<ol>
-<li>元素全为 0 的行（称为<strong>零行</strong>）在非零行下方（如有零行）；</li>
-<li>非零行从左边数起第一个不为 0 的元素（称为<strong>主元</strong>），它们的列指标随行指标的递增而严格增大.</li>
+<ol style="list-style-type: decimal">
+<li>元素全为 <span class="math inline">\(0\)</span> 的行（称为<strong>零行</strong>）在非零行下方（如有零行）；</li>
+<li>非零行从左边数起第一个不为 <span class="math inline">\(0\)</span> 的元素（称为<strong>主元</strong>），它们的列指标随行指标的递增而严格增大.</li>
 </ol>
 <p>具有如下特点的矩阵称为<strong>简化行阶梯形矩阵</strong>：</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li>它是行阶梯形矩阵；</li>
-<li>每个非零行的主元都是 1；</li>
-<li>每个主元所在列的其余元素都是 0.</li>
+<li>每个非零行的主元都是 <span class="math inline">\(1\)</span>；</li>
+<li>每个主元所在列的其余元素都是 <span class="math inline">\(0\)</span>.</li>
 </ol>
 
   </section>
