@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      《线性代数》笔记（1） | Goulash 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HX">
+    
+    
+
+    <meta name="description" content="使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。
+
+每个方程中，左端都是未知量 $x_1, x_2, ...$ 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
+含 $n$ 个未知量的线性方程组称为 $n$ 元线性方程组，它的一般形式是
+$$\begin {equation}
+
+&amp;NegativeMediumSpace;&amp;Tab;\left\{
+
+&amp;Nega">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《线性代数》笔记（1） | Goulash">
+<meta property="og:url" content="https://hx1997.github.io/2017/07/30/Linear-Algebra-Notes-1/index.html">
+<meta property="og:site_name" content="Goulash">
+<meta property="og:description" content="使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。
+
+每个方程中，左端都是未知量 $x_1, x_2, ...$ 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
+含 $n$ 个未知量的线性方程组称为 $n$ 元线性方程组，它的一般形式是
+$$\begin {equation}
+
+&amp;NegativeMediumSpace;&amp;Tab;\left\{
+
+&amp;Nega">
+<meta property="og:updated_time" content="2017-08-03T11:56:26.300Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《线性代数》笔记（1） | Goulash">
+<meta name="twitter:description" content="使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。
+
+每个方程中，左端都是未知量 $x_1, x_2, ...$ 的一次齐次式，右端是常数，像这样的方程组称为线性方程组.
+含 $n$ 个未知量的线性方程组称为 $n$ 元线性方程组，它的一般形式是
+$$\begin {equation}
+
+&amp;NegativeMediumSpace;&amp;Tab;\left\{
+
+&amp;Nega">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+<body>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">Goulash</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">《线性代数》笔记（1）</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-07-30" class="post-meta__date date">2017-07-30</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/数学/">数学</a>, <a class="tags-link" href="/tags/笔记/">笔记</a>, <a class="tags-link" href="/tags/线性代数/">线性代数</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。</p>
+<hr>
+<p>每个方程中，左端都是未知量 <span>$x_1, x_2, ...$</span><!-- Has MathJax --> 的<em>一次</em>齐次式，右端是常数，像这样的方程组称为<strong>线性方程组</strong>.</p>
+<p>含 <span>$n$</span><!-- Has MathJax --> 个未知量的线性方程组称为 <strong><span>$n$</span><!-- Has MathJax --> 元线性方程组</strong>，它的一般形式是</p>
+<span>$$\begin {equation}
+
+&NegativeMediumSpace;&Tab;\left\{
+
+&NegativeMediumSpace;&Tab;&Tab;\begin {array}{c}
+
+&NegativeMediumSpace;&Tab;&Tab;&Tab;a_{11} x_1+a_{12} x_2+\cdots+a_{1n} x_n=b_1, \\
+
+&NegativeMediumSpace;&Tab;&Tab;&Tab;a_{21} x_1+a_{22} x_2+\cdots+a_{2n} x_n=b_2, \\
+
+&NegativeMediumSpace;&Tab;&Tab;&Tab;\vdots \\
+
+&NegativeMediumSpace;&Tab;&Tab;&Tab;a_{s1} x_1+a_{s2} x_2+...+a_{sn} x_n=b_s.
+
+&NegativeMediumSpace;&Tab;&Tab;\end {array}
+
+&NegativeMediumSpace;&Tab;\right.
+
+\end {equation}$$</span><!-- Has MathJax -->
+<p><strong>定义 1</strong>　由 <span>$s \cdot m$</span><!-- Has MathJax --> 个数排成 <span>$s$</span><!-- Has MathJax --> 行、<span>$m$</span><!-- Has MathJax --> 列的一张表称为一个 <span>$s \times m$</span><!-- Has MathJax --> <strong>矩阵</strong>，其中的每一个数称为这个矩阵的一个<strong>元素</strong>，第 <span>$i$</span><!-- Has MathJax --> 行与第 <span>$j$</span><!-- Has MathJax --> 列交叉位置的元素称为矩阵的 <strong><span>$(i,j)$</span><!-- Has MathJax --> 元</strong>.</p>
+<p>对于一个线性方程组，可以只写出它的系数和常数项，并且把它们按照原来的次序排成一个矩阵，这个矩阵称为线性方程组的<strong>增广矩阵</strong>. 而只列出系数的表称为方程组的<strong>系数矩阵</strong>. 例如，线性方程组 (1) 的增广矩阵和系数矩阵依次是：</p>
+<span>$$\begin {bmatrix}
+
+&NegativeMediumSpace;&Tab;a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; b_1 \\
+
+&NegativeMediumSpace;&Tab;a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} &amp; b_2 \\
+
+&NegativeMediumSpace;&Tab;\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+
+&NegativeMediumSpace;&Tab;a_{s1} &amp; a_{s2} &amp; \cdots &amp; a_{sn} &amp; b_s \\
+
+\end {bmatrix}，
+
+\begin {bmatrix}
+
+&NegativeMediumSpace;&Tab;a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+
+&NegativeMediumSpace;&Tab;a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
+
+&NegativeMediumSpace;&Tab;\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+
+&NegativeMediumSpace;&Tab;a_{s1} &amp; a_{s2} &amp; \cdots &amp; a_{sn} \\
+
+\end {bmatrix}$$</span><!-- Has MathJax -->
+<p>元素全为 0 的矩阵称为<strong>零矩阵</strong>，简记作 <strong>0</strong>. 如果一个矩阵 <strong>A</strong> 的行数与列数相等，则称它为<strong>方阵</strong>. m 行 m 列的方阵也称为 <strong>m 阶矩阵</strong>.</p>
+<p>矩阵的<strong>初等行变换</strong>有三种：</p>
+<ol>
+<li>把一行的倍数加到另一行上；</li>
+<li>互换两行的位置；</li>
+<li>用一个非零数乘某一行.</li>
+</ol>
+<p>它们分别对应线性方程组的三种<strong>初等变换</strong>：</p>
+<ol>
+<li>把一个方程的倍数加到另一个方程上；</li>
+<li>互换两个方程的位置；</li>
+<li>用一个非零数乘某一个方程.</li>
+</ol>
+<p>具有如下特点的矩阵称为<strong>行阶梯形矩阵</strong>：</p>
+<ol>
+<li>元素全为 0 的行（称为<strong>零行</strong>）在非零行下方（如有零行）；</li>
+<li>非零行从左边数起第一个不为 0 的元素（称为<strong>主元</strong>），它们的列指标随行指标的递增而严格增大.</li>
+</ol>
+<p>具有如下特点的矩阵称为<strong>简化行阶梯形矩阵</strong>：</p>
+<ol>
+<li>它是行阶梯形矩阵；</li>
+<li>每个非零行的主元都是 1；</li>
+<li>每个主元所在列的其余元素都是 0.</li>
+</ol>
+
+  </section>
+
+  
+
+<section class="post-comments">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      var disqus_shortname = 'hx1997'; 
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">Powered by <a href="https://hexo.io/">Hexo</a> | Theme by <a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]--><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+</html>
