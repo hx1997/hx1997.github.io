@@ -80,7 +80,7 @@
                         
 							
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/archives/">ARCHIVES</a>
                         </li>
 							
 						
@@ -88,7 +88,7 @@
                         
 							
                         <li>
-                            <a href="/archives/">ARCHIVES</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
 							
 						
@@ -192,6 +192,7 @@
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。</p>
 <hr>
+<h2 id="线性方程组的基本理论">线性方程组的基本理论</h2>
 <p>每个方程中，左端都是未知量 <span class="math inline">\(x_1, x_2, \cdots\)</span> 的<em>一次</em>齐次式，右端是常数，像这样的方程组称为<strong>线性方程组</strong>.</p>
 <p>含 <span class="math inline">\(n\)</span> 个未知量的线性方程组称为 <strong><span class="math inline">\(\boldsymbol{n}\)</span> 元线性方程组</strong>，它的一般形式是</p>
 <p><span class="math display">\[
@@ -208,7 +209,7 @@
 \]</span></p>
 <p>常数项全为 <span class="math inline">\(0\)</span> 的线性方程组称为<strong>齐次线性方程组</strong>. 任何一个齐次线性方程组都有零解，如果一个齐次线性方程组除了零解，还有其他的解，则称其他的解为<strong>非零解</strong>. 常数项不全为 <span class="math inline">\(0\)</span> 的线性方程组称为<strong>非齐次线性方程组</strong>.</p>
 <p><strong>定义 1</strong>　由 <span class="math inline">\(s \cdot m\)</span> 个数排成 <span class="math inline">\(s\)</span> 行、<span class="math inline">\(m\)</span> 列的一张表称为一个 <span class="math inline">\(s \times m\)</span> <strong>矩阵</strong>，其中的每一个数称为这个矩阵的一个<strong>元素</strong>，第 <span class="math inline">\(i\)</span> 行与第 <span class="math inline">\(j\)</span> 列交叉位置的元素称为矩阵的 <strong><span class="math inline">\(\boldsymbol{(i,j)}\)</span> 元</strong>.</p>
-<p>对于一个线性方程组，可以只写出它的系数和常数项，并且把它们按照原来的次序排成一个矩阵，这个矩阵称为线性方程组的<strong>增广矩阵</strong>. 而只列出系数的表称为方程组的<strong>系数矩阵</strong>. 例如，线性方程组 (1) 的增广矩阵和系数矩阵依次是：</p>
+<p>对于一个线性方程组，可以只写出它的系数和常数项，并且把它们按照原来的次序排成一个矩阵，这个矩阵称为线性方程组的<strong>增广矩阵</strong>. 而只列出系数的矩阵称为方程组的<strong>系数矩阵</strong>. 例如，线性方程组 (1) 的增广矩阵和系数矩阵依次是：</p>
 <p><span class="math display">\[
 \begin {bmatrix}
     a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; b_1 \\
@@ -252,6 +253,23 @@
 </ol>
 <p>可以证明，任何一个矩阵都能经过一系列初等行变换化成行阶梯形矩阵，并且能进一步用初等行变换化成简化行阶梯形矩阵.</p>
 <p><strong>定理 1</strong>　<span class="math inline">\(n\)</span> 元线性方程组的解的情况只有三种可能：无解、有惟一解、有无穷多个解. 把 <span class="math inline">\(n\)</span> 元线性方程组的增广矩阵经过初等行变换化成阶梯形矩阵，如果相应的阶梯形方程组出现“<span class="math inline">\(0 = d\)</span>（<span class="math inline">\(d\)</span> 为非零数）”这样的方程，则原方程组无解；否则，有解. 当有解时，如果阶梯形矩阵的非零行个数 <span class="math inline">\(r\)</span> 等于未知量个数 <span class="math inline">\(n\)</span>，则原方程组有惟一解；如果非零行个数 <span class="math inline">\(r &lt; n\)</span>，则原方程组有无穷多个解.</p>
+<p><strong>推论 2</strong>　<span class="math inline">\(n\)</span> 元齐次线性方程组有非零解的充分必要条件是：其系数矩阵经过初等行变换化为阶梯形矩阵后，非零行个数 <span class="math inline">\(r&lt;n\)</span>.</p>
+<p><strong>推论 3</strong>　<span class="math inline">\(n\)</span> 元齐次线性方程组如果方程的个数 <span class="math inline">\(s&lt;n\)</span>，则它一定有非零解.</p>
+<p><strong>证</strong>　该方程组的系数矩阵有 <span class="math inline">\(s\)</span> 行，对其施行初等行变换化为阶梯形矩阵后，非零行个数 <span class="math inline">\(r \leq s&lt;n\)</span>，由推论 2 知该方程组有非零解.　<span class="math inline">\(\Box\)</span></p>
+<h2 id="数域">数域</h2>
+<p><strong>定义 1</strong>　设 <span class="math inline">\(K\)</span> 是复数集的一个子集，如果 <span class="math inline">\(K\)</span> 满足：</p>
+<p>（1）<span class="math inline">\(0, 1 \in K\)</span>；（加法单位元、乘法单位元）</p>
+<p>（2）对任意的 <span class="math inline">\(a, b \in K\)</span>，都有 <span class="math inline">\(a \pm b, ab \in K\)</span>，并且当 <span class="math inline">\(b \neq 0\)</span> 时有 <span class="math inline">\(\frac{a}{b} \in K\)</span>，（对四则运算封闭）</p>
+<p>则称 <span class="math inline">\(K\)</span> 为一个数域.</p>
+<p><strong>命题 1</strong>　任一数域都包含有理数域.</p>
+<p><strong>证</strong>　设 <span class="math inline">\(K\)</span> 为一数域，则有 <span class="math inline">\(0, 1 \in K\)</span>，且</p>
+<p><span class="math inline">\(2=1+1 \in K, 3=1+2 \in K, \cdots, n=1+(n-1) \in K\)</span>，</p>
+<p>即 <span class="math inline">\(\mathbb{N} \subset K\)</span>，又</p>
+<p><span class="math inline">\(-1=0-1 \in K, -2=0-2 \in K, \cdots, -n=0-n \in K\)</span>，</p>
+<p>从而 <span class="math inline">\(\mathbb{Z} \subset K\)</span>，于是任意分数</p>
+<p><span class="math inline">\(\frac{a}{b} \in K (b \neq 0)\)</span>，</p>
+<p>因此，<span class="math inline">\(\mathbb{Q} \subset K\)</span>.　<span class="math inline">\(\Box\)</span></p>
+<p><strong>命题 2</strong>　复数域包含所有的数域.</p>
 
                 <hr>
                 
@@ -283,7 +301,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线性方程组的基本理论"><span class="toc-text">线性方程组的基本理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数域"><span class="toc-text">数域</span></a></li></ol>
                 </div>
             </div>
         </div>
