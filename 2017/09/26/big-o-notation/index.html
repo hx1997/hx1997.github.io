@@ -187,13 +187,18 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2 id="大-o-记号">大 O 记号</h2>
-<p><strong>定义</strong>　称函数 <span class="math display">\[f(x) = O(g(x))\]</span>，如果存在正常数 <span class="math inline">\(k, C\)</span>，使得只要 <span class="math inline">\(x &gt; k\)</span>，就有 <span class="math inline">\(|f(x)| \leq C|g(x)|\)</span> 成立。</p>
+                <p>注：文中<em>斜体</em>的文字表示我自己的想法或阐发，不一定严谨或正确。</p>
+<h2 id="大-o-记号">大 O 记号</h2>
+<p><strong>定义 1</strong>　称函数 <span class="math inline">\(f(x) = O(g(x))\)</span>，如果存在正常数 <span class="math inline">\(k, C\)</span>，使得只要 <span class="math inline">\(x &gt; k\)</span>，就有 <span class="math inline">\(|f(x)| \leq C|g(x)|\)</span> 成立。</p>
 <p><strong>例 1</strong>　证明 <span class="math inline">\(x^2 + 2x + 1 = O(x^2)\)</span>.</p>
 <p><strong>解</strong>　设 <span class="math inline">\(f(x) = x^2 + 2x + 1, g(x) = x^2​\)</span>，并令 <span class="math inline">\(k = 1​\)</span>，则当 <span class="math inline">\(x &gt; 1​\)</span> 时有</p>
 <p><span class="math display">\[|f(x)| = f(x) = x^2 + 2x + 1 \leq x^2 + 2x^2 + x^2 = 4x^2 = 4|g(x)|.\]</span></p>
 <p>即我们找到了正常数 <span class="math inline">\(k = 1, C = 4\)</span>，使得只要 <span class="math inline">\(x &gt; k\)</span>，就有 <span class="math inline">\(|f(x)| \leq C|g(x)|\)</span>. 因此 <span class="math inline">\(x^2 + 2x + 1 = O(x^2)\)</span>.　<span class="math inline">\(\Box\)</span></p>
-<p>注意，取 <span class="math inline">\(g(x) \equiv 1\)</span> 时，即函数 <span class="math inline">\(f(x) = O(1)\)</span> 时，有 <span class="math inline">\(\forall x (x &gt; k \to |f(x)| \leq C)\)</span>，这就是函数<strong>有界性</strong>的定义.</p>
+<p>上述定义也可用极限的语言写成：</p>
+<p><strong>定理 1（大 O 比率定理）</strong>　函数 <span class="math inline">\(f(x) = O(g(x))\)</span>，当且仅当极限 <span class="math inline">\(\lim\limits_{x\to\infty} \left| \frac{f(x)}{g(x)} \right|\)</span> 存在，并且存在正常数 <span class="math inline">\(C\)</span>，使得</p>
+<p><span class="math display">\[\lim\limits_{x\to\infty} \left| \frac{f(x)}{g(x)} \right| \leq C.\]</span></p>
+<p><em>注意，取 <span class="math inline">\(g(x) \equiv 1\)</span> 时，即函数 <span class="math inline">\(f(x) = O(1)\)</span> 时，有 <span class="math inline">\(\forall x (x &gt; k \to |f(x)| \leq C)\)</span>，这就是函数<strong>有界性</strong>的定义.</em></p>
+<p><em>若 <span class="math inline">\(f(x), g(x)\)</span> 都是 <span class="math inline">\(x\to\infty\)</span> 时的无穷大，则 <span class="math inline">\(f(x) = O(g(x))\)</span> 意味着 <span class="math inline">\(f(x)\)</span> 趋于无穷大的“速度”（或增长的阶）不高于 <span class="math inline">\(g(x)\)</span>，其中阶（order）是指数量级（order of magnitude）. 换言之，<span class="math inline">\(g(x)\)</span> 是 <span class="math inline">\(f(x)\)</span> 增长率的<strong>上界</strong>.</em></p>
 
                 <hr>
                 
