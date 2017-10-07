@@ -216,10 +216,10 @@
 <p><span class="math display">\[
 \begin {array}
     \ O(1) &amp; \subset &amp; O(\log n) \subset O(n) \subset O(n \log n) \\
-    &amp; \subset &amp; O(n^2) \subset O(n^k)(k&gt;2) \subset O(k^n)(k&gt;1)
+    &amp; \subset &amp; O(n^2) \subset O(n^k)(k&gt;2) \subset O(2^n)
 \end {array}
 \]</span> 这里用了包含符号，因为 <span class="math inline">\(O(g(x))​\)</span> 事实上是同样复杂度函数的集合，<span class="math inline">\(f(x) = O(g(x))​\)</span> 严格来说也应该写成 <span class="math inline">\(f(x) \in O(g(x))​\)</span>，但前者已经约定俗成了.</p>
-<p>上述式子可通俗地理解为，随着问题规模无限增长，时间复杂度为常数阶 <span class="math inline">\(O(1)\)</span> 的算法所需的执行时间不多于对数阶 <span class="math inline">\(O(\log n)\)</span> 的，对数阶的不多于线性阶 <span class="math inline">\(O(n)\)</span> 的，线性阶的不多于线性对数阶 <span class="math inline">\(O(n \log n)\)</span> 的，线性对数阶的不多于平方阶 <span class="math inline">\(O(n^2)\)</span> 的，平方阶的不多于多项式阶 <span class="math inline">\(O(n^k)\)</span> 的，多项式阶的不多于指数阶 <span class="math inline">\(O(k^n)\)</span> 的. 换句话说，上述时间复杂度所代表的算法效率依次递减. 在实际的算法设计中，一般认为时间复杂度为多项式阶 <span class="math inline">\(O(n^k)\)</span>（及更快）的算法是可接受的，指数阶 <span class="math inline">\(O(k^n)\)</span> 的算法则是不可接受的，因为一旦问题规模增大，其所需执行时间指数爆炸式增长.</p>
+<p>上述式子可通俗地理解为，随着问题规模无限增长，时间复杂度为常数阶 <span class="math inline">\(O(1)\)</span> 的算法所需的执行时间不多于对数阶 <span class="math inline">\(O(\log n)\)</span> 的，对数阶的不多于线性阶 <span class="math inline">\(O(n)\)</span> 的，线性阶的不多于线性对数阶 <span class="math inline">\(O(n \log n)\)</span> 的，线性对数阶的不多于平方阶 <span class="math inline">\(O(n^2)\)</span> 的，平方阶的不多于多项式阶 <span class="math inline">\(O(n^k)\)</span> 的，多项式阶的不多于指数阶 <span class="math inline">\(O(2^n)\)</span> 的. 换句话说，上述时间复杂度所代表的算法效率依次递减. 在实际的算法设计中，一般认为时间复杂度为多项式阶 <span class="math inline">\(O(n^k)\)</span>（及更快）的算法是可接受的，指数阶 <span class="math inline">\(O(2^n)\)</span> 的算法则是不可接受的，因为一旦问题规模增大，其所需执行时间指数爆炸式增长.</p>
 <h2 id="一些运算规则">一些运算规则</h2>
 <p>由大 O 记号的定义可证明以下运算规则： <span class="math display">\[
 O(f(x)) + O(g(x)) = O(max(f(x), g(x))) \\
