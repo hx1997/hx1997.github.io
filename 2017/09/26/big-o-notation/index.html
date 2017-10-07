@@ -198,12 +198,12 @@
 <p><strong>定理 1（大 O 比率定理）</strong>　如果极限 <span class="math inline">\(\lim\limits_{x\to\infty} \left| \frac{f(x)}{g(x)} \right|\)</span> 存在，则 <span class="math inline">\(f(x) = O(g(x))\)</span>.</p>
 <p><strong>证</strong>　若极限 <span class="math inline">\(\lim\limits_{x\to\infty} \left| \frac{f(x)}{g(x)} \right|\)</span> 存在且等于 <span class="math inline">\(l\)</span>，按极限的定义有 <span class="math display">\[
 \begin {array}
-    \forall &amp; \epsilon &gt; 0, \exists N(x &gt; N \to \left| \left| \frac{f(x)}{g(x)} \right| - l \right| &lt; \epsilon) &amp; \\
+    \ &amp; \forall \epsilon &gt; 0, \exists N(x &gt; N \to \left| \left| \frac{f(x)}{g(x)} \right| - l \right| &lt; \epsilon) &amp; \\
     \implies &amp; \forall \epsilon &gt; 0, \exists N(x &gt; N \to \left| \frac{f(x)}{g(x)} \right| - \left| l \right| &lt; \epsilon) &amp; \\
     \iff &amp; \forall \epsilon &gt; 0, \exists N(x &gt; N \to \left| \frac{f(x)}{g(x)} \right| &lt; \epsilon + \left| l \right|) &amp; \\
     \iff &amp; \forall \epsilon &gt; 0, \exists N(x &gt; N \to \left| \frac{f(x)}{g(x)} \right| &lt; C) &amp;
 \end {array}
-\]</span> 其中 <span class="math inline">\(C = \epsilon + \left| l \right|\)</span>. 则存在正常数 <span class="math inline">\(N, C\)</span>，使得只要 <span class="math inline">\(x &gt; N\)</span>，就有 <span class="math inline">\(|f(x)| &lt; C|g(x)|\)</span> 成立，从而 <span class="math inline">\(f(x) = O(g(x))\)</span>.　<span class="math inline">\(\Box\)</span></p>
+\]</span> 其中 <span class="math inline">\(C = \epsilon + \left| l \right|​\)</span>. 则存在正常数 <span class="math inline">\(N, C​\)</span>，使得只要 <span class="math inline">\(x &gt; N​\)</span>，就有 <span class="math inline">\(|f(x)| &lt; C|g(x)|​\)</span> 成立，从而 <span class="math inline">\(f(x) = O(g(x))​\)</span>.　<span class="math inline">\(\Box​\)</span></p>
 <p><em>注意，取 <span class="math inline">\(g(x) \equiv 1\)</span> 时，即函数 <span class="math inline">\(f(x) = O(1)\)</span> 时，有 <span class="math inline">\(\forall x (x &gt; k \to |f(x)| \leq C)\)</span>，这就是函数<strong>有界性</strong>的定义.</em></p>
 <p><em>若 <span class="math inline">\(f(x), g(x)\)</span> 都是 <span class="math inline">\(x\to\infty\)</span> 时的无穷大，则 <span class="math inline">\(f(x) = O(g(x))\)</span> 意味着随着 <span class="math inline">\(x\)</span> 无限增长，<span class="math inline">\(f(x)\)</span> 趋于无穷大的“速度”（或增长的阶）不高于 <span class="math inline">\(g(x)\)</span>. 换言之，当 <span class="math inline">\(x\)</span> 充分大时，<span class="math inline">\(g(x)\)</span> 是 <span class="math inline">\(f(x)\)</span> 增长率的<strong>上界</strong>.</em></p>
 
