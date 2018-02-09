@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Hello World｜Goulash
+        《离散数学及其应用》第四章第一节习题解｜Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/2016/11/06/hello-world/">
+    <link rel="canonical" href="https://hx1997.github.io/2018/02/09/discrete-math-ch4sec1-answer/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -153,15 +153,21 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Hello World</h1>
+                    <h1>《离散数学及其应用》第四章第一节习题解</h1>
                     
                     <span class="meta">
                          作者 HX
                         <span>
-                          日期 2016-11-06
+                          日期 2018-02-09
                          </span>
                     </span>
                     <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#数学"
+                           title="数学">数学</a>
+                        
+                        <a class="tag" href="/tags/#离散数学"
+                           title="离散数学">离散数学</a>
                         
                     </div>
                 </div>
@@ -170,7 +176,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Hello World
+            《离散数学及其应用》第四章第一节习题解
         </span>
     </div>
 </header>
@@ -181,31 +187,78 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+                <p>下学期学算法设计与分析，预习了下，发现递推方程十分重要，这本来是大一离散数学的内容，但是我们课程精简掉了这部分… 于是找出大一买的《离散数学及其应用》<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，顺便刷下题。</p>
+<h2 id="习题解">习题解</h2>
+<h3 id="section">4.1</h3>
+<blockquote>
+<p>Use mathematical induction to verify the formula derived in Example 2 for the number of moves required to complete the <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi" target="_blank" rel="external">Tower of Hanoi</a> puzzle.</p>
+</blockquote>
+<blockquote>
+<p>用数学归纳法验证例 2 中导出的解决<a href="https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%BA%E5%A1%94" target="_blank" rel="external">汉诺塔问题</a>所需步数的公式。</p>
+</blockquote>
+<p>解决汉诺塔问题所需步数的公式为</p>
+<p><span class="math display">\[ H_n = 2^n - 1. \]</span></p>
+<p>现在用数学归纳法验证之.</p>
+<p><strong>证</strong>　当 <span class="math inline">\(n = 1\)</span> 时，<span class="math inline">\(H_n = 2^1 - 1 = 1\)</span>. 原塔柱只有 <span class="math inline">\(1\)</span> 片圆盘时，只需用 <span class="math inline">\(1\)</span> 步将该片圆盘移动到目标塔柱即可，该情况成立.</p>
+<p>假设 <span class="math inline">\(n = k \; (k &gt; 1)\)</span> 时公式成立，即有 <span class="math inline">\(H_k = 2^k - 1\)</span>.</p>
+<p><span class="math inline">\(n = k + 1 \; (k &gt; 1)\)</span> 时，先用 <span class="math inline">\(H_k\)</span> 步将原塔柱最上面 <span class="math inline">\(k\)</span> 片圆盘移动到辅助塔柱，再用 <span class="math inline">\(1\)</span> 步将原塔柱剩下的 <span class="math inline">\(1\)</span> 片圆盘移动到目标塔柱，最后用 <span class="math inline">\(H_k\)</span> 步将辅助塔柱所有圆盘移动到目标塔柱. 因此有</p>
+<p><span class="math display">\[ H_{k+1} = 2 H_k + 1 = 2 \cdot (2^k - 1) + 1 = 2^{k+1} - 1, \]</span></p>
+<p>得证.　<span class="math inline">\(\Box​\)</span></p>
+<h3 id="section-1">4.2</h3>
+<blockquote>
+<p>A vending machine dispensing books of stamps accepts only one-dollar coins, <span class="math inline">\(\$1\)</span> bills, and <span class="math inline">\(\$5\)</span> bills.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of ways to deposit <span class="math inline">\(n\)</span> dollars in the vending machine, where the order in which the coins and bills are deposited matters.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> How many ways are there to deposit <span class="math inline">\(\$10\)</span> for a book of stamps?</p>
+</blockquote>
+<blockquote>
+<p>现有一台贩卖整套邮票的机器，只接收 1 美元硬币、1 美元纸币、5 美元纸币.</p>
+<p><strong>1)</strong> 求投入 <span class="math inline">\(n\)</span> 美元的不同投法数的递推式，要考虑硬币和纸币投入的顺序.</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 投入 10 美元购买一套邮票，共有多少种投币方法？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 投入 <span class="math inline">\(n\)</span> 美元可分为两种情况：其一，先投入 <span class="math inline">\(n - 1\)</span> 美元，再投入 <span class="math inline">\(1\)</span> 美元；其二，先投入 <span class="math inline">\(n - 5\)</span> 美元，再投入 <span class="math inline">\(5\)</span> 美元. 记投入 <span class="math inline">\(n\)</span> 美元的投法数为 <span class="math inline">\(f(n)\)</span>，则根据分步计数乘法原理，前者有 <span class="math inline">\(f(n-1) \cdot 2\)</span> 种投法（投入 <span class="math inline">\(1\)</span> 美元有硬币和纸币两种投法），后者有 <span class="math inline">\(f(n-5) \cdot 1\)</span> 种投法. 由分类计数加法原理，递推式为 <span class="math inline">\(f(n) = 2 f(n-1) + f(n-5), \; n &gt; 1\)</span>.</p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+        \begin {array}{c}
+            f(n) &amp; = &amp; 0, &amp; \quad n &lt; 0 \\
+            f(0) &amp; = &amp; 1, &amp; \\
+            f(1) &amp; = &amp; 2. &amp; \\
+        \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 将 <span class="math inline">\(n = 10\)</span> 代入递推式得 <span class="math display">\[
+\begin {align*}
+    f(10) &amp; = 2 f(9) + f(5) \\
+    &amp; = 2 \cdot [2 f(8) + f(4)] + 2 f(4) + f(0) \\
+    &amp; = 2^2 f(8) + 2^2 f(4) + 1 \\
+    &amp; = 2^2 \cdot [2 f(7) + f(3)] + 2^2 \cdot [2 f(3) + f(-1)] + 1 \\
+    &amp; = 2^3 f(7) + 3 \cdot 2^2 f(3) + 1 \\
+    &amp; \vdots \\
+    &amp; = 2^5 \cdot [2^4 f(1) + 1] + 5 \cdot 2^4 f(1) + 1 \\
+    &amp; = 2^{10} + 6 \times 2^5 + 1 \\
+    &amp; = 1217.
+\end {align*}
+\]</span></p>
+<h2 id="参考资料">参考资料</h2>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Kenneth H. Rosen, 《离散数学及其应用（英文精编版·第7版）》. 北京：机械工业出版社, 2016.12.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/31/reverse-esurfing/" data-toggle="tooltip" data-placement="top"
-                           title="记一次（失败的）广东天翼校园安卓客户端逆向">&larr; Previous Post</a>
-                    </li>
                     
+                    <li class="next">
+                        <a href="/2017/12/03/on-en-ch-translation/" data-toggle="tooltip" data-placement="top"
+                           title="英汉翻译乱谈">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -226,7 +279,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#quick-start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#习题解"><span class="toc-text">习题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-text">4.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-1"><span class="toc-text">4.2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -256,8 +309,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "hx1997";
-    var disqus_identifier = "https://hx1997.github.io/2016/11/06/hello-world/";
-    var disqus_url = "https://hx1997.github.io/2016/11/06/hello-world/";
+    var disqus_identifier = "https://hx1997.github.io/2018/02/09/discrete-math-ch4sec1-answer/";
+    var disqus_url = "https://hx1997.github.io/2018/02/09/discrete-math-ch4sec1-answer/";
 
     (function () {
         var dsq = document.createElement('script');

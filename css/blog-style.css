@@ -10,6 +10,11 @@ hr{
     margin:0;
 }
 
+/* 处理 MathJax 公式溢出页面 */
+.MathJax_Display {
+    overflow-x: auto
+}
+
 .sidebar-container {
     color: #bfbfbf;
     font-size: 14px;
