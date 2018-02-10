@@ -189,7 +189,7 @@
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <p>下学期学算法设计与分析，预习了下，发现递推方程十分重要，这本来是大一离散数学的内容，但是我们课程精简掉了这部分… 于是找出大一买的《离散数学及其应用》<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，顺便刷下题。我的这本是精编版，章节和原版可能不同，第四章是 Advanced Counting Techniques（高级计数技巧），第一节是 Applications of Recurrence Relations（递推式的应用）。</p>
 <h2 id="习题解">习题解</h2>
-<h3 id="section">4.1</h3>
+<h3 id="section">4.1.1</h3>
 <blockquote>
 <p>Use mathematical induction to verify the formula derived in Example 2 for the number of moves required to complete the <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi" target="_blank" rel="external">Tower of Hanoi</a> puzzle.</p>
 </blockquote>
@@ -204,7 +204,7 @@
 <p><span class="math inline">\(n = k + 1 \; (k &gt; 1)\)</span> 时，先用 <span class="math inline">\(H_k\)</span> 步将原塔柱最上面 <span class="math inline">\(k\)</span> 片圆盘移动到辅助塔柱，再用 <span class="math inline">\(1\)</span> 步将原塔柱剩下的 <span class="math inline">\(1\)</span> 片圆盘移动到目标塔柱，最后用 <span class="math inline">\(H_k\)</span> 步将辅助塔柱所有圆盘移动到目标塔柱. 因此有</p>
 <p><span class="math display">\[ H_{k+1} = 2 H_k + 1 = 2 \cdot (2^k - 1) + 1 = 2^{k+1} - 1, \]</span></p>
 <p>得证.　<span class="math inline">\(\Box​\)</span></p>
-<h3 id="section-1">4.2</h3>
+<h3 id="section-1">4.1.2</h3>
 <blockquote>
 <p>A vending machine dispensing books of stamps accepts only one-dollar coins, <span class="math inline">\(\$1\)</span> bills, and <span class="math inline">\(\$5\)</span> bills.</p>
 <p><strong>a)</strong> Find a recurrence relation for the number of ways to deposit <span class="math inline">\(n\)</span> dollars in the vending machine, where the order in which the coins and bills are deposited matters.</p>
@@ -279,7 +279,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#习题解"><span class="toc-text">习题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-text">4.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-1"><span class="toc-text">4.2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#习题解"><span class="toc-text">习题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-text">4.1.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-1"><span class="toc-text">4.1.2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ hr{
 
 /* 处理 MathJax 公式溢出页面 */
 .MathJax_Display {
-    overflow-x: auto
+    overflow-x: auto;
 }
 
 .sidebar-container {
