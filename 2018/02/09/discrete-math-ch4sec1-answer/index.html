@@ -298,35 +298,25 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 不包含三个连续的 0 且长度为 7 的二进制串有多少个？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 长度为 <span class="math inline">\(n\)</span> 的二进制串可分为两类：一种包含三个连续的 0，另一种不包含 3 个连续的 0. 记前者的个数为 <span class="math inline">\(f(n)\)</span>，后者的个数为 <span class="math inline">\(g(n)\)</span>. 长度为 <span class="math inline">\(n\)</span> 的二进制串总共有 <span class="math inline">\(2^n\)</span> 个，因此有 <span class="math inline">\(g(n) = 2^n - f(n)\)</span>. 下面来求 <span class="math inline">\(f(n)\)</span>.</p>
-<p>若串的最后一位为 1，则 <span class="math inline">\(f(n) = f(n-1)\)</span>. 否则（最后一位为 0），若倒数第二位为 1，则 <span class="math inline">\(f(n) = f(n-2)\)</span>. 否则（串以 00 结尾），若倒数第三位为 1，则 <span class="math inline">\(f(n) = f(n-3)\)</span>. 否则（串以 000 结尾），<span class="math inline">\(f(n) = 2^{n-3} \cdot 1\)</span>.</p>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)\)</span>. 若串的最后一位为 1，则 <span class="math inline">\(f(n) = f(n-1)\)</span>. 否则（最后一位为 0），若倒数第二位为 1，则 <span class="math inline">\(f(n) = f(n-2)\)</span>. 否则（串以 00 结尾），若倒数第三位为 1，则 <span class="math inline">\(f(n) = f(n-3)\)</span>. 否则（串以 000 结尾），<span class="math inline">\(f(n) = 0\)</span>.</p>
 <p>综上，</p>
-<p><span class="math display">\[f(n) = f(n-1) + f(n-2) + f(n-3) + 2^{n-3}, \; n &gt; 3.\]</span></p>
-<p>从而 <span class="math display">\[
-\begin {align*}
-    g(n) &amp; = 2^n - f(n) \\
-    &amp; = 2^n - f(n-1) - f(n-2) - f(n-3) - 2^{n-3} \\
-    &amp; = 2^n - (2^{n-1} - g(n-1)) - (2^{n-2} - g(n-2)) - (2^{n-3} - g(n-3)) - 2^{n-3} \\
-    &amp; = g(n-1) + g(n-2) + g(n-3) + 2^n - 2^{n-1} - 2^{n-2} - 2^{n-3} - 2^{n-3} \\
-    &amp; = g(n-1) + g(n-2) + g(n-3) + 2^n \cdot (1 - 2^{-1} - 2^{-2} - 2^{-3} - 2^{-3}) \\
-    &amp; = g(n-1) + g(n-2) + g(n-3), \; n &gt; 3.
-\end {align*}
-\]</span> <strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+<p><span class="math display">\[f(n) = f(n-1) + f(n-2) + f(n-3), \; n &gt; 3.\]</span></p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
     \left\{
             \begin {array} {c}
-                g(1) = 2, \\
-                g(2) = 4, \\
-                g(3) = 7.
+                f(1) = 2, \\
+                f(2) = 4, \\
+                f(3) = 7.
             \end {array}
     \right.
 \end {equation*}
 \]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
 \begin {align*}
-    g(4) &amp; = g(3) + g(2) + g(1) = 13, \\
-    g(5) &amp; = g(4) + g(3) + g(2) = 24, \\
-    g(6) &amp; = g(5) + g(4) + g(3) = 44, \\
-    g(7) &amp; = g(6) + g(5) + g(4) = 81.
+    f(4) &amp; = f(3) + f(2) + f(1) = 13, \\
+    f(5) &amp; = f(4) + f(3) + f(2) = 24, \\
+    f(6) &amp; = f(5) + f(4) + f(3) = 44, \\
+    f(7) &amp; = f(6) + f(5) + f(4) = 81.
 \end {align*}
 \]</span></p>
 <h2 id="参考资料">参考资料</h2>
