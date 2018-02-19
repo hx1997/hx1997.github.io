@@ -80,14 +80,6 @@
                         
 							
                         <li>
-                            <a href="/archives/">ARCHIVES</a>
-                        </li>
-							
-						
-                    
-                        
-							
-                        <li>
                             <a href="/about/">ABOUT</a>
                         </li>
 							
@@ -97,6 +89,14 @@
 							
                         <li>
                             <a href="/tags/">TAGS</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">ARCHIVES</a>
                         </li>
 							
 						
@@ -200,7 +200,7 @@
 <p>把 User-Agent 改成 iPhoneOS 99 就行了，最好用真实的 Safari UA 改。</p>
 <p><span class="math display">\[flag\{LMvBi8w9$m1TrgK4\}\]</span></p>
 <h2 id="照猫画虎">3. <a href="http://ctf4.shiyanbar.com/web/copy/index.php" target="_blank" rel="external">照猫画虎</a></h2>
-<p>这题换过，之前是圆圈。页面说第 1234567890 位访客有惊喜，抓包，发现响应头有 <code>Set-Cookie: Visitor=MjY5OTowNDE1NzQwZWFhNGQ5ZGVjYmM4ZGEwMDFkM2ZkODA1Zg%3D%3D</code>，后面一串 urlencode 解码 + base64 解码得 <code>2699:0415740eaa4d9decbc8da001d3fd805f</code>，冒号后面的一串 MD5 扔到 <a href="cmd5.com" class="uri">cmd5.com</a> 还原得 <code>2699</code>。就是说后面 MD5 值是对冒号前面数字的校验值。于是构造 <code>1234567890:e807f1fcf82d132f9bb018ca6738a19f</code>，用 base64 + urlencode 编码后写到请求头的 Cookie 里，得到 flag</p>
+<p>这题换过，之前是圆圈。页面说第 1234567890 位访客有惊喜，抓包，发现响应头有 <code>Set-Cookie: Visitor=MjY5OTowNDE1NzQwZWFhNGQ5ZGVjYmM4ZGEwMDFkM2ZkODA1Zg%3D%3D</code>，后面一串 urlencode 解码 + base64 解码得 <code>2699:0415740eaa4d9decbc8da001d3fd805f</code>，冒号后面的一串 MD5 扔到 <a href="http://cmd5.com" target="_blank" rel="external">cmd5.com</a> 还原得 <code>2699</code>。就是说后面 MD5 值是对冒号前面数字的校验值。于是构造 <code>1234567890:e807f1fcf82d132f9bb018ca6738a19f</code>，用 base64 + urlencode 编码后写到请求头的 Cookie 里，得到 flag</p>
 <p><span class="math display">\[flag\{T4mmL9GhpaKWunPE\}\]</span></p>
 
                 <hr>
