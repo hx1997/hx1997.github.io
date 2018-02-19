@@ -75,6 +75,7 @@ body {
 
 p {
     margin:0 0 20px;
+    word-break: break-word;
 }
 
 h1,
