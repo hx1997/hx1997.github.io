@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Goulash
+        2018 西普杯铁三赛测评题解题报告（writeup）｜Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/tags/笔记/">
+    <link rel="canonical" href="https://hx1997.github.io/2018/02/19/t3sec-warm-up-writeup/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="true
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -139,250 +139,146 @@
 </script>
 
 <!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="//wx3.sinaimg.cn/large/6b1e58d5gy1fi99j3hqy3j21hc0u07wj.jpg">
+
+
 <style>
-    .intro-header .site-heading {
-        margin: 50px;
-    }
     
     header.intro-header {
         background-image: url('//wx3.sinaimg.cn/large/6b1e58d5gy1fi99j3hqy3j21hc0u07wj.jpg')
     }
+
     
 </style>
 
-<!-- Page Header -->
 <header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading text-center">
-                    <h1>ARCHIVES</h1>
-                    <span class="subheading">Some pieces of beef, and some vegetables too.</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>2018 西普杯铁三赛测评题解题报告（writeup）</h1>
+                    
+                    <span class="meta">
+                         作者 HX
+                        <span>
+                          日期 2018-02-19
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#信息安全"
+                           title="信息安全">信息安全</a>
+                        
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="post-title-haojen">
+        <span>
+            2018 西普杯铁三赛测评题解题报告（writeup）
+        </span>
+    </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <!-- archive list -->
-            
-				
-				
-				
-					
-					
-					<div class="archive archive-year" data-date="2018">
-						<h2 class="archive-title">
-						<span class="fa fa-archive">
-							<a href="/archives/2018">2018</a>
-						</span>
-						</h2>
-				
-				
-					
-					
-					<div class="archive archive-month" data-date="201802">
-						<h3 class="archive-title">
-							<a href="/archives/2018/02">02</a>
-						</h3>
-				
-				<div class="one-tag-list">
-                <div class="post-preview">
-                    <a href="/2018/02/19/t3sec-warm-up-writeup/">
-                        <h4 class="post-title">
-                            2018 西普杯铁三赛测评题解题报告（writeup）
-                        </h4>
-                        
-                    </a>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="权限">1. <a href="http://ctf4.shiyanbar.com/web/root/index.php" target="_blank" rel="external">权限</a></h2>
+<p>题目描述：你是管理员吗？</p>
+<p>打开是一个登录页面，应该是要以管理员身份登录。网页标题是 password.txt，于是打开 http://ctf4.shiyanbar.com/web/root/password.txt，发现一堆密码。回到登录页，用 BurpSuite 暴力破解密码，字典用刚才发现的一堆密码，得到密码是 <code>Nsf0cuS</code>。但是这条请求的响应网页里说“这里没有flag哦！” 观察响应头，有一条 <code>Set-Cookie: newpage=MjkwYmNhNzBjN2RhZTkzZGI2NjQ0ZmEwMGI5ZDgzYjkucGhw</code>，后面一串 base64 解码得 <code>290bca70c7dae93db6644fa00b9d83b9.php</code>。打开 http://ctf4.shiyanbar.com/web/root/290bca70c7dae93db6644fa00b9d83b9.php，是一个留言板页面，页面提示用管理员身份留言。先随便留言抓个包，发现请求头里有 <code>Cookie: IsLogin=0</code>和<code>userlevel=guest</code>。改成<code>Cookie: IsLogin=1</code>和<code>userlevel=root</code>，POST 过去，响应头里有<code>Set-Cookie: Flag=flag%7BC0ngratulati0n%7D</code>，urlencode 解码（其实就是 ASCII）得</p>
+<p><span class="math display">\[flag\{C0ngratulati0n\}\]</span></p>
+<h2 id="ios">2. <a href="http://ctf4.shiyanbar.com/web/IOS/index.php" target="_blank" rel="external">IOS</a></h2>
+<p>把 User-Agent 改成 iPhoneOS 99 就行了，最好用真实的 Safari UA 改。</p>
+<p><span class="math display">\[flag\{LMvBi8w9$m1TrgK4\}\]</span></p>
+<h2 id="照猫画虎">3. <a href="http://ctf4.shiyanbar.com/web/copy/index.php" target="_blank" rel="external">照猫画虎</a></h2>
+<p>这题换过，之前是圆圈。页面说第 1234567890 位访客有惊喜，抓包，发现响应头有 <code>Set-Cookie: Visitor=MjY5OTowNDE1NzQwZWFhNGQ5ZGVjYmM4ZGEwMDFkM2ZkODA1Zg%3D%3D</code>，后面一串 urlencode 解码 + base64 解码得 <code>2699:0415740eaa4d9decbc8da001d3fd805f</code>，冒号后面的一串 MD5 扔到 <a href="cmd5.com" class="uri">cmd5.com</a> 还原得 <code>2699</code>。就是说后面 MD5 值是对冒号前面数字的校验值。于是构造 <code>1234567890:e807f1fcf82d132f9bb018ca6738a19f</code>，用 base64 + urlencode 编码后写到请求头的 Cookie 里，得到 flag</p>
+<p><span class="math display">\[flag\{T4mmL9GhpaKWunPE\}\]</span></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/02/09/discrete-math-ch4sec1-answer/" data-toggle="tooltip" data-placement="top"
+                           title="《离散数学及其应用》第四章第一节习题解">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
                 </div>
-				<hr>
-				</div>
-            
-				
-				
-				
-				
-				<div class="one-tag-list">
-                <div class="post-preview">
-                    <a href="/2018/02/09/discrete-math-ch4sec1-answer/">
-                        <h4 class="post-title">
-                            《离散数学及其应用》第四章第一节习题解
-                        </h4>
-                        
-                    </a>
+                <!-- disqus 评论框 end -->
+                
+
+
+                <!--加入新的评论系统-->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#权限"><span class="toc-text">1. 权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ios"><span class="toc-text">2. IOS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#照猫画虎"><span class="toc-text">3. 照猫画虎</span></a></li></ol>
                 </div>
-				<hr>
-				</div>
-            
-				
-				
-				
-					
-					</div><!--month-->
-					</div><!--year-->
-					
-					
-					
-					<div class="archive archive-year" data-date="2017">
-						<h2 class="archive-title">
-						<span class="fa fa-archive">
-							<a href="/archives/2017">2017</a>
-						</span>
-						</h2>
-				
-				
-					
-					
-					<div class="archive archive-month" data-date="201712">
-						<h3 class="archive-title">
-							<a href="/archives/2017/12">12</a>
-						</h3>
-				
-				<div class="one-tag-list">
-                <div class="post-preview">
-                    <a href="/2017/12/03/on-en-ch-translation/">
-                        <h4 class="post-title">
-                            英汉翻译乱谈
-                        </h4>
-                        
-                    </a>
-                </div>
-				<hr>
-				</div>
-            
-				
-				
-				
-				
-				<div class="one-tag-list">
-                <div class="post-preview">
-                    <a href="/2017/12/03/i-am-a-feminist-emma-watson/">
-                        <h4 class="post-title">
-                            \[译\] Emma Watson 于联合国：《我是一名女权主义者》
-                        </h4>
-                        
-                    </a>
-                </div>
-				<hr>
-				</div>
-            
-				
-				
-				
-				
-					
-					</div><!--month-->
-					
-					
-					<div class="archive archive-month" data-date="201709">
-						<h3 class="archive-title">
-							<a href="/archives/2017/09">09</a>
-						</h3>
-				
-				<div class="one-tag-list">
-                <div class="post-preview">
-                    <a href="/2017/09/26/big-o-notation/">
-                        <h4 class="post-title">
-                            大 O 记号及算法的时间复杂度
-                        </h4>
-                        
-                    </a>
-                </div>
-				<hr>
-				</div>
-            
-				
-				
-				
-				
-					
-					</div><!--month-->
-					
-					
-					<div class="archive archive-month" data-date="201707">
-						<h3 class="archive-title">
-							<a href="/archives/2017/07">07</a>
-						</h3>
-				
-				<div class="one-tag-list">
-                <div class="post-preview">
-                    <a href="/2017/07/30/Linear-Algebra-Notes-1/">
-                        <h4 class="post-title">
-                            《线性代数》笔记（1）
-                        </h4>
-                        
-                    </a>
-                </div>
-				<hr>
-				</div>
-            
-				
-				
-				
-				
-					
-					</div><!--month-->
-					
-					
-					<div class="archive archive-month" data-date="201703">
-						<h3 class="archive-title">
-							<a href="/archives/2017/03">03</a>
-						</h3>
-				
-				<div class="one-tag-list">
-                <div class="post-preview">
-                    <a href="/2017/03/31/reverse-esurfing/">
-                        <h4 class="post-title">
-                            记一次（失败的）广东天翼校园安卓客户端逆向
-                        </h4>
-                        
-                    </a>
-                </div>
-				<hr>
-				</div>
-            
-				
-				
-				
-					
-					</div><!--month-->
-					</div><!--year-->
-					
-					
-					
-					<div class="archive archive-year" data-date="2016">
-						<h2 class="archive-title">
-						<span class="fa fa-archive">
-							<a href="/archives/2016">2016</a>
-						</span>
-						</h2>
-				
-				
-					
-					
-					<div class="archive archive-month" data-date="201611">
-						<h3 class="archive-title">
-							<a href="/archives/2016/11">11</a>
-						</h3>
-				
-				<div class="one-tag-list">
-                <div class="post-preview">
-                    <a href="/2016/11/06/hello-world/">
-                        <h4 class="post-title">
-                            Hello World
-                        </h4>
-                        
-                    </a>
-                </div>
-				<hr>
-				</div>
-            
+            </div>
         </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
     </div>
+</article>
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "hx1997";
+    var disqus_identifier = "https://hx1997.github.io/2018/02/19/t3sec-warm-up-writeup/";
+    var disqus_url = "https://hx1997.github.io/2018/02/19/t3sec-warm-up-writeup/";
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
 
 <!-- Footer -->
 <!-- Footer -->
