@@ -5,20 +5,15 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Some pieces of beef, and some vegetables too.">
-    <meta name="keyword" content="undefined">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="alternate" type="application/atom+xml" title="Goulash" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
     <title>
         
-        《离散数学及其应用》第四章第一节习题解｜Goulash
+          《离散数学及其应用》第四章第一节习题解 - Goulash
         
     </title>
 
@@ -28,23 +23,41 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
 
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
-<style>
 
-    header.intro-header {
-        background-image: url('//wx3.sinaimg.cn/large/6b1e58d5gy1fi99j3hqy3j21hc0u07wj.jpg')
-    }
-</style>
 <!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
-" data-ishome = "false" >
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -54,12 +67,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    Goulash
-                </span>
-                's Blog
-            </a>
+            <a class="navbar-brand" href="/">Goulash</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -68,44 +76,43 @@
             so, when navbar scale out, the <nav> will cover tags.
             also mask any touch event of tags, unfortunately.
         -->
-        <!-- /.navbar-collapse -->
         <div id="huxblog_navbar">
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="/">Home</a>
                     </li>
-					
+
                     
+
                         
-							
-                        <li>
-                            <a href="/archives/">ARCHIVES</a>
-                        </li>
-							
-						
                     
+
                         
-							
                         <li>
                             <a href="/about/">ABOUT</a>
                         </li>
-							
-						
-                    
                         
-							
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
                         <li>
                             <a href="/tags/">TAGS</a>
                         </li>
-							
-						
+                        
                     
-					
-					
+                    
                 </ul>
             </div>
         </div>
+        <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->
 </nav>
@@ -113,7 +120,7 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
+    var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
@@ -138,54 +145,40 @@
     }
 </script>
 
-<!-- Main Content -->
 
-<!--only post-->
-
-
-<img class="wechat-title-img"
-     src="//wx3.sinaimg.cn/large/6b1e58d5gy1fi99j3hqy3j21hc0u07wj.jpg">
-
-
-<style>
+    <!-- Main Content -->
     
-    header.intro-header {
-        background-image: url('//wx3.sinaimg.cn/large/6b1e58d5gy1fi99j3hqy3j21hc0u07wj.jpg')
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///wx3.sinaimg.cn/large/6b1e58d5gy1fi99j3hqy3j21hc0u07wj.jpg')
     }
-
-    
 </style>
-
-<header class="intro-header">
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>《离散数学及其应用》第四章第一节习题解</h1>
-                    
-                    <span class="meta">
-                         作者 HX
-                        <span>
-                          日期 2018-02-09
-                         </span>
-                    </span>
-                    <div class="tags text-center">
+                    <div class="tags">
                         
-                        <a class="tag" href="/tags/#数学"
-                           title="数学">数学</a>
+                          <a class="tag" href="/tags/#数学" title="数学">数学</a>
                         
-                        <a class="tag" href="/tags/#离散数学"
-                           title="离散数学">离散数学</a>
+                          <a class="tag" href="/tags/#离散数学" title="离散数学">离散数学</a>
                         
                     </div>
+                    <h1>《离散数学及其应用》第四章第一节习题解</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2018-02-09
+                    </span>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="post-title-haojen">
-        <span>
-            《离散数学及其应用》第四章第一节习题解
-        </span>
     </div>
 </header>
 
@@ -193,8 +186,13 @@
 <article>
     <div class="container">
         <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
                 <p>下学期学算法设计与分析，预习了下，发现递推方程十分重要，这本来是大一离散数学的内容，但是我们课程精简掉了这部分… 于是找出大一买的《离散数学及其应用》<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，顺便刷下题。我的这本是精编版，章节和原版可能不同，第四章是 Advanced Counting Techniques（高级计数技巧），第一节是 Applications of Recurrence Relations（递推式的应用）。</p>
 <h2 id="习题解">习题解</h2>
 <h3 id="section">4.1.1</h3>
@@ -360,21 +358,21 @@
 </ol>
 </div>
 
+
                 <hr>
+
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2018/02/19/t3sec-warm-up-writeup/" data-toggle="tooltip" data-placement="top"
-                           title="2018 西普杯铁三赛测评题解题报告（writeup）">&larr; Previous Post</a>
-                    </li>
+                        <li class="previous">
+                            <a href="/2018/02/19/t3sec-warm-up-writeup/" data-toggle="tooltip" data-placement="top" title="2018 西普杯铁三赛测评题解题报告（writeup）">&larr; Previous Post</a>
+                        </li>
                     
                     
-                    <li class="next">
-                        <a href="/2017/12/03/on-en-ch-translation/" data-toggle="tooltip" data-placement="top"
-                           title="英汉翻译乱谈">Next Post &rarr;</a>
-                    </li>
+                        <li class="next">
+                            <a href="/2017/12/03/on-en-ch-translation/" data-toggle="tooltip" data-placement="top" title="英汉翻译乱谈">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -388,20 +386,11 @@
                 <!-- disqus 评论框 end -->
                 
 
-
-                <!--加入新的评论系统-->
-                
             </div>
+    <!-- Side Catalog Container -->
+        
 
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#习题解"><span class="toc-text">习题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-text">4.1.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-1"><span class="toc-text">4.1.2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-2"><span class="toc-text">4.1.3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-3"><span class="toc-text">4.1.4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-4"><span class="toc-text">4.1.5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section-5"><span class="toc-text">4.1.6</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Sidebar Container -->
+    <!-- Sidebar Container -->
 
             <div class="
                 col-lg-8 col-lg-offset-2
@@ -414,10 +403,11 @@
                 <!-- Friends Blog -->
                 
             </div>
-        </div>
 
+        </div>
     </div>
 </article>
+
 
 
 
@@ -428,10 +418,8 @@
     var disqus_identifier = "https://hx1997.github.io/2018/02/09/discrete-math-ch4sec1-answer/";
     var disqus_url = "https://hx1997.github.io/2018/02/09/discrete-math-ch4sec1-answer/";
 
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
@@ -442,13 +430,13 @@
 
 
 
-<!-- Footer -->
-<!-- Footer -->
+
+    <!-- Footer -->
+    <!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
                 
                 
@@ -464,13 +452,19 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Goulash 2018
+                    Copyright &copy; Goulash 2018 
                     <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
                 </p>
-
             </div>
         </div>
     </div>
@@ -483,7 +477,8 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
+<script src="/js/hux-blog.min.js"></script>
+
 
 <!-- async load function -->
 <script>
@@ -496,6 +491,25 @@
       s.parentNode.insertBefore(o, s);
     }
 </script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
 
 <!-- jquery.tagcloud.js -->
 <script>
@@ -513,33 +527,30 @@
 
 <!--fastClick.js -->
 <script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
 </script>
 
+
 <!-- Google Analytics -->
+
 
 
 
 <!-- Baidu Tongji -->
 
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+<!-- Side Catalog -->
 
-  _st('install','undefined','2.0.0');
-</script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="//secure.gravatar.com/avatar/43d1ed590896218a6bff5275a61adcf8?size=400px"><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config("");
 </script>
@@ -557,6 +568,7 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
 </body>
 
 </html>
