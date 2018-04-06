@@ -97,14 +97,14 @@
 
                         
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
@@ -227,7 +227,7 @@
                     
                     
                         <li class="next">
-                            <a href="/2016/11/06/hello-world/" data-toggle="tooltip" data-placement="top" title="Hello World">Next Post &rarr;</a>
+                            <a href="/2016/08/23/hello-world/" data-toggle="tooltip" data-placement="top" title="Hello World">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -235,11 +235,11 @@
                 
 
                 
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment"></div>
+                <!-- Valine 评论框 end -->
                 
 
             </div>
@@ -267,20 +267,26 @@
 
 
 
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "hx1997";
-    var disqus_identifier = "https://hx1997.github.io/2017/03/31/reverse-esurfing/";
-    var disqus_url = "https://hx1997.github.io/2017/03/31/reverse-esurfing/";
 
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = "SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz";
+    var valine_key =  "gtaegP4TT3CzPJH7bwy54kkV";
+    new Valine({
+        // AV 对象来自上面引入av-min.js(老司机们不要开车➳♡゛扎心了老铁)
+        av: AV, 
+        el: '#comment',
+        app_id: valine_id,
+        app_key: valine_key,
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!', // 留言框占位提示文字
+    });
 </script>
-<!-- disqus 公共JS代码 end -->
+<!-- Valine 公共JS代码 end -->
 
 
 
