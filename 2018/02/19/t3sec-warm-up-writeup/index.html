@@ -90,14 +90,14 @@
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -195,24 +195,24 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="权限">1. <a href="http://ctf4.shiyanbar.com/web/root/index.php" target="_blank" rel="external">权限</a></h2>
+                <h3 id="权限">1. <a href="http://ctf4.shiyanbar.com/web/root/index.php" target="_blank" rel="external">权限</a></h3>
 <p>题目描述：你是管理员吗？</p>
 <p>打开是一个登录页面，应该是要以管理员身份登录。网页标题是 password.txt，于是打开 http://ctf4.shiyanbar.com/web/root/password.txt，发现一堆密码。回到登录页，用 BurpSuite 暴力破解密码，字典用刚才发现的一堆密码，得到密码是 <code>Nsf0cuS</code>。但是这条请求的响应网页里说“这里没有flag哦！” 观察响应头，有一条 <code>Set-Cookie: newpage=MjkwYmNhNzBjN2RhZTkzZGI2NjQ0ZmEwMGI5ZDgzYjkucGhw</code>，后面一串 base64 解码得 <code>290bca70c7dae93db6644fa00b9d83b9.php</code>。打开 http://ctf4.shiyanbar.com/web/root/290bca70c7dae93db6644fa00b9d83b9.php，是一个留言板页面，页面提示用管理员身份留言。先随便留言抓个包，发现请求头里有 <code>Cookie: IsLogin=0</code>和<code>userlevel=guest</code>。改成<code>Cookie: IsLogin=1</code>和<code>userlevel=root</code>，POST 过去，响应头里有<code>Set-Cookie: Flag=flag%7BC0ngratulati0n%7D</code>，urlencode 解码（其实就是 ASCII）得</p>
 <p><span class="math display">\[flag\{C0ngratulati0n\}\]</span></p>
-<h2 id="ios">2. <a href="http://ctf4.shiyanbar.com/web/IOS/index.php" target="_blank" rel="external">IOS</a></h2>
+<h3 id="ios">2. <a href="http://ctf4.shiyanbar.com/web/IOS/index.php" target="_blank" rel="external">IOS</a></h3>
 <p>把 User-Agent 改成 iPhoneOS 99 就行了，最好用真实的 Safari UA 改。</p>
 <p><span class="math display">\[flag\{LMvBi8w9$m1TrgK4\}\]</span></p>
-<h2 id="照猫画虎">3. <a href="http://ctf4.shiyanbar.com/web/copy/index.php" target="_blank" rel="external">照猫画虎</a></h2>
+<h3 id="照猫画虎">3. <a href="http://ctf4.shiyanbar.com/web/copy/index.php" target="_blank" rel="external">照猫画虎</a></h3>
 <p>这题换过，之前是圆圈。页面说第 1234567890 位访客有惊喜，抓包，发现响应头有 <code>Set-Cookie: Visitor=MjY5OTowNDE1NzQwZWFhNGQ5ZGVjYmM4ZGEwMDFkM2ZkODA1Zg%3D%3D</code>，后面一串 urlencode 解码 + base64 解码得 <code>2699:0415740eaa4d9decbc8da001d3fd805f</code>，冒号后面的一串 MD5 扔到 <a href="http://cmd5.com" target="_blank" rel="external">cmd5.com</a> 还原得 <code>2699</code>。就是说后面 MD5 值是对冒号前面数字的校验值。于是构造 <code>1234567890:e807f1fcf82d132f9bb018ca6738a19f</code>，用 base64 + urlencode 编码后写到请求头的 Cookie 里，得到 flag</p>
 <p><span class="math display">\[flag\{T4mmL9GhpaKWunPE\}\]</span></p>
-<h2 id="问题就在这">4. <a href="http://ctf4.shiyanbar.com/ste/gpg/john.tar.gz.gpg" target="_blank" rel="external">问题就在这</a></h2>
+<h3 id="问题就在这">4. <a href="http://ctf4.shiyanbar.com/ste/gpg/john.tar.gz.gpg" target="_blank" rel="external">问题就在这</a></h3>
 <p>题目描述：找答案 GPG key: GhairfAvvewvukDetolicDer-OcNayd#</p>
 <p>显然是 GPG 加密，打开 Windows 10 WSL bash，用 gpg 命令解密，得到压缩包，解压。解压后是一个数据包 john-in-the-middle.pcap（这名字… 中间人？），用 Wireshark 打开，导出 HTTP 对象。在导出的文件里找到 logo.png，用 <a href="http://www.caesum.com/handbook/Stegsolve.jar" target="_blank" rel="external">Stegsolve</a> 就可以找到隐写的 flag</p>
 <p><span class="math display">\[flag\{J0hn\_th3\_Sn1ff3r\}\]</span></p>
-<h2 id="你最美">5. <a href="http://ctf4.shiyanbar.com/misc/123/123.exe" target="_blank" rel="external">你最美</a></h2>
+<h3 id="你最美">5. <a href="http://ctf4.shiyanbar.com/misc/123/123.exe" target="_blank" rel="external">你最美</a></h3>
 <p>下载后拖进十六进制编辑器，发现一大段 base64 ，解码导出成文件，是个 PNG 图片。打开图片，扫描二维码，得到 flag</p>
 <p><span class="math display">\[flag\{you\ are\ beautiful\}\]</span></p>
-<h2 id="shellcode">6. <a href="http://ctf4.shiyanbar.com/re/shellcode/shellcode.txt" target="_blank" rel="external">shellcode</a></h2>
+<h3 id="shellcode">6. <a href="http://ctf4.shiyanbar.com/re/shellcode/shellcode.txt" target="_blank" rel="external">shellcode</a></h3>
 <p>一段十六进制数字，于是先用 Python 写了段脚本把十六进制当作 ASCII 字符显示出来。中间有 <code>echo ZmxhZ3tTSEVsbGNvZGVfSVNfc29fQ29vbH0K|base64 -d</code> 引人注目，好像是 Linux 命令，直接用 bash 运行就得到 base64 解码的结果</p>
 <p><span class="math display">\[flag\{SHEllcode\_IS\_so\_Cool\}\]</span></p>
 
