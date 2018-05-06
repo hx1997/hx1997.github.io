@@ -90,7 +90,7 @@
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
@@ -104,7 +104,7 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -244,13 +244,21 @@
 <p>一开始 <code>while</code> 循环不会执行，先看到很长的那句，作用是比对全局数组 <code>dword_402160</code> 中的每个字节和 <code>v12 % 256</code> 与 <code>new_pass_table</code> 中每个字节的异或是否相等，不相等就返回 -1，全部相等就跳到标签 <code>LABEL_17</code>。我们的目的是使程序最后打印出 <code>Right!</code>，从而确定正确的 flag，所以要求 <code>if</code> 语句必须满足，即二者必须相等。</p>
 <p>注意到异或运算的一个性质：如果 A ^ B = C，那么 A ^ C = B。现在已知 <code>dword_402160</code> 数组的内容和 <code>v12 % 256</code> 的值，可以反推出输入正确的 flag 时，<code>new_pass_table</code> 中应该有的内容。再结合前面分析的加密算法，可以从 <code>new_pass_table</code> 再解密还原出正确的 flag。</p>
 <p>写了一段 C 代码，得到正确 flag 对应的 <code>new_pass_table</code> 内容是（都是十六进制数）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">4d 4d 4d 75 4d 48 4d d3 4e 79 4a 4c 4a 4b 4d 4d 4a 50 4a 4b 4a 4d 4d e3 4a 4c 49 66 4d 4d 4a 50 4a 4c 4d 48 49 78 4a f3 4d 48 4a 47 4d 48 49 71 4d 49 4d 48 4a 4a 4a 03 49 76 4a 4e 4d 49 4a 48 4a 4e 4a 48 4d 48 4a 13 4d 4c 4d 4a 4d 48 4a 4f 4a 49 4e 65</div></pre></td></tr></table></figure>
+<blockquote>
+<p>4d 4d 4d 75 4d 48 4d d3 4e 79 4a 4c 4a 4b 4d 4d 4a 50 4a 4b 4a 4d 4d e3 4a 4c 49 66 4d 4d 4a 50 4a 4c 4d 48 49 78 4a f3 4d 48 4a 47 4d 48 49 71 4d 49 4d 48 4a 4a 4a 03 49 76 4a 4e 4d 49 4a 48 4a 4e 4a 48 4d 48 4a 13 4d 4c 4d 4a 4d 48 4a 4f 4a 49 4e 65</p>
+</blockquote>
 <p>看成 ASCII 码转成字符是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MMMuMHM?NyJLJKMMJPJKJMM?JLIfMMJPJLMHIxJ?MHJGMHIqMIMHJJJ?IvJNMIJHJNJHMHJ?MLMJMHJOJINe</div></pre></td></tr></table></figure>
+<blockquote>
+<p>MMMuMHM?NyJLJKMMJPJKJMM?JLIfMMJPJLMHIxJ?MHJGMHIqMIMHJJJ?IvJNMIJHJNJHMHJ?MLMJMHJOJINe</p>
+</blockquote>
 <p>其中问号是不可显示字符，是题目故意设置的障碍，要在标签 <code>LABEL_17</code> 中才能解出。先不管问号，把已知的部分按刚才分析的加密算法反过来做，大写字母还原回数字，小写字母还原回字母，就能得到：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">66 6c 61 6? 7b 35 34 66 39 34 36 6? 35 2d 66 39 35 61 2d 3? 61 30 61 2d 62 61 33 3? 2d 37 62 31 37 31 61 3? 65 63 61 38 32 7d</div></pre></td></tr></table></figure>
+<blockquote>
+<p>66 6c 61 6? 7b 35 34 66 39 34 36 6? 35 2d 66 39 35 61 2d 3? 61 30 61 2d 62 61 33 3? 2d 37 62 31 37 31 61 3? 65 63 61 38 32 7d</p>
+</blockquote>
 <p>看成 ASCII 码转成字符是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fla?&#123;54f946?5-f95a-?a0a-ba3?-7b171a?eca82&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>fla?{54f946?5-f95a-?a0a-ba3?-7b171a?eca82}</p>
+</blockquote>
 <p>由于已知 flag 前四位，第四位问号可以补出。剩下四位未知字符需要在标签 <code>LABEL_17</code> 中确定，据说是一个 CRC32 算法。但因为只有四位字符，运算量不大，我就直接爆破了。 <span class="math display">\[
 flag\{54f946f5-f95a-4a0a-ba31-7b171a7eca82\}
 \]</span> <img src="http://wx3.sinaimg.cn/large/6b1e58d5gy1fr1yn8s2qtj20d306l74g.jpg"></p>
