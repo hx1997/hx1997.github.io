@@ -97,14 +97,14 @@
 
                         
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
@@ -194,8 +194,8 @@
                 post-container">
 
                 <p>下学期学算法设计与分析，预习了下，发现递推方程十分重要，这本来是大一离散数学的内容，但是我们课程精简掉了这部分… 于是找出大一买的《离散数学及其应用》<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，顺便刷下题。我的这本是精编版，章节和原版可能不同，第四章是 Advanced Counting Techniques（高级计数技巧），第一节是 Applications of Recurrence Relations（递推式的应用）。</p>
-<h2 id="习题解">习题解</h2>
-<h3 id="section">4.1.1</h3>
+<h3 id="习题解">习题解</h3>
+<h4 id="section">4.1.1</h4>
 <blockquote>
 <p>Use mathematical induction to verify the formula derived in Example 2 for the number of moves required to complete the <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi" target="_blank" rel="external">Tower of Hanoi</a> puzzle.</p>
 </blockquote>
@@ -210,7 +210,7 @@
 <p><span class="math inline">\(n = k + 1 \; (k &gt; 1)\)</span> 时，先用 <span class="math inline">\(H_k\)</span> 步将原塔柱最上面 <span class="math inline">\(k\)</span> 片圆盘移动到辅助塔柱，再用 <span class="math inline">\(1\)</span> 步将原塔柱剩下的 <span class="math inline">\(1\)</span> 片圆盘移动到目标塔柱，最后用 <span class="math inline">\(H_k\)</span> 步将辅助塔柱所有圆盘移动到目标塔柱. 因此有</p>
 <p><span class="math display">\[ H_{k+1} = 2 H_k + 1 = 2 \cdot (2^k - 1) + 1 = 2^{k+1} - 1, \]</span></p>
 <p>得证.　<span class="math inline">\(\Box\)</span></p>
-<h3 id="section-1">4.1.2</h3>
+<h4 id="section-1">4.1.2</h4>
 <blockquote>
 <p>A vending machine dispensing books of stamps accepts only one-dollar coins, <span class="math inline">\(\$1\)</span> bills, and <span class="math inline">\(\$5\)</span> bills.</p>
 <p><strong>a)</strong> Find a recurrence relation for the number of ways to deposit <span class="math inline">\(n\)</span> dollars in the vending machine, where the order in which the coins and bills are deposited matters.</p>
@@ -248,7 +248,7 @@
     &amp; = 1217.
 \end {align*}
 \]</span></p>
-<h3 id="section-2">4.1.3</h3>
+<h4 id="section-2">4.1.3</h4>
 <blockquote>
 <p>A country uses as currency coins with values of 1 peso, 2 pesos, 5 pesos, and 10 pesos and bills with values of 5 pesos, 10 pesos, 20 pesos, 50 pesos, and 100 pesos. How many ways are there to pay a bill of 17 pesos, where the order in which coins and bills are paid matters?</p>
 </blockquote>
@@ -256,7 +256,7 @@
 <p>某国用比索作为货币单位，有面值为 1 比索、2 比索、5 比索、10 比索的硬币，以及面值为 5 比索、10 比索、20 比索、50 比索、100 比索的纸币。现要付 17 比索的账单，有多少种方法？要考虑硬币和纸币的顺序.</p>
 </blockquote>
 <p><strong>解</strong>　待解</p>
-<h3 id="section-3">4.1.4</h3>
+<h4 id="section-3">4.1.4</h4>
 <blockquote>
 <p><strong>a)</strong> Find a recurrence relation for the number of bit strings of length <span class="math inline">\(n\)</span> that contain a pair of consecutive 0s.</p>
 <p><strong>b)</strong> What are the initial conditions?</p>
@@ -287,7 +287,7 @@
     f(7) &amp; = f(6) + f(5) + 2^5 = 94.
 \end {align*}
 \]</span></p>
-<h3 id="section-4">4.1.5</h3>
+<h4 id="section-4">4.1.5</h4>
 <blockquote>
 <p><strong>a)</strong> Find a recurrence relation for the number of bit strings of length <span class="math inline">\(n\)</span> that do not contain three consecutive 0s.</p>
 <p><strong>b)</strong> What are the initial conditions?</p>
@@ -319,7 +319,7 @@
     f(7) &amp; = f(6) + f(5) + f(4) = 81.
 \end {align*}
 \]</span></p>
-<h3 id="section-5">4.1.6</h3>
+<h4 id="section-5">4.1.6</h4>
 <blockquote>
 <p><strong>a)</strong> Find a recurrence relation for the number of ways to climb <span class="math inline">\(n\)</span> stairs if the person climbing the stairs can take one stair or two stairs at a time.</p>
 <p><strong>b)</strong> What are the initial conditions?</p>
@@ -350,7 +350,7 @@
     f(8) &amp;= f(7) + f(6) = 34.
 \end {align*}
 \]</span></p>
-<h2 id="参考资料">参考资料</h2>
+<h3 id="参考资料">参考资料</h3>
 <div class="footnotes">
 <hr>
 <ol>

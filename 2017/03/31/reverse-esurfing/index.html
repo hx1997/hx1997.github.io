@@ -97,14 +97,14 @@
 
                         
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
@@ -190,13 +190,13 @@
                 post-container">
 
                 <p>本文同时发表于知乎专栏：<a href="https://zhuanlan.zhihu.com/p/26120989" class="uri" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26120989</a></p>
-<h2 id="背景">背景</h2>
+<h3 id="背景">背景</h3>
 <p>GitHub 搜索得知，2015、2016 年已有学生写过模拟天翼客户端登录校园网的代码，然而逐一试过后发现没有一个可用的（。浏览这些 repo 后发现电信曾对认证算法进行过多次更新，但至少在 2016 年 10 月前都是采用 <a href="https://zh.wikipedia.org/wiki/CHAP" target="_blank" rel="external">CHAP</a> 协议进行认证。2016 年 10 月后，电信再次更新算法，原先的 challenge + login + heartbeat 模式似乎不好用了，POST challenge 会返回 spec is in black list。</p>
 <p>尝试对 PC 和安卓客户端抓包未果后（其实是有果的，但是数据包的数据都是哈希过的，无从得知原文），我决定对安卓「掌上大学」客户端进行逆向。</p>
-<h2 id="工具">工具</h2>
+<h3 id="工具">工具</h3>
 <p><a href="http://sourceforge.net/projects/dex2jar/" target="_blank" rel="external">dex2jar</a>（apk 反编译为 jar）</p>
 <p><a href="http://jd.benow.ca/" target="_blank" rel="external">JD-GUI</a>（Java 反编译器）</p>
-<h2 id="过程">过程</h2>
+<h3 id="过程">过程</h3>
 <p>首先从<a href="http://zsteduapp.10000.gd.cn/EsurfingClient/GetClient.aspx%3FareaCode%3Dzd%26osType%3DandroidPhone%26dialType%3Dportal" target="_blank" rel="external">这里</a>下载安卓客户端 apk，并准备好工具解压，然后运行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">d2j-dex2jar APKPATH</div></pre></td></tr></table></figure>
 <p>其中 APKPATH 为客户端 apk 路径，Windows 下操作需要在 d2j-dex2jar 后加 .bat。</p>
