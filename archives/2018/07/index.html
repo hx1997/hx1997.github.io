@@ -13,11 +13,11 @@
 
     <title>
         
-          谈“complement” - Goulash
+          Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/2018/06/24/on-the-word-complement/">
+    <link rel="canonical" href="https://hx1997.github.io/archives/2018/07/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -147,142 +147,7 @@
 
 
     <!-- Main Content -->
-    
-<!-- Image to hack wechat -->
-<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
-
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        background-image: url('///wx3.sinaimg.cn/large/6b1e58d5gy1fi99j3hqy3j21hc0u07wj.jpg')
-    }
-</style>
-<header class="intro-header" >
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                          <a class="tag" href="/tags/#数学" title="数学">数学</a>
-                        
-                          <a class="tag" href="/tags/#英语" title="英语">英语</a>
-                        
-                    </div>
-                    <h1>谈“complement”</h1>
-                    <h2 class="subheading"></h2>
-                    <span class="meta">
-                        Posted by HX on
-                        2018-06-24
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-    <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-                <p>complement 这个词以及它的形容词 complementary 和 complete 是同源的。所以 complement 是“使某物完整的东西”/“补充物”的意思，动词“使某物完整”/“补充某物”是后起义。</p>
-<p>其实 complement 本身并没有什么有趣的，有趣的是它在各个领域中作为专门术语的意思以及相应的中文翻译。</p>
-<p>语法中的补语，就是 complement 的翻译，取的是“使谓语部分完整的东西”的意思。例如 He is mad. 中，mad 是补语，单独的 He is 意思是不完整的，加上补语才完整。He drove her mad. 中，mad 也是补语，或称宾补，单独的 He drove her 意思也是不完整的。（语言学上的补语意思很广，不同的语法流派对补语也有不同定义）</p>
-<p>几何上的余角，是 complementary angle 的翻译，取“使另一个角完整的角”的意思，这里的完整就是指 <span class="math inline">\(90\)</span> 度（当然“完整”的定义各术语不同），一个角加上它的余角就完整了（相加等于 <span class="math inline">\(90\)</span> 度）。</p>
-<p>余弦、余切、余割分别是 cosine, cotangent, cosecant 的翻译，里面的 co- 是 complementary 的缩写，所以一个角的 cosine（余弦值）就是这个角的 complementary angle（余角）的 sine（正弦值）。</p>
-<p>计算机科学里的反码，是 ones’ complement 的翻译（也有地方翻译成“一补数”），取“使另一个数完整的数”的意思，这里的完整就是指 n 个 <span class="math inline">\(1\)</span>（所以叫 ones’ complement, one 是复数表明有多个 <span class="math inline">\(1\)</span>），n 是原码的位数。换句话说，一个数的 ones’ complement 是使得二者相加等于 n 个 <span class="math inline">\(1\)</span> 的数。举个例子（下面都是二进制数）：</p>
-<p><span class="math inline">\(10000010\)</span> 的反码是 <span class="math inline">\(01111101\)</span>，因为 <span class="math inline">\(10000010 + 01111101 = 11111111\)</span>.</p>
-<p>（对补码不清楚的人就别看这段了，以免混乱）</p>
-<p>同样还有补码，是 two’s complement 的翻译（也有地方翻译成“二补数”），也取“使另一个数完整的数”的意思，这里的完整是指 <span class="math inline">\(2\)</span>（对于小数）或者 <span class="math inline">\(2^n\)</span>（对于整数），n 是原码的位数，所以叫 two’s complement。换句话说，一个数的 two’s complement 是使得二者相加等于 <span class="math inline">\(2\)</span> 或者 <span class="math inline">\(2^n\)</span> 的数。注意，英语里 two’s complement of x 和 two’s complement notation/representation of x 是不一样的，前者是对 x 求补后的数，后者是 x 的补码表示形式，中文里常说的“正数的补码和原码相同”指的是后者，即“正数的补码<strong>表示</strong>与原码<strong>表示</strong>相同”。求补运算就是上面说的，用 <span class="math inline">\(2\)</span> 或 <span class="math inline">\(2^n\)</span> 减去 x。</p>
-<p>为什么偏偏是 <span class="math inline">\(2^n\)</span> 呢？（从英语科普变成 CS 科普）</p>
-<p><span class="math inline">\(2^n\)</span> 的二进制形式是 <span class="math inline">\(1\)</span> 后面跟 n 个 <span class="math inline">\(0\)</span>，比如 <span class="math inline">\(2^4\,_{(10)}\)</span> = <span class="math inline">\(10000\,_{(2)}\)</span>，这有 <span class="math inline">\(5\)</span> 位，而原来的数是 <span class="math inline">\(n=4\)</span> 位，多出来的最高位 <span class="math inline">\(1\)</span> 会作为溢出扔掉，所以 <span class="math inline">\(2^n\)</span> 其实会被当成 <span class="math inline">\(0\)</span>（如果机器数只能存 <span class="math inline">\(4\)</span> 位的话），这相当于 一个数（用补码表示） + 它自己求补后的数 = <span class="math inline">\(0\)</span>。所以正数的补码表示是其本身，而负数的补码表示是相应正数求补后的数。例如，<span class="math inline">\(0001\)</span>（<span class="math inline">\(1\)</span> 的补码表示） + <span class="math inline">\(1111\)</span>（<span class="math inline">\(-1\)</span> 的补码表示） = <span class="math inline">\(10000\)</span>，扔掉溢出位等于 <span class="math inline">\(0\)</span>. 而原码和反码不具有这样的性质。至于为什么要搞这么多，是因为把减法转换为加法来做，就可以只用加法器同时做加减两种运算，而现在的计算机也的确是这么设计的…（也可以设计减法器但那样加减要用不同元件有开销的问题）</p>
-<p>当然我只是从英语的角度来看，我知道有大佬可以从群论或者环论的角度来解释这个补码，向大佬低头orz</p>
-<p>就扯这么些吧。</p>
-
-
-                <hr>
-
-                
-
-                <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/2018/07/05/simple-web-server-c-implementation/" data-toggle="tooltip" data-placement="top" title="C 写的一个简单的 Web 服务器">&larr; Previous Post</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/2018/05/06/2018-redhat-online-re-ccm-writeup/" data-toggle="tooltip" data-placement="top" title="2018 红帽杯线上赛一道 RE + 一道 Pwn 解题报告（writeup）">Next Post &rarr;</a>
-                        </li>
-                    
-                </ul>
-
-                
-
-                
-
-                
-                <!-- Valine 评论框 start -->
-                <div class="comment" id="comment"></div>
-                <!-- Valine 评论框 end -->
-                
-
-            </div>
-    <!-- Side Catalog Container -->
-        
-
-    <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-
-        </div>
-    </div>
-</article>
-
-
-
-
-
-
-<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
-<!--Leancloud 操作库:-->
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<!--Valine 的核心代码库-->
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
-    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
-    new Valine({
-        el: '#comment',
-        appId: valine_id,
-        appKey: valine_key,
-        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!', // 留言框占位提示文字
-    });
-</script>
-<!-- Valine 公共JS代码 end -->
-
-
-
-
-
+    <!-- Default Archive layout, we use archives instead. -->
 
     <!-- Footer -->
     <!-- Footer -->
