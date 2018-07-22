@@ -203,7 +203,7 @@
 <p>首先，程序有反调试，先解决掉这个。（反调试其实是分析到一半才发现的，这里为了写文章的逻辑，先说了）</p>
 <p>反调试的表现是，用 OD 载入程序，还<strong>没进入主函数的逻辑</strong>，就打印出 <code>///////\nWARNING\n///////\n</code>，立马退出了。把脱壳文件拖进 IDA（使用 IDA 时，分析的是脱壳文件，使用 OD 时，分析的是原文件，后文不再说明），按 Shift+F12 查看字符串，果然有这串：</p>
 <div class="figure">
-<img src="E:\Dropbox\Blog\source_posts\anheng-july-re-youngter-drive\1.PNG" alt="1">
+<img src="http://wx3.sinaimg.cn/large/6b1e58d5gy1ftisfe69e9j20gh04zt8y.jpg" alt="1">
 <p class="caption">1</p>
 </div>
 <p>双击，然后按 Ctrl+X 看有哪些函数引用了这条字符串，有两个，先看靠前的那个。函数里有很多 <code>ollydbg.exe</code>、<code>ida.exe</code> 这样的字符串，还有 <code>CreateToolhelp32Snapshot</code> 之类的 API 调用，很明显是遍历系统进程，检测有没有调试工具在运行。再看靠后的那个，这个函数很有意思，学到了点东西，我把反汇编结果贴出来：</p>
