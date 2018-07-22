@@ -267,7 +267,7 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 包含两个连续的 0 且长度为 7 的二进制串有多少个？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：其一，最后一位为 1，则最后一位和前 <span class="math inline">\(n - 1\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-1)\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1，最后两位和前 <span class="math inline">\(n - 2\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-2)\)</span> 个这样的串，若倒数第二位为 0，前 $n -2 $ 位不管如何组合，结果都是含 00 的串，前 <span class="math inline">\(n - 2\)</span> 位有 <span class="math inline">\(2^{n-2}\)</span> 种可能，最后两位已确定只有一种可能，即有 <span class="math inline">\(2^{n-2} \cdot 1\)</span> 个这样的串. 因此总数为</p>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：其一，最后一位为 1，则最后一位和前 <span class="math inline">\(n - 1\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-1)\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1，最后两位和前 <span class="math inline">\(n - 2\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-2)\)</span> 个这样的串，若倒数第二位为 0，前 <span class="math inline">\(n -2\)</span> 位不管如何组合，结果都是含 00 的串，前 <span class="math inline">\(n - 2\)</span> 位有 <span class="math inline">\(2^{n-2}\)</span> 种可能，最后两位已确定只有一种可能，即有 <span class="math inline">\(2^{n-2} \cdot 1\)</span> 个这样的串. 因此总数为</p>
 <p><span class="math display">\[f(n) = f(n-1) + f(n-2) + 2^{n-2}, \; n &gt; 2.\]</span></p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
