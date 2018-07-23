@@ -90,7 +90,7 @@
 
                         
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
@@ -104,7 +104,7 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
@@ -203,7 +203,7 @@
 <p>首先，程序有反调试，先解决掉这个。（反调试其实是分析到一半才发现的，这里为了写文章的逻辑，先说了，而且后面其实也不怎么用到 OD 调试…）</p>
 <p>反调试的表现是，用 OD 载入程序，还<strong>没进入主函数的逻辑</strong>，就打印出 <code>///////\nWARNING\n///////\n</code>，立马退出了。把脱壳文件拖进 IDA，按 Shift+F12 查看字符串，果然有这串：</p>
 <div class="figure">
-<img src="http://wx3.sinaimg.cn/large/6b1e58d5gy1ftisfe69e9j20gh04zt8y.jpg" alt="IDA 查看警告字符串">
+<img src="//wx3.sinaimg.cn/large/6b1e58d5gy1ftisfe69e9j20gh04zt8y.jpg" alt="IDA 查看警告字符串">
 <p class="caption">IDA 查看警告字符串</p>
 </div>
 <p>双击，然后按 Ctrl+X 看有哪些函数引用了这条字符串，有两个，先看靠前的那个。函数里有很多 <code>ollydbg.exe</code>、<code>ida.exe</code> 这样的字符串，还有 <code>CreateToolhelp32Snapshot</code> 之类的 API 调用，很明显是遍历系统进程，检测有没有调试工具在运行。再看靠后的那个，这个函数很有意思，学到了点东西，我把反汇编结果贴出来：</p>
@@ -232,7 +232,7 @@
 <p>网上搜了下，说是 IDA 识别出错，堆栈不平衡了。所谓堆栈平衡，就是说在函数开始和结束时，栈顶指针 SP 必须指向同一个地方，否则称为堆栈不平衡或堆栈平衡破坏。我们知道函数的局部变量是在栈上分配，所谓分配其实就是抬高栈顶，减少 SP 的值，划出一块内存空间给局部变量用。函数结束时，要回收分配的空间，也就是降低栈顶，增加 SP 的值。当时分配了多少空间，就应当回收多少，因此 SP 指向的地方应当是不变的。IDA 的做法是在函数开始时，假设 SP 为 0，函数中间可能会增减 SP，最后结束时 SP 应当回到 0，而这里 IDA 识别出现了错误，SP 大于 0，因此报错。这种情况下一般有两种办法：一是直接看汇编，不看伪代码了，IDA 的反汇编还是有保证的；二是手动修复 SP。我选择了后者。</p>
 <p>点 Options 菜单里第一项 General，在打开的对话框里勾选 Stack pointer，这样会在每一行汇编指令左边显示出该句执行前的 SP。拉到 <code>sub_411940</code> 的汇编底部，点击 SP 值异常的前面那一句，如下图，按 Alt+K：</p>
 <div class="figure">
-<img src="http://wx2.sinaimg.cn/large/6b1e58d5gy1ftk7t1dam5j20ay07vq2v.jpg" alt="修复 SP 指针">
+<img src="//wx2.sinaimg.cn/large/6b1e58d5gy1ftk7t1dam5j20ay07vq2v.jpg" alt="修复 SP 指针">
 <p class="caption">修复 SP 指针</p>
 </div>
 <p>在弹出的对话框里输入 <code>0x0</code>，确定，然后再点击下一句，同样按 Alt+K，输 <code>0x0</code>，确定。这样最后两句的 SP 都变成了 0，此时可以按 F5 看伪代码了：</p>
@@ -244,7 +244,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">isalpha</span><span class="params">(<span class="keyword">char</span> a)</span> </span>&#123;</div><div class="line">	<span class="keyword">return</span> (a &gt;= <span class="string">'a'</span> &amp;&amp; a &lt;= <span class="string">'z'</span>) || (a &gt;= <span class="string">'A'</span> &amp;&amp; a &lt;= <span class="string">'Z'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">map</span><span class="params">(<span class="keyword">char</span> ch, <span class="keyword">char</span> *str)</span> </span>&#123;</div><div class="line">	<span class="keyword">char</span> buf[<span class="number">2</span>] = &#123;ch, <span class="number">0</span>&#125;;</div><div class="line">	<span class="keyword">return</span> (<span class="built_in">strstr</span>(str,buf) - str);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</div><div class="line">	<span class="keyword">char</span> str1[] = <span class="string">"TOiZiZtOrYaToUwPnToBsOaOapsyS"</span>;</div><div class="line">	<span class="keyword">char</span> str2[] = <span class="string">"QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">29</span>; i++) &#123;</div><div class="line">		<span class="comment">// threads run alternately; so only half of the input will be transformed.</span></div><div class="line">		<span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">			<span class="built_in">putchar</span>(str1[i]);</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (<span class="built_in">isalpha</span>(<span class="built_in">map</span>(str1[i], str2) + <span class="number">38</span>))</div><div class="line">			<span class="built_in">putchar</span>(<span class="built_in">map</span>(str1[i], str2) + <span class="number">38</span>);</div><div class="line">		<span class="keyword">else</span></div><div class="line">			<span class="built_in">putchar</span>(<span class="built_in">map</span>(str1[i], str2) + <span class="number">96</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// find out the character that will be transformed into NULL byte.</span></div><div class="line">	<span class="keyword">if</span> (<span class="built_in">isalpha</span>(<span class="built_in">strlen</span>(str2) + <span class="number">38</span>))</div><div class="line">		<span class="built_in">putchar</span>(<span class="built_in">strlen</span>(str2) + <span class="number">38</span>);</div><div class="line">	<span class="keyword">else</span></div><div class="line">		<span class="built_in">putchar</span>(<span class="built_in">strlen</span>(str2) + <span class="number">96</span>);</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>最后 flag： <span class="math display">\[
 flag\{ThisisthreadofwindowshahaIsESZ\}
-\]</span> <img src="http://wx1.sinaimg.cn/large/6b1e58d5gy1ftk7rr9c3wj20qh0htdg5.jpg" alt="flag"></p>
+\]</span> <img src="//wx1.sinaimg.cn/large/6b1e58d5gy1ftk7rr9c3wj20qh0htdg5.jpg" alt="flag"></p>
 <h3 id="x3.-参考资料">0x3. 参考资料</h3>
 <div class="footnotes">
 <hr>
