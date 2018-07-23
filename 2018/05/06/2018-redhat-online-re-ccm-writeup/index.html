@@ -90,6 +90,13 @@
 
                         
                         <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archive/">ARCHIVES</a>
                         </li>
                         
@@ -98,13 +105,6 @@
                         
                         <li>
                             <a href="/about/">ABOUT</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
@@ -200,7 +200,7 @@
 <h3 id="x1.-re---ccm">0x1. RE - CCM</h3>
 <p>拿到 exe，扔进 PEiD 看看。</p>
 <div class="figure">
-<img src="https://wx2.sinaimg.cn/large/6b1e58d5gy1fr1rnm3p3bj20ei089gmh.jpg">
+<img src="//wx2.sinaimg.cn/large/6b1e58d5gy1fr1rnm3p3bj20ei089gmh.jpg">
 
 </div>
 <p>加了 nSPack 壳，先找个工具脱壳。脱壳后的文件拖进 IDA，按 F5 看伪代码。</p>
@@ -208,7 +208,7 @@
 <p><code>main</code> 函数逻辑很简单，就是确认输入的 flag 长度为 42，再经过函数 <code>sub_401380</code> 处理，如果返回 1 就打印 <code>Right!</code>，表示输入的 flag 正确。</p>
 <p>进入 <code>sub_401380</code> 分析。</p>
 <div class="figure">
-<img src="https://wx3.sinaimg.cn/large/6b1e58d5gy1fr1uhawb0nj20n614wt9j.jpg">
+<img src="//wx3.sinaimg.cn/large/6b1e58d5gy1fr1uhawb0nj20n614wt9j.jpg">
 
 </div>
 <p>看不全的两行后面再说。</p>
@@ -231,7 +231,7 @@
 <p>这个函数有两部分，功能一样，只是一个针对小写字母，一个针对大写字母，这里只截取了小写字母部分，后面的分析将会表明大写字母的部分是没用的。</p>
 <p>这个函数的作用是生成两张维吉尼亚密码表，一张小写，一张大写，长这样（要用到的是小写的）：</p>
 <div class="figure">
-<img src="https://wx4.sinaimg.cn/mw690/6b1e58d5gy1fr1w8qokr2j20p00p0grz.jpg">
+<img src="//wx4.sinaimg.cn/mw690/6b1e58d5gy1fr1w8qokr2j20p00p0grz.jpg">
 
 </div>
 <p>小写密码表会存到传入的局部数组 <code>subst_table_low</code>，以备后面加密替换。</p>
@@ -261,7 +261,7 @@
 </blockquote>
 <p>由于已知 flag 前四位，第四位问号可以补出。剩下四位未知字符需要在标签 <code>LABEL_17</code> 中确定，据说是一个 CRC32 算法。但因为只有四位字符，运算量不大，我就直接爆破了。 <span class="math display">\[
 flag\{54f946f5-f95a-4a0a-ba31-7b171a7eca82\}
-\]</span> <img src="https://wx3.sinaimg.cn/large/6b1e58d5gy1fr1yn8s2qtj20d306l74g.jpg"></p>
+\]</span> <img src="//wx3.sinaimg.cn/large/6b1e58d5gy1fr1yn8s2qtj20d306l74g.jpg"></p>
 <h3 id="x2.-pwn---game-server">0x2. Pwn - game server</h3>
 <p>一道简单的栈溢出。拿到文件先扔进 file 命令，看到是 32 位 ELF，再检查保护机制，只开启了 NX 和 Partial RELRO。扔进 IDA，<code>main</code> 函数除了调用 <code>sub_8048637</code> 外，没有任何有趣的地方。进入 <code>sub_8048637</code>：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub_8048637</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">char</span> s; <span class="comment">// [sp+7h] [bp-111h]@5</span></div><div class="line">  <span class="keyword">char</span> v2; <span class="comment">// [sp+107h] [bp-11h]@5</span></div><div class="line">  <span class="keyword">size_t</span> nbytes; <span class="comment">// [sp+108h] [bp-10h]@5</span></div><div class="line">  <span class="keyword">char</span> *v4; <span class="comment">// [sp+10Ch] [bp-Ch]@1</span></div><div class="line"></div><div class="line">  <span class="built_in">puts</span>(<span class="string">"Welcome to my game server"</span>);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"First, you need to tell me you name?"</span>);</div><div class="line">  fgets(byte_804A180, <span class="number">256</span>, <span class="built_in">stdin</span>);</div><div class="line">  v4 = <span class="built_in">strrchr</span>(byte_804A180, <span class="number">10</span>);</div><div class="line">  <span class="keyword">if</span> ( v4 )</div><div class="line">    *v4 = <span class="number">0</span>;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Hello %s\n"</span>, byte_804A180);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"What's you occupation?"</span>);</div><div class="line">  fgets(byte_804A080, <span class="number">256</span>, <span class="built_in">stdin</span>);</div><div class="line">  v4 = <span class="built_in">strrchr</span>(byte_804A080, <span class="number">10</span>);</div><div class="line">  <span class="keyword">if</span> ( v4 )</div><div class="line">    *v4 = <span class="number">0</span>;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Well, my noble %s\n"</span>, byte_804A080);</div><div class="line">  nbytes = <span class="built_in">snprintf</span>(</div><div class="line">             &amp;s,</div><div class="line">             <span class="number">0x100</span>u,</div><div class="line">             <span class="string">"Our %s is a noble %s. He is come from north and well change out would."</span>,</div><div class="line">             byte_804A180,</div><div class="line">             byte_804A080);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"Here is you introduce"</span>);</div><div class="line">  <span class="built_in">puts</span>(&amp;s);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"Do you want to edit you introduce by yourself?[Y/N]"</span>);</div><div class="line">  v2 = getchar();</div><div class="line">  getchar();</div><div class="line">  <span class="keyword">if</span> ( v2 == <span class="number">89</span> )</div><div class="line">    read(<span class="number">0</span>, &amp;s, nbytes);</div><div class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">"name : %s\noccupation : %s\nintroduce : %s\n"</span>, byte_804A180, byte_804A080, &amp;s);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -272,7 +272,7 @@ flag\{54f946f5-f95a-4a0a-ba31-7b171a7eca82\}
 flag\{f3b92d795c9ee0725c160680acd084d9\}
 \]</span></p>
 <div class="figure">
-<img src="https://wx3.sinaimg.cn/mw690/6b1e58d5gy1fs3393pkfbj20u012345g.jpg">
+<img src="//wx3.sinaimg.cn/mw690/6b1e58d5gy1fs3393pkfbj20u012345g.jpg">
 
 </div>
 
