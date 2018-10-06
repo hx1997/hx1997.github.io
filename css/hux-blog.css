@@ -20,6 +20,13 @@
   margin: 0 0.167em;
 }
 
+.wavy-book-mark {
+  text-decoration: underline;
+  -moz-text-decoration-style: wavy;
+  text-decoration-style: wavy;
+  margin: 0 0.167em;
+}
+
 .sidebar-container {
   color: #bfbfbf;
   font-size: 14px;
