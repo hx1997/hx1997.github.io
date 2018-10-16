@@ -13,11 +13,11 @@
 
     <title>
         
-          C 写的一个简单的 Web 服务器 - Goulash
+          中科大第五届信息安全大赛部分解题报告（writeup） - Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/2018/07/05/simple-web-server-c-implementation/">
+    <link rel="canonical" href="https://hx1997.github.io/2018/10/16/ustc-hackergame-2018-writeup/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -183,15 +183,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#编程" title="编程">编程</a>
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
                         
                     </div>
-                    <h1>C 写的一个简单的 Web 服务器</h1>
+                    <h1>中科大第五届信息安全大赛部分解题报告（writeup）</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by HX on
-                        2018-07-05 | 
-                        <span id="/2018/07/05/simple-web-server-c-implementation/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                        2018-10-16 | 
+                        <span id="/2018/10/16/ustc-hackergame-2018-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
                             <span class="pre-meta-item-text">👓 </span>
                             <span class="leancloud-visitors-count"></span>
                             <span class="post-meta-item-text"> views</span>
@@ -214,8 +218,25 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>准备用来交学校期末课程设计作业的项目，支持静态网页的 GET 请求和动态 PHP 网页的 GET/POST 请求，可在 Windows 和 Linux 上编译，在 Linux 上支持多进程模式。写得十分粗糙，之后也不会再维护了。</p>
-<p>源码及编译方法：<a href="https://github.com/hx1997/SimpleHttpServer" class="uri" target="_blank" rel="external">https://github.com/hx1997/SimpleHttpServer</a></p>
+                <h3 id="猫咪和键盘">猫咪和键盘</h3>
+<p>题目是一个 C++ 源文件，似乎每一行的顺序被打乱了，但各行打乱的规律都是相同的。</p>
+<div class="figure">
+<img src="https://i.loli.net/2018/10/16/5bc5fc159062c.png">
+
+</div>
+<p>写 Python 脚本逐行恢复原本顺序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">newline = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> open(<span class="string">'./typed_printf.cpp'</span>):</div><div class="line">    newline += line[<span class="number">0</span>]</div><div class="line">    newline += line[<span class="number">32</span>:<span class="number">39</span>]</div><div class="line">    newline += line[<span class="number">1</span>:<span class="number">7</span>]</div><div class="line">    newline += line[<span class="number">20</span>:<span class="number">22</span>]</div><div class="line">    newline += line[<span class="number">8</span>:<span class="number">20</span>]</div><div class="line">    newline += line[<span class="number">22</span>:<span class="number">32</span>]</div><div class="line">    newline += line[<span class="number">39</span>:]</div><div class="line"></div><div class="line"><span class="keyword">print</span> newline</div></pre></td></tr></table></figure>
+<p>将输出重定向到新文件 <code>typed.cpp</code>，按注释里的提示，用 g++ 7 编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">g++-7 -std=c++17 typed.cpp</div></pre></td></tr></table></figure>
+<p>运行后打印出 flag： <span class="math display">\[
+flag\{FfQ47if9Zxw9jXE68VtGAJDk6Y6Xc88UrUtpK3iF8p7BMs4y2gzdG8Ao2gv6aiJ125typed\_printf95\}
+\]</span></p>
+<h3 id="猫咪遥控器">猫咪遥控器</h3>
+<p>题目提示上下左右，又有一段猫追着激光点跑的视频，猜测是根据给出的文件里面的上下左右方向画图。写了段 C 程序来画：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> N 150</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> M 600</span></div><div class="line"></div><div class="line"><span class="keyword">char</span> <span class="built_in">map</span>[N][M];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">up</span><span class="params">(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y)</span> </span>&#123;</div><div class="line">	<span class="built_in">map</span>[(*x)--][*y] = <span class="string">'!'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y)</span> </span>&#123;</div><div class="line">	<span class="built_in">map</span>[(*x)++][*y] = <span class="string">'!'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">left</span><span class="params">(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y)</span> </span>&#123;</div><div class="line">	<span class="built_in">map</span>[*x][(*y)--] = <span class="string">'!'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">right</span><span class="params">(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y)</span> </span>&#123;</div><div class="line">	<span class="built_in">map</span>[*x][(*y)++] = <span class="string">'!'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">char</span> buf[<span class="number">4000</span>];</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; M; j++)</div><div class="line">			<span class="built_in">map</span>[i][j] = <span class="string">'.'</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>;</div><div class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, buf);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(buf); i++) &#123;</div><div class="line">		<span class="keyword">switch</span> (buf[i]) &#123;</div><div class="line">			<span class="keyword">case</span> <span class="string">'U'</span>: up(&amp;x, &amp;y); <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> <span class="string">'D'</span>: down(&amp;x, &amp;y); <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> <span class="string">'L'</span>: left(&amp;x, &amp;y); <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> <span class="string">'R'</span>: right(&amp;x, &amp;y); <span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; j++)</div><div class="line">			<span class="built_in">putchar</span>(<span class="built_in">map</span>[j][i]);</div><div class="line">		<span class="built_in">puts</span>(<span class="string">""</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行之后输入 seq.txt 里的内容，就打印出 flag 的图形了。因为横屏不够宽度，所以交换了一下行列，竖屏打印，而且是左右调转的。 <span class="math display">\[
+flag\{MeowMeow\}
+\]</span> <img src="https://i.loli.net/2018/10/16/5bc6040610cc4.png"></p>
 
 
                 <hr>
@@ -224,13 +245,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/07/22/anheng-july-re-youngter-drive/" data-toggle="tooltip" data-placement="top" title="安恒杯 7 月月赛逆向 Youngter-drive 解题报告（writeup）">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/06/24/on-the-word-complement/" data-toggle="tooltip" data-placement="top" title="谈“complement”">Next Post &rarr;</a>
+                            <a href="/2018/07/22/anheng-july-re-youngter-drive/" data-toggle="tooltip" data-placement="top" title="安恒杯 7 月月赛逆向 Youngter-drive 解题报告（writeup）">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
