@@ -101,20 +101,6 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">ARCHIVES</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
@@ -122,7 +108,21 @@
 
                         
                         <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -218,7 +218,9 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="猫咪和键盘">猫咪和键盘</h3>
+                <h3 id="x0.-前言">0x0. 前言</h3>
+<p>作为校外其他组参赛，最后<a href="https://hack.lug.ustc.edu.cn/board/" target="_blank" rel="external">总排名 94</a>，其他高校组排名 69，我还是好菜啊。</p>
+<h3 id="x1.-猫咪和键盘-150">0x1. 猫咪和键盘 150</h3>
 <p>题目是一个 C++ 源文件，似乎每一行的顺序被打乱了，但各行打乱的规律都是相同的。</p>
 <div class="figure">
 <img src="https://i.loli.net/2018/10/16/5bc5fc159062c.png">
@@ -231,7 +233,7 @@
 <p>运行后打印出 flag： <span class="math display">\[
 flag\{FfQ47if9Zxw9jXE68VtGAJDk6Y6Xc88UrUtpK3iF8p7BMs4y2gzdG8Ao2gv6aiJ125typed\_printf95\}
 \]</span></p>
-<h3 id="猫咪遥控器">猫咪遥控器</h3>
+<h3 id="x2.-猫咪遥控器-200">0x2. 猫咪遥控器 200</h3>
 <p>题目提示上下左右，又有一段猫追着激光点跑的视频，猜测是根据给出的文件里面的上下左右方向画图。写了段 C 程序来画：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> N 150</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> M 600</span></div><div class="line"></div><div class="line"><span class="keyword">char</span> <span class="built_in">map</span>[N][M];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">up</span><span class="params">(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y)</span> </span>&#123;</div><div class="line">	<span class="built_in">map</span>[(*x)--][*y] = <span class="string">'!'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y)</span> </span>&#123;</div><div class="line">	<span class="built_in">map</span>[(*x)++][*y] = <span class="string">'!'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">left</span><span class="params">(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y)</span> </span>&#123;</div><div class="line">	<span class="built_in">map</span>[*x][(*y)--] = <span class="string">'!'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">right</span><span class="params">(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y)</span> </span>&#123;</div><div class="line">	<span class="built_in">map</span>[*x][(*y)++] = <span class="string">'!'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">char</span> buf[<span class="number">4000</span>];</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; M; j++)</div><div class="line">			<span class="built_in">map</span>[i][j] = <span class="string">'.'</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>;</div><div class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, buf);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(buf); i++) &#123;</div><div class="line">		<span class="keyword">switch</span> (buf[i]) &#123;</div><div class="line">			<span class="keyword">case</span> <span class="string">'U'</span>: up(&amp;x, &amp;y); <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> <span class="string">'D'</span>: down(&amp;x, &amp;y); <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> <span class="string">'L'</span>: left(&amp;x, &amp;y); <span class="keyword">break</span>;</div><div class="line">			<span class="keyword">case</span> <span class="string">'R'</span>: right(&amp;x, &amp;y); <span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; j++)</div><div class="line">			<span class="built_in">putchar</span>(<span class="built_in">map</span>[j][i]);</div><div class="line">		<span class="built_in">puts</span>(<span class="string">""</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>运行之后输入 seq.txt 里的内容，就打印出 flag 的图形了。因为横屏不够宽度，所以交换了一下行列，竖屏打印，而且是左右调转的。 <span class="math display">\[
