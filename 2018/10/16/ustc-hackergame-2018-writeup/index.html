@@ -108,14 +108,14 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -247,7 +247,7 @@ flag\{STgAn0grAPhy\_w1tH\_uUeNc0DE\_I5\_50\_fun\}
 <p>运行一下给的程序，结果一直在唱<del>诗</del>歌，歌词是 <a href="https://www.gnu.org/music/free-software-song.en.html" target="_blank" rel="external">The Free Software Song</a>。</p>
 <p>打开 IDA，把程序拖进去，先看看 <code>init</code>（初始化函数，会在 <code>main</code> 之前执行）。发现程序用了 <code>alarm</code>，一定时间后会自动结束，<code>nop</code> 掉。直奔 <code>main</code>，大概看了下，先验证命令行参数个数为 2 个，然后进行 233333 次循环，每次循环都打印一遍歌词、响铃、执行 <code>sub_401540</code>。循环完后打印上面函数处理过的 Key，再调用 <code>sub_4019A0</code> 对 Key 做一大堆变换之后输出 flag。这两个函数的变换十分复杂，差点<del>当场去世</del>直接放弃。决定先用 signsrch 检查一下是不是什么已知的加密算法，结果给出 RIPEMD-160 和 RIPEMD-128 这两个算法，被 <code>sub_401540</code> 使用，但另一个函数的算法没识别出来。那有啥用啊？？？</p>
 <p>不过想到题目提示用“她的诗”里的第十行作为参数启动程序，这程序又正好要 2 个参数（另一个是程序名），先传参进去运行试试，还是在唱歌。既然程序循环 233333 次，我倒要看看你循环完了输出什么，把 <code>sleep</code>, <code>puts</code>, <code>system</code>, <code>printf</code> 这些费时又没用的函数 <code>nop</code> 掉，再用参数运行程序，等了一小会，竟然就打印出 flag 了（… <span class="math display">\[
-flag\{HowEVER,\_Somedaj,\_sOMe0NE\_wILl\_FiND_it.\}
+flag\{HowEVER,\_Somedaj,\_sOMe0NE\_wILl\_FiND\_it.\}
 \]</span> <img src="https://i.loli.net/2018/10/17/5bc6b15971900.png"></p>
 
 
