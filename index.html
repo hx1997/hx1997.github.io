@@ -108,14 +108,14 @@
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -213,7 +213,8 @@
             
 本文仍在修改中，不是最终版。
 
-直接拖进IDA，进main()函数看，程序先验证命令行参数个数大于1，然后将第二个参数作为文件名打开，分配一块与此文件大小相同的缓冲区buf，把文件内容读到里面。接着提示输入三个数first, second, third。再把缓冲区buf指针传进函数sub_400806中，该函数执行结束后，判断全局变量dword_6024B0为0、dword_6024......
+0x0. 前言
+8 个人只做出了这唯一的一道题，太惨了… 有道密码学热身题是 RSA，解出来的人多到都降分到 100+ 了，还是不会解，我真的好菜。另外一道逆向题看了下，想起和看雪 CTF 的叹息之墙很像，搜了一下，发现这种混淆叫做控制流平坦化（control flow flattening），第一次见，解不出来。用了腾讯实验室的脚本 deflat.......
         </div>
     </a>
     <p class="post-meta">

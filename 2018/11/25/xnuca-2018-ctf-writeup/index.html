@@ -108,14 +108,14 @@
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -221,6 +221,9 @@
                 <blockquote>
 <p>本文仍在修改中，不是最终版。</p>
 </blockquote>
+<h3 id="x0.-前言">0x0. 前言</h3>
+<p>8 个人只做出了这唯一的一道题，太惨了… 有道密码学热身题是 RSA，解出来的人多到都降分到 100+ 了，还是不会解，我真的好菜。另外一道逆向题看了下，想起和看雪 CTF 的叹息之墙很像，搜了一下，发现这种混淆叫做控制流平坦化（control flow flattening），第一次见，解不出来。用了腾讯实验室的脚本 deflat.py 恢复控制流好像也有点问题。总之就还有很多要学…</p>
+<h3 id="x1.-code-interpreter">0x1. Code Interpreter</h3>
 <p>直接拖进IDA，进main()函数看，程序先验证命令行参数个数大于1，然后将第二个参数作为文件名打开，分配一块与此文件大小相同的缓冲区buf，把文件内容读到里面。接着提示输入三个数first, second, third。再把缓冲区buf指针传进函数sub_400806中，该函数执行结束后，判断全局变量dword_6024B0为0、dword_6024CC和dword_6024C8的低八位为0x5E、dword_6024C0的16~23位为0x5E，满足则打印成功并回显flag。</p>
 <p>由于上述四个全局变量没有在main()函数中修改，因此只能是在sub_400806中修改了。接下来分析sub_400806。</p>
 <p>一开始先设置了一些全局变量，尤其是把刚输入的三个数依次存进了dword_6020A0数组中，具体什么意思还不清楚，先往下看。一个while循环套一个switch，switch括号里的东西是buf[dword_4024B4]，因此很明显dword_4024B4是buf的偏移指针。</p>
