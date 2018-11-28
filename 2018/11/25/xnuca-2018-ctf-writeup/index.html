@@ -101,7 +101,7 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -115,14 +115,14 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
@@ -218,41 +218,38 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <blockquote>
-<p>本文仍在修改中，不是最终版。</p>
-</blockquote>
-<h3 id="x0.-前言">0x0. 前言</h3>
-<p>8 个人只做出了这唯一的一道题，太惨了… 不过第一次做虚拟机的题，做出来很开心。有道密码学热身题是 RSA，解出来的人多到都降分到 100+ 了，还是不会解，我真的好菜。另外一道逆向题看了下，想起和看雪 CTF 的叹息之墙很像，搜了一下，发现这种混淆叫做控制流平坦化（control flow flattening），第一次见，解不出来。用了腾讯实验室的脚本 deflat.py 恢复控制流好像也有点问题。总之就还有很多要学…</p>
+                <h3 id="x0.-前言">0x0. 前言</h3>
+<p>8 个人只做出了这唯一的一道题，太惨了… 不过第一次做虚拟机的题，做出来很开心。有道密码学热身题是 RSA，解出来的人多到都降分到 100+ 了，还是不会解，我真的好菜。另外一道逆向题看了下，想起和看雪 CTF 的叹息之墙很像，搜了一下，发现这种混淆叫做<a href="https://zhuanlan.zhihu.com/p/33641488" target="_blank" rel="external">控制流平坦化</a>（control flow flattening），第一次见，解不出来。用了腾讯实验室的脚本 <a href="https://security.tencent.com/index.php/opensource/detail/18" target="_blank" rel="external">deflat.py</a> 恢复控制流好像也有点问题。总之就还有很多要学…</p>
 <h3 id="x1.-code-interpreter">0x1. Code Interpreter</h3>
-<p>直接拖进IDA，进main()函数看，程序先验证命令行参数个数大于1，然后将第二个参数作为文件名打开，分配一块与此文件大小相同的缓冲区buf，把文件内容读到里面。接着提示输入三个数first, second, third。再把缓冲区buf指针传进函数sub_400806中，该函数执行结束后，判断全局变量dword_6024B0为0、dword_6024CC和dword_6024C8的低八位为0x5E、dword_6024C0的16~23位为0x5E，满足则打印成功并回显flag。</p>
-<p>由于上述四个全局变量没有在main()函数中修改，因此只能是在sub_400806中修改了。接下来分析sub_400806。</p>
-<p>一开始先设置了一些全局变量，尤其是把刚输入的三个数依次存进了dword_6020A0数组中，具体什么意思还不清楚，先往下看。一个while循环套一个switch，switch括号里的东西是buf[dword_4024B4]，因此很明显dword_4024B4是buf的偏移指针。</p>
-<p>再看各个case，大致浏览了下，default分支会打印出Invalid opcode!这个字符串，意思是无效操作码，很明显（如题目名字）这是一个代码解释器，解释buf里的opcode。</p>
-<p>case 0分支只是将变量v16设为0，这样下一次循环就会退出，可以视为停机操作hlt。</p>
-<p>case 1分支先取指令中第二和第三字节拼接起来，再取第四第五字节和前者再拼接形成一个DWORD，把这个DWORD存到数组dword_6020A0中，同时dword_6024B8加一。可以猜测，dword_6020A0相当于一个栈，dword_6024B8是栈顶指针。这样，case 1的作用是push 立即数（小尾序）。</p>
-<p>case 2将栈顶指针减一，可以说相当于pop，但没有返回栈顶元素。</p>
-<p>case 3使dword_6024A0[指令第二字节] += dword_6024A0[指令第三字节]，相当于add，dword_6024A0是一个数组，有5个int元素，dword_6024A0[4]其实就是main()里面判断的dword_6024B0。</p>
-<p>case 4使dword_6024A0[指令第二字节] -= dword_6024A0[指令第三字节]，相当于sub。</p>
-<p>case 5使dword_6024A0[指令第二字节] *= 指令第三字节，相当于mul [内存], 立即数。</p>
-<p>case 6使dword_6024A0[指令第二字节] &gt;&gt;= 指令第三字节，相当于shr [内存], 立即数。</p>
-<p>case 7使dword_6024A0[指令第二字节] = dword_6024A0[指令第三字节]，相当于mov。</p>
-<p>case 8使dword_6024A0[指令第二字节] = 栈[dword_6024A0[指令第三字节]]，也相当于mov但是从栈上mov。</p>
-<p>case 9使dword_6024A0[指令第二字节] ^= dword_6024A0[指令第三字节]，相当于xor。</p>
-<p>case 10使dword_6024A0[指令第二字节] |= dword_6024A0[指令第三字节]，相当于or。</p>
-<p>到此全部opcode分析完，接着要按题目给出的code文件里的内容解析指令，应该可以写脚本解析，但是我手工解析的，这是个机械的过程，这里不说了，解析完是这样（我翻译成的C伪代码）：</p>
+<p>直接拖进 IDA，进 <code>main()</code> 函数看，程序先验证命令行参数个数大于 1，然后将第二个参数作为文件名打开，分配一块与此文件大小相同的缓冲区 <code>buf</code>，把文件内容读到里面。接着提示输入三个数 <code>first</code>, <code>second</code>, <code>third</code>。再把缓冲区 <code>buf</code> 指针传进函数 <code>sub_400806</code> 中，该函数执行结束后，判断全局变量 <code>dword_6024B0</code> 为 0、<code>first</code> 和 <code>third</code> 的低八位为 0x5E、<code>second</code> 的16~23 位为 0x5E，满足则打印成功并回显 flag。</p>
+<p>由于上述四个全局变量没有在 <code>main()</code> 函数中修改，因此只能是在 <code>sub_400806</code> 中修改了。接下来分析 <code>sub_400806</code>。</p>
+<p>一开始先设置了一些全局变量，尤其是把刚输入的三个数依次存进了 <code>dword_6020A0</code> 数组中，具体什么意思还不清楚，先往下看。一个 <code>while</code> 循环套一个 <code>switch</code>，<code>switch</code> 括号里的东西是 <code>buf[dword_4024B4]</code>，因此很明显 <code>dword_4024B4</code> 是 <code>buf</code> 的偏移指针。</p>
+<p>再看各个 case，大致浏览了下，<code>default</code> 分支会打印出 <code>Invalid opcode!</code> 这个字符串，意思是无效操作码，很明显（如题目名字）这是一个代码解释器，解释 <code>buf</code> 里的opcode。</p>
+<p><code>case 0</code> 分支只是将变量 <code>v16</code> 设为0，这样下一次循环就会退出，可以视为停机操作 <code>hlt</code>。</p>
+<p><code>case 1</code> 分支先取指令中第二和第三字节拼接起来，再取第四第五字节和前者再拼接形成一个 DWORD，把这个 DWORD 存到数组 <code>dword_6020A0</code> 中，同时 <code>dword_6024B8</code> 加一。可以猜测，<code>dword_6020A0</code> 相当于一个栈，<code>dword_6024B8</code> 是栈顶指针。这样，<code>case 1</code> 的作用是 <code>push 立即数（小尾序）</code>。</p>
+<p><code>case 2</code> 将栈顶指针减一，可以说相当于 <code>pop</code>，但没有返回栈顶元素。</p>
+<p><code>case 3</code> 使 <code>dword_6024A0[指令第二字节] += dword_6024A0[指令第三字节]</code>，相当于 <code>add</code>，<code>dword_6024A0</code> 是一个数组，有 5 个 <code>int</code> 元素，<code>dword_6024A0[4]</code> 其实就是 <code>main()</code> 里面判断的 <code>dword_6024B0</code>。</p>
+<p><code>case 4</code> 使 <code>dword_6024A0[指令第二字节] -= dword_6024A0[指令第三字节]</code>，相当于 <code>sub</code>。</p>
+<p><code>case 5</code> 使 <code>dword_6024A0[指令第二字节] *= 指令第三字节</code>，相当于 <code>mul [内存], 立即数</code>。</p>
+<p><code>case 6</code> 使 <code>dword_6024A0[指令第二字节] &gt;&gt;= 指令第三字节</code>，相当于 <code>shr [内存], 立即数</code>。</p>
+<p><code>case 7</code> 使 <code>dword_6024A0[指令第二字节] = dword_6024A0[指令第三字节]</code>，相当于 <code>mov</code>。</p>
+<p><code>case 8</code> 使 <code>dword_6024A0[指令第二字节] = 栈[dword_6024A0[指令第三字节]]</code>，也相当于 <code>mov</code> 但是从栈上 <code>mov</code>。</p>
+<p><code>case 9</code> 使 <code>dword_6024A0[指令第二字节] ^= dword_6024A0[指令第三字节]</code>，相当于 <code>xor</code>。</p>
+<p><code>case 10</code> 使 <code>dword_6024A0[指令第二字节] |= dword_6024A0[指令第三字节]</code>，相当于 <code>or</code>。</p>
+<p>到此全部 opcode 分析完，接着要按题目给出的 code 文件里的内容解析指令，应该可以写脚本解析，但是我手工解析的，这是个机械的过程，这里不说了，解析完是这样（我翻译成的 C 伪代码）：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">e = <span class="number">0</span>;</div><div class="line">a = <span class="number">0</span>;</div><div class="line">b = first;</div><div class="line">c = second;</div><div class="line">d = third;</div><div class="line">b &gt;&gt;= <span class="number">4</span>;</div><div class="line">b *= <span class="number">0x15</span>;</div><div class="line">a = b;</div><div class="line">a -= d;</div><div class="line">push <span class="number">0x1d7ecc6b</span></div><div class="line">b = pop();</div><div class="line">a -= b;</div><div class="line">e |= a;</div><div class="line">a = <span class="number">0</span>;</div><div class="line">b = first;</div><div class="line">c = second;</div><div class="line">d = third;</div><div class="line">d &gt;&gt;= <span class="number">8</span>;</div><div class="line">d *= <span class="number">3</span>;</div><div class="line">a = d;</div><div class="line">a += c;</div><div class="line">push <span class="number">0x6079797c</span></div><div class="line">b = pop();</div><div class="line">a -= b;</div><div class="line">e |= a;</div><div class="line">a = <span class="number">0</span>;</div><div class="line">b = first;</div><div class="line">c = second;</div><div class="line">d = third;</div><div class="line">b &gt;&gt;= <span class="number">8</span>;</div><div class="line">a = b;</div><div class="line">a += c;</div><div class="line">push <span class="number">0x5fbcbdbd</span></div><div class="line">b = pop();</div><div class="line">a -= b;</div><div class="line">e |= a;</div></pre></td></tr></table></figure>
-<p>最后要求e==0才能通过main()函数的判断，整理一下上面代码，e的表达式可以写成一句：</p>
+<p>最后要求 <code>e==0</code> 才能通过 <code>main()</code> 函数的判断，整理一下上面代码，<code>e</code> 的表达式可以写成一句：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">e = ((first &gt;&gt; <span class="number">4</span>) * <span class="number">0x15</span> - third - <span class="number">0x1d7ecc6b</span>) | ((third &gt;&gt; <span class="number">8</span>) * <span class="number">3</span> + second - <span class="number">0x6079797c</span>) | ((first &gt;&gt; <span class="number">8</span>) + second - <span class="number">0x5fbcbdbd</span>)</div></pre></td></tr></table></figure>
-<p>再加上main()里的另外三条约束条件：</p>
+<p>再加上 <code>main()</code> 里的另外三条约束条件：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(second &amp; <span class="number">0xff0000</span>) == <span class="number">0x5e0000</span></div><div class="line">(first &amp; <span class="number">0xff</span>) == <span class="number">0x5e</span></div><div class="line">(third &amp; <span class="number">0xff</span>) == <span class="number">0x5e</span></div></pre></td></tr></table></figure>
-<p>有这些方程就足够解出要输入的三个数first, second, third，写脚本用Z3求解即可，脚本如下：</p>
+<p>有这些方程就足够解出要输入的三个数 first, second, third，写脚本用 Z3 求解即可，脚本如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.path.append(<span class="string">'z3/build/'</span>)</div><div class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</div><div class="line"></div><div class="line">s = Solver()</div><div class="line"></div><div class="line">first = BitVec(<span class="string">'first'</span>,<span class="number">32</span>)</div><div class="line">second = BitVec(<span class="string">'second'</span>,<span class="number">32</span>)</div><div class="line">third = BitVec(<span class="string">'third'</span>,<span class="number">32</span>)</div><div class="line"></div><div class="line">s.add(((first &gt;&gt; <span class="number">4</span>) * <span class="number">0x15</span> - third - <span class="number">0x1d7ecc6b</span>) | ((third &gt;&gt; <span class="number">8</span>) * <span class="number">3</span> + second - <span class="number">0x6079797c</span>) | ((first &gt;&gt; <span class="number">8</span>) + second - <span class="number">0x5fbcbdbd</span>) == <span class="number">0</span>)</div><div class="line">s.add((second &amp; <span class="number">0xff0000</span>) == <span class="number">0x5e0000</span>)</div><div class="line">s.add((first &amp; <span class="number">0xff</span>) == <span class="number">0x5e</span>)</div><div class="line">s.add((third &amp; <span class="number">0xff</span>) == <span class="number">0x5e</span>)</div><div class="line"></div><div class="line">print(s.check())</div><div class="line">mod = s.model()</div><div class="line"></div><div class="line">chars = [</div><div class="line">          mod[first],</div><div class="line">          mod[second],</div><div class="line">          mod[third]</div><div class="line">        ]</div><div class="line"></div><div class="line"><span class="keyword">print</span> chars</div></pre></td></tr></table></figure>
 <p>运行脚本：</p>
 <div class="figure">
 <img src="https://i.loli.net/2018/11/25/5bfac469c6fbd.png">
 
 </div>
-<p>将这三个数输入到题目程序中就得到flag： <span class="math display">\[
+<p>将这三个数输入到题目程序中就得到 flag： <span class="math display">\[
 X-NUCA\{5e5f5e5e5f5e5e5f5e5e5f5e\}
 \]</span> <img src="https://i.loli.net/2018/11/25/5bfac46a8746f.png"></p>
 
