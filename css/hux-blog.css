@@ -82,7 +82,7 @@ body {
   overflow-x: hidden;
 }
 p {
-  font-family: -apple-system, "Helvetica Neue", "Arial", "Noto Serif SC", serif;
+  font-family: -apple-system, "Noto Serif SC", serif;
   margin: 30px 0;
   word-break: break-word;
 }
@@ -560,7 +560,7 @@ pre code {
   }
 }
 .post-content-preview {
-  font-family: -apple-system, "Helvetica Neue", "Arial", "Noto Serif SC", serif;
+  font-family: -apple-system, "Noto Serif SC", serif;
   font-size: 13px;
   /* font-style: italic; */
   color: #a3a3a3;
