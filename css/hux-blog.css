@@ -1,3 +1,5 @@
+@import '//fonts.lug.ustc.edu.cn/css?family=Noto+Serif+SC:400,700';
+
 @media (min-width: 1200px) {
   .post-container,
   .sidebar-container {
@@ -15,11 +17,13 @@
     overflow-x: auto;
 }
 
+/* 下划线专名号 */
 .proper-noun {
   border-bottom: 1px solid;
   margin: 0 0.167em;
 }
 
+/* 波浪线书名号 */
 .wavy-book-mark {
   text-decoration: underline;
   -moz-text-decoration-style: wavy;
@@ -78,20 +82,26 @@ body {
   overflow-x: hidden;
 }
 p {
+  font-family: -apple-system, "Helvetica Neue", "Arial", "Noto Serif SC", serif;
   margin: 30px 0;
   word-break: break-word;
 }
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2 {
   /* Hux learn from
      *     TypeIsBeautiful,
      *     [This Post](http://zhuanlan.zhihu.com/ibuick/20186806) etc.
      */
   font-family: -apple-system, "Helvetica Neue", "Arial", "PingFang SC", "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif;
+  line-height: 1.7;
+  line-height: 1.1;
+  font-weight: bold;
+}
+h3,
+h4,
+h5,
+h6 {
+  font-family: -apple-system, "Helvetica Neue", "Arial", "Noto Serif SC", serif;
   line-height: 1.7;
   line-height: 1.1;
   font-weight: bold;
