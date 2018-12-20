@@ -560,8 +560,9 @@ pre code {
   }
 }
 .post-content-preview {
+  font-family: -apple-system, "Helvetica Neue", "Arial", "Noto Serif SC", serif;
   font-size: 13px;
-  font-style: italic;
+  /* font-style: italic; */
   color: #a3a3a3;
 }
 .post-content-preview:hover {
