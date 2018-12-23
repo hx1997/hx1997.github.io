@@ -1,4 +1,4 @@
-@import '//fonts.lug.ustc.edu.cn/css?family=Noto+Serif+SC:400,700';
+@import '//fonts.googleapis.com/css?family=Noto+Serif+SC';
 
 @media (min-width: 1200px) {
   .post-container,
