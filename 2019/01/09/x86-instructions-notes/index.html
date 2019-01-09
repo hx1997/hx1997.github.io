@@ -13,11 +13,11 @@
 
     <title>
         
-          Goulash
+          x86 指令笔记 - Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/404.html">
+    <link rel="canonical" href="https://hx1997.github.io/2019/01/09/x86-instructions-notes/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -166,24 +166,195 @@
 
     <!-- Main Content -->
     
-<!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/404-bg.jpg')">
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///wx4.sinaimg.cn/large/6b1e58d5gy1fxbajxfwc4j21hc0u0ngu.jpg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>404</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">你来到了没有知识的荒原 :(</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                        
+                          <a class="tag" href="/tags/#二进制" title="二进制">二进制</a>
+                        
+                          <a class="tag" href="/tags/#汇编" title="汇编">汇编</a>
+                        
+                    </div>
+                    <h1>x86 指令笔记</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2019-01-09 | 
+                        <span id="/2019/01/09/x86-instructions-notes/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>最近在写一个辣鸡 x86 反汇编器，做点笔记。</p>
+<h3 id="概述">概述</h3>
+<p>x86 指令有 6 部分，并不是每条指令都要有全部部分：</p>
+<ul>
+<li>指令前缀（0 - 4 字节）</li>
+<li>指令码（opcode，1 - 2 字节）</li>
+<li>ModR/M（0 - 1 字节）</li>
+<li>SIB（0 - 1 字节）</li>
+<li>偏移（0/1/2/4 字节）</li>
+<li>立即数（0/1/2/4 字节）</li>
+</ul>
+<p>另外，第一操作数是指两个操作数中较复杂的那个，第二操作数是指简单的那个。比如 <code>mov eax, [ebp-0x40]</code> 前面的操作数是第二操作数，后面的是第一操作数。</p>
+<h3 id="指令前缀">指令前缀</h3>
+<p>有 4 组前缀，一条指令在每组中最多只能取其中 1 个前缀，4 组就是 4 个前缀，各来自不同组。</p>
+<ul>
+<li>第一组：锁与重复</li>
+<li>0xf0: <code>lock</code></li>
+<li>0xf2: <code>repne</code></li>
+<li>0xf3: <code>rep</code></li>
+<li>第二组：段跨越（segment override）</li>
+<li>0x26: <code>es:</code></li>
+<li>0x2e: <code>cs:</code></li>
+<li>0x36: <code>ss:</code></li>
+<li>0x3e: <code>ds:</code></li>
+<li>0x64: <code>fs:</code></li>
+<li>0x65: <code>gs:</code></li>
+<li>第三组：操作数长度覆盖（operand-size override）</li>
+<li>0x66: 改变操作数长度，16 位机默认长度为 16 位，32 位机默认长度为 32 位，改变后互换。</li>
+<li>第四组：地址长度覆盖（address-size override）</li>
+<li>0x67: 改变地址长度，16 位机默认长度为 16 位，32 位机默认长度为 32 位，改变后互换。</li>
+</ul>
+<h3 id="指令码">指令码</h3>
+<p><a href="https://css.csail.mit.edu/6.858/2014/readings/i386/appa.htm" target="_blank" rel="external">The Intel Manual</a> and <a href="http://ref.x86asm.net/coder32.html" target="_blank" rel="external">the x86 Opcode and Instruction Reference</a> are your friends.</p>
+<h3 id="modrm">ModR/M</h3>
+<p>ModR/M 指出操作数的寻址方式（addressing mode），其高 2 位为 Mod，中间 3 位为 Reg/Opcode，低 3 位为 R/M。</p>
+<p>若 Mod == 11（二进制），则第一操作数为寄存器寻址，否则为存储器寻址。</p>
+<p>Reg/Opcode 有两种意义：</p>
+<ol style="list-style-type: decimal">
+<li>有的指令需要第二操作数，由这个字段给出。</li>
+<li>有的指令用这个字段作为扩展指令码（opcode extension），即指令码部分和 Reg/Opcode 字段共同决定该指令是什么指令。</li>
+</ol>
+<p>R/M 和 Mod 一起决定第一操作数更具体的寻址方式，见<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>。</p>
+<p>若为存储器寻址，且 R/M == 100（二进制），则后面还有 SIB 字节指明具体寻址方式。</p>
+<h3 id="sib">SIB</h3>
+<p>SIB 是 scale-index-base（比例-变址-基址）的意思，其高 2 位为 scale，中间 3 位为 index，低 3 位为 base。</p>
+<p>SIB 寻址的汇编形如 <code>[base+index*scale]</code>。</p>
+<p>scale 为 00、01、10、11（二进制）分别表示比例因子为 1、2、4、8，乘在变址寄存器上。</p>
+<p>index 为 0 - 7 分别代表（32 位情况）<code>eax</code>、<code>ecx</code>、<code>edx</code>、<code>ebx</code>、无变址寄存器、<code>ebp</code>、<code>esi</code>、<code>edi</code>。</p>
+<p>base 为 0 - 7 分别代表（32 位情况）<code>eax</code>、<code>ecx</code>、<code>edx</code>、<code>ebx</code>、<code>esp</code>、[*]、<code>esi</code>、<code>edi</code>。</p>
+<p>其中 [*] 表示：</p>
+<ul>
+<li>若 Mod == 00（二进制），则无基址寄存器。</li>
+<li>若 Mod == 01 || Mod == 10，则为 <code>ebp</code>。</li>
+</ul>
+<h3 id="位移和立即数">位移和立即数</h3>
+<p>有些指令或寻址方式要求给出偏移或立即数，请查手册。</p>
+<h3 id="参考资料">参考资料</h3>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://zh.wikipedia.org/wiki/X86#ModR/M%E4%B8%8ESIB<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/12/02/pcb-2018-ctf-writeup/" data-toggle="tooltip" data-placement="top" title="2018 鹏城杯 CTF 部分解题报告（writeup）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <script>
-    document.body.classList.add('page-fullscreen');
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!', // 留言框占位提示文字
+    });
 </script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
 
 
     <!-- Footer -->
