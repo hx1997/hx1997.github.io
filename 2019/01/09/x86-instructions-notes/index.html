@@ -233,21 +233,29 @@
 <h3 id="指令前缀">指令前缀</h3>
 <p>有 4 组前缀，一条指令在每组中最多只能取其中 1 个前缀，4 组就是 4 个前缀，各来自不同组。</p>
 <ul>
-<li>第一组：锁与重复</li>
+<li>第一组：锁与重复
+<ul>
 <li>0xf0: <code>lock</code></li>
 <li>0xf2: <code>repne</code></li>
 <li>0xf3: <code>rep</code></li>
-<li>第二组：段跨越（segment override）</li>
+</ul></li>
+<li>第二组：段跨越（segment override）
+<ul>
 <li>0x26: <code>es:</code></li>
 <li>0x2e: <code>cs:</code></li>
 <li>0x36: <code>ss:</code></li>
 <li>0x3e: <code>ds:</code></li>
 <li>0x64: <code>fs:</code></li>
 <li>0x65: <code>gs:</code></li>
-<li>第三组：操作数长度覆盖（operand-size override）</li>
+</ul></li>
+<li>第三组：操作数长度覆盖（operand-size override）
+<ul>
 <li>0x66: 改变操作数长度，16 位机默认长度为 16 位，32 位机默认长度为 32 位，改变后互换。</li>
-<li>第四组：地址长度覆盖（address-size override）</li>
+</ul></li>
+<li>第四组：地址长度覆盖（address-size override）
+<ul>
 <li>0x67: 改变地址长度，16 位机默认长度为 16 位，32 位机默认长度为 32 位，改变后互换。</li>
+</ul></li>
 </ul>
 <h3 id="指令码">指令码</h3>
 <p><a href="https://css.csail.mit.edu/6.858/2014/readings/i386/appa.htm" target="_blank" rel="external">The Intel Manual</a> and <a href="http://ref.x86asm.net/coder32.html" target="_blank" rel="external">the x86 Opcode and Instruction Reference</a> are your friends.</p>
