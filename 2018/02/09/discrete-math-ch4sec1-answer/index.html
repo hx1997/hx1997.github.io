@@ -101,13 +101,6 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
@@ -116,6 +109,13 @@
                         
                         <li>
                             <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
@@ -265,7 +265,7 @@
     &amp; = 2^2 f(8) + 2^2 f(4) + 1 \\
     &amp; = 2^2 \cdot [2 f(7) + f(3)] + 2^2 \cdot [2 f(3) + f(-1)] + 1 \\
     &amp; = 2^3 f(7) + 3 \cdot 2^2 f(3) + 1 \\
-    &amp; \vdots \\
+    &amp; = \cdots \\
     &amp; = 2^5 \cdot [2^4 f(1) + 1] + 5 \cdot 2^4 f(1) + 1 \\
     &amp; = 2^{10} + 6 \times 2^5 + 1 \\
     &amp; = 1217.
@@ -281,7 +281,7 @@
 <p><strong>解</strong>　待解</p>
 <h4 id="section-3">4.1.4</h4>
 <blockquote>
-<p><strong>a)</strong> Find a recurrence relation for the number of bit strings of length <span class="math inline">\(n\)</span> that contain a pair of consecutive 0s.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of bit strings of length <span class="math inline">\(n​\)</span> that contain a pair of consecutive 0s.</p>
 <p><strong>b)</strong> What are the initial conditions?</p>
 <p><strong>c)</strong> How many strings of length seven contain two consecutive 0s?</p>
 </blockquote>
@@ -290,7 +290,7 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 包含两个连续的 0 且长度为 7 的二进制串有多少个？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：其一，最后一位为 1，则最后一位和前 <span class="math inline">\(n - 1\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-1)\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1，最后两位和前 <span class="math inline">\(n - 2\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-2)\)</span> 个这样的串，若倒数第二位为 0，前 <span class="math inline">\(n -2\)</span> 位不管如何组合，结果都是含 00 的串，前 <span class="math inline">\(n - 2\)</span> 位有 <span class="math inline">\(2^{n-2}\)</span> 种可能，最后两位已确定只有一种可能，即有 <span class="math inline">\(2^{n-2} \cdot 1\)</span> 个这样的串. 因此总数为</p>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)​\)</span>. 分两种情况：其一，最后一位为 1，则最后一位和前 <span class="math inline">\(n - 1​\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-1)​\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1，最后两位和前 <span class="math inline">\(n - 2​\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-2)​\)</span> 个这样的串，若倒数第二位为 0，前 <span class="math inline">\(n -2​\)</span> 位不管如何组合，结果都是含 00 的串，前 <span class="math inline">\(n - 2​\)</span> 位有 <span class="math inline">\(2^{n-2}​\)</span> 种可能，最后两位已确定只有一种可能，即有 <span class="math inline">\(2^{n-2} \cdot 1​\)</span> 个这样的串. 因此总数为</p>
 <p><span class="math display">\[f(n) = f(n-1) + f(n-2) + 2^{n-2}, \; n &gt; 2.\]</span></p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
@@ -344,7 +344,7 @@
 \]</span></p>
 <h4 id="section-5">4.1.6</h4>
 <blockquote>
-<p><strong>a)</strong> Find a recurrence relation for the number of ways to climb <span class="math inline">\(n\)</span> stairs if the person climbing the stairs can take one stair or two stairs at a time.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of ways to climb <span class="math inline">\(n​\)</span> stairs if the person climbing the stairs can take one stair or two stairs at a time.</p>
 <p><strong>b)</strong> What are the initial conditions?</p>
 <p><strong>c)</strong> In how many ways can this person climb a flight of eight stairs?</p>
 </blockquote>
@@ -353,7 +353,7 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 这个人爬 8 级楼梯有多少种方法？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 记这样的方法数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：先爬 <span class="math inline">\(n - 2\)</span> 级楼梯，再一次爬 <span class="math inline">\(2\)</span> 级楼梯；先爬 <span class="math inline">\(n - 1\)</span> 级楼梯，再爬 <span class="math inline">\(1\)</span> 级楼梯. 因此 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2\)</span>.</p>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的方法数为 <span class="math inline">\(f(n)​\)</span>. 分两种情况：先爬 <span class="math inline">\(n - 2​\)</span> 级楼梯，再一次爬 <span class="math inline">\(2​\)</span> 级楼梯；先爬 <span class="math inline">\(n - 1​\)</span> 级楼梯，再爬 <span class="math inline">\(1​\)</span> 级楼梯. 因此 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2​\)</span>.</p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
     \left\{
@@ -371,6 +371,92 @@
     f(6) &amp; = f(5) + f(4) = 13, \\
     f(7) &amp; = f(6) + f(5) = 21, \\
     f(8) &amp;= f(7) + f(6) = 34.
+\end {align*}
+\]</span></p>
+<h4 id="section-6">4.1.7</h4>
+<blockquote>
+<p>A string that contains only 0s, 1s, and 2s is called a <strong>ternary string</strong>.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of ternary strings of length <span class="math inline">\(n\)</span> that do not contain two consecutive 0s.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> How many ternary strings of length six do not contain two consecutive 0s?</p>
+</blockquote>
+<blockquote>
+<p>只包含 0, 1, 2 的串称为<strong>三进制串</strong>。</p>
+<p><strong>1)</strong> 求不包含两个连续的 0 且长度为 <span class="math inline">\(n\)</span> 的三进制串个数的递推式。</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 不包含两个连续的 0 且长度为 6 的三进制串有多少个？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的三进制串个数为 <span class="math inline">\(f(n)​\)</span>. 分两种情况：其一，最后一位为 1 或 2，则最后一位和前 <span class="math inline">\(n - 1​\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(2 f(n-1)​\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1 或 2，最后两位和前 <span class="math inline">\(n - 2​\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(2 f(n-2)​\)</span> 个这样的串，因此总数为</p>
+<p><span class="math display">\[f(n) = 2 f(n-1) + 2 f(n-2), \; n &gt; 2.​\]</span></p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+            \begin {array} {c}
+                f(1) = 3, \\
+                f(2) = 8.
+            \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
+\begin {align*}
+    f(3) &amp; = 2 f(2) + 2 f(1) = 22, \\
+    f(4) &amp; = 2 f(3) + 2 f(2) = 60, \\
+    f(5) &amp; = 2 f(4) + 2 f(3) = 164, \\
+    f(6) &amp; = 2 f(5) + 2 f(4) = 448.
+\end {align*}
+\]</span></p>
+<h4 id="section-7">4.1.10</h4>
+<blockquote>
+<p>Messages are transmitted over a communication channel using two signals. The transmittal of one signal requires 1 microsecond, and the transmittal of the other signal requires 2 microseconds.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of different messages consisting of sequences of these two signals, where each signal in the message is immediately followed by the next signal, that can be sent in <span class="math inline">\(n\)</span> microseconds.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> How many different messages can be sent in 10 microseconds using these two signals?</p>
+</blockquote>
+<blockquote>
+<p>消息通过两种信号在一条信道上传输。其中一种信号传输耗时 1 微秒，另一种信号传输耗时 2 微秒。</p>
+<p><strong>1)</strong> 求这两种信号的序列所组成的、传输需时 <span class="math inline">\(n\)</span> 微秒的不同消息数的递推式。</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 使用这两种信号、传输需时 10 微秒的不同消息有多少种？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 思路与 4.1.6 完全类似。递推式为 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2​\)</span>.</p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+            \begin {array} {c}
+                f(1) = 1, \\
+                f(2) = 2.
+            \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
+\begin {align*}
+    f(3) &amp; = f(2) + f(1) = 3, \\
+    f(4) &amp; = f(3) + f(2) = 5, \\
+    f(5) &amp; = f(4) + f(3) = 8, \\
+    f(6) &amp; = f(5) + f(4) = 13, \\
+    f(7) &amp; = f(6) + f(5) = 21, \\
+    f(8) &amp; = f(7) + f(6) = 34, \\
+    f(9) &amp; = f(8) + f(7) = 55, \\
+    f(10) &amp; = f(9) + f(8) = 89.
+\end {align*}
+\]</span></p>
+<h3 id="section-8">4.1.11</h3>
+<blockquote>
+<p><strong>a)</strong> Find the recurrence relation satisfied by <span class="math inline">\(R_n\)</span>, where <span class="math display">\[R_n\]</span> is the number of regions that a plane is divided into by <span class="math inline">\(n\)</span> lines, if no two of the lines are parallel and no three of the lines go through the same point.</p>
+<p><strong>b)</strong> Find <span class="math inline">\(R_n\)</span> using iteration.</p>
+</blockquote>
+<blockquote>
+<p><strong>1)</strong> 求 <span class="math inline">\(R_n\)</span> 所满足的递推式，<span class="math inline">\(R_n\)</span> 是指 <span class="math inline">\(n\)</span> 条直线可将一个平面分成的区域数（假设任意两条直线不平行，任意三条直线不经过同一点）。</p>
+<p><strong>2)</strong> 用迭代法求 <span class="math inline">\(R_n\)</span>。</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 注意到条件“任意两条直线不平行，任意三条直线不经过同一点”，因此在已有 <span class="math inline">\(n - 1​\)</span> 条直线的情况下，再画一条直线，该直线必与现有直线有 <span class="math inline">\(n - 1​\)</span> 个交点，且将平面划分出 <span class="math inline">\(n​\)</span> 个新区域。因此递推式为 <span class="math inline">\(R_n = R_{n-1} + n, \; n \ge 1​\)</span>. 初始条件为 <span class="math inline">\(R_0 = 1​\)</span>.</p>
+<p><strong>2)</strong> 迭代可得 <span class="math display">\[
+\begin {align*}
+    R_n &amp; = R_{n-1} + n \\
+    &amp; = R_{n-2} + (n - 1) + n \\
+    &amp; = \cdots \\
+    &amp; = R_0 + 1 + 2 + \cdots + (n - 1) + n \\
+    &amp; = \frac{1}{2} (n^2 + n) + 1
 \end {align*}
 \]</span></p>
 <h3 id="参考资料">参考资料</h3>
