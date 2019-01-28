@@ -101,6 +101,13 @@
 
                         
                         <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/about/">ABOUT</a>
                         </li>
                         
@@ -109,13 +116,6 @@
                         
                         <li>
                             <a href="/archive/">ARCHIVES</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -246,7 +246,7 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 投入 10 美元购买一套邮票，共有多少种投币方法？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 投入 <span class="math inline">\(n\)</span> 美元可分为两种情况：其一，先投入 <span class="math inline">\(n - 1\)</span> 美元，再投入 <span class="math inline">\(1\)</span> 美元；其二，先投入 <span class="math inline">\(n - 5\)</span> 美元，再投入 <span class="math inline">\(5\)</span> 美元. 记投入 <span class="math inline">\(n\)</span> 美元的投法数为 <span class="math inline">\(f(n)\)</span>，则根据分步计数乘法原理，前者有 <span class="math inline">\(f(n-1) \cdot 2\)</span> 种投法（投入 <span class="math inline">\(1\)</span> 美元有硬币和纸币两种投法），后者有 <span class="math inline">\(f(n-5) \cdot 1\)</span> 种投法. 由分类计数加法原理，递推式为</p>
+<p><strong>解</strong>　<strong>1)</strong> 投入 <span class="math inline">\(n​\)</span> 美元可分为两种情况：其一，先投入 <span class="math inline">\(n - 1​\)</span> 美元，再投入 <span class="math inline">\(1​\)</span> 美元；其二，先投入 <span class="math inline">\(n - 5​\)</span> 美元，再投入 <span class="math inline">\(5​\)</span> 美元. 记投入 <span class="math inline">\(n​\)</span> 美元的投法数为 <span class="math inline">\(f(n)​\)</span>，则根据分步计数乘法原理，前者有 <span class="math inline">\(f(n-1) \cdot 2​\)</span> 种投法（投入 <span class="math inline">\(1​\)</span> 美元有硬币和纸币两种投法），后者有 <span class="math inline">\(f(n-5) \cdot 1​\)</span> 种投法. 由分类计数加法原理，递推式为</p>
 <p><span class="math display">\[f(n) = 2 f(n-1) + f(n-5), \; n &gt; 1.\]</span></p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
@@ -442,7 +442,7 @@
 \]</span></p>
 <h3 id="section-8">4.1.11</h3>
 <blockquote>
-<p><strong>a)</strong> Find the recurrence relation satisfied by <span class="math inline">\(R_n\)</span>, where <span class="math display">\[R_n\]</span> is the number of regions that a plane is divided into by <span class="math inline">\(n\)</span> lines, if no two of the lines are parallel and no three of the lines go through the same point.</p>
+<p><strong>a)</strong> Find the recurrence relation satisfied by <span class="math inline">\(R_n\)</span>, where <span class="math inline">\(R_n\)</span> is the number of regions that a plane is divided into by <span class="math inline">\(n\)</span> lines, if no two of the lines are parallel and no three of the lines go through the same point.</p>
 <p><strong>b)</strong> Find <span class="math inline">\(R_n\)</span> using iteration.</p>
 </blockquote>
 <blockquote>
