@@ -108,14 +108,14 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -504,7 +504,7 @@
 <p><strong>b)</strong> Check your result with the closed formula for <span class="math inline">\(C_5\)</span> mentioned in the solution of Example 5.</p>
 </blockquote>
 <blockquote>
-<p><strong>1)</strong> 用例 5 中得出的递推式求 <span class="math inline">\(C_5\)</span>，即给六个数的乘积加括号以确定乘法顺序的不同方法数.</p>
+<p><strong>1)</strong> 用例 5 中得出的递推式求 <span class="math inline">\(C_5​\)</span>，即给六个数的乘积加括号以确定乘法顺序的不同方法数.</p>
 <p><strong>2)</strong> 将你的结果与例 5 的解中提到的 <span class="math inline">\(C_5\)</span> 的闭式解相比较.</p>
 </blockquote>
 <p><strong>解</strong>　<strong>1)</strong> 例 5 中得出的递推式为 <span class="math display">\[
@@ -530,6 +530,35 @@ C_n = \frac{C(2n,n)}{(n+1)}.
 \]</span> 代入 <span class="math inline">\(n = 5\)</span> 得 <span class="math display">\[
 C_5 = \frac{C(10,5)}{6} = 42.
 \]</span> 这与递推式的解相同.</p>
+<h4 id="section-12">4.1.24</h4>
+<blockquote>
+<p>Let <span class="math inline">\(\{a_n\}​\)</span> be a sequence of real numbers. The <strong>backward differences</strong> of this sequence are define recursively as shown next. The <strong>first difference</strong> <span class="math inline">\(\nabla a_n​\)</span> is <span class="math display">\[
+\nabla a_n = a_n - a_{n-1}.
+\]</span> The <strong>(k+1)st difference</strong> <span class="math inline">\(\nabla^{k+1} a_n​\)</span> is obtained from <span class="math inline">\(\nabla^k a_n​\)</span> by <span class="math display">\[
+\nabla^{k+1} a_n = \nabla^k a_n - \nabla^k a_{n-1}.
+\]</span> Find <span class="math inline">\(\nabla^2 a_n\)</span> for the following sequences.</p>
+<p><strong>a)</strong> <span class="math inline">\(a_n = 4.​\)</span> <strong>b)</strong> <span class="math inline">\(a_n = 2n.​\)</span></p>
+<p><strong>c)</strong> <span class="math inline">\(a_n = n^2.​\)</span> <strong>d)</strong> <span class="math inline">\(a_n = 2^n.​\)</span></p>
+</blockquote>
+<blockquote>
+<p>设 <span class="math inline">\(\{a_n\}\)</span> 为实数序列. 该序列的<strong>后向差分</strong>递归定义如下. <strong>一阶差分</strong> <span class="math inline">\(\nabla a_n\)</span> 为 <span class="math display">\[
+\nabla a_n = a_n - a_{n-1}.
+\]</span> <strong>k+1 阶差分</strong> <span class="math inline">\(\nabla^{k+1} a_n\)</span> 从 <span class="math inline">\(\nabla^k a_n\)</span> 得出 <span class="math display">\[
+\nabla^{k+1} a_n = \nabla^k a_n - \nabla^k a_{n-1}.
+\]</span> 对以下序列，求 <span class="math inline">\(\nabla^2 a_n​\)</span>.</p>
+<p><strong>a)</strong> <span class="math inline">\(a_n = 4.​\)</span> <strong>b)</strong> <span class="math inline">\(a_n = 2n.​\)</span></p>
+<p><strong>c)</strong> <span class="math inline">\(a_n = n^2.\)</span> <strong>d)</strong> <span class="math inline">\(a_n = 2^n.\)</span></p>
+</blockquote>
+<p><strong>解</strong>　按定义有 <span class="math display">\[
+\begin {align*}
+    \nabla^2 a_n &amp; = \nabla a_n - \nabla a_{n-1} \\
+    &amp; = (a_n - a_{n-1}) - (a_{n-1} - a_{n-2}) \\
+    &amp; = a_n - 2 a_{n-1} + a_{n-2}.
+\end {align*}
+\]</span> <strong>a)</strong> <span class="math inline">\(\nabla^2 a_n = a_n - 2 a_{n-1} + a_{n-2} = 4 - 2 \times 4 + 4 = 0.​\)</span></p>
+<p><strong>b)</strong> <span class="math inline">\(\nabla^2 a_n = a_n - 2 a_{n-1} + a_{n-2} = 2n - 4(n-1) + 2(n-2) = 0.\)</span></p>
+<p><strong>c)</strong> <span class="math inline">\(\nabla^2 a_n = a_n - 2 a_{n-1} + a_{n-2} = n^2 - 2 (n-1)^2 + (n-2)^2 = 2.\)</span></p>
+<p><strong>d)</strong> <span class="math inline">\(\nabla^2 a_n = a_n - 2 a_{n-1} + a_{n-2} = 2^n - 2^n + 2^{n-2} = 2^{n-2}.\)</span></p>
 <h3 id="参考资料">参考资料</h3>
 <div class="footnotes">
 <hr>
