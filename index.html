@@ -101,13 +101,6 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">ABOUT</a>
                         </li>
                         
@@ -123,6 +116,13 @@
                         
                         <li>
                             <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -199,6 +199,37 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2019/04/22/dxs-2018-bbvvmm-writeup/">
+        <h2 class="post-title">
+            第十二届全国大学生信息安全竞赛初赛 bbvvmm 解题报告（writeup）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            看题目名大概是虚拟机（VM）题。先运行一下，提示输入用户名和密码，输错后提示错误退出。看 main 函数，拉到最后：
+
+
+
+
+可见要打印出 flag，需要 v5 和 v8 同时为 0。v5 是一个字符串比较的结果，v8 是一块内存的值。做题时发现 v5 不涉及虚拟机，比较好搞，先看它。
+
+
+
+
+v5 和一串疑似 base64 编码的字符串比较，在 base64_encod......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2019-04-22
+    </p>
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -418,37 +449,6 @@ SIB（0 - 1 字节）
     <p class="post-meta">
         Posted by HX on
         2018-06-24
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/05/06/2018-redhat-online-re-ccm-writeup/">
-        <h2 class="post-title">
-            2018 红帽杯线上赛一道 RE + 一道 Pwn 解题报告（writeup）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            0x0. 前言
-这次红帽杯除送分题外唯一做出的题就是一道逆向（还有一道 Pwn 差了一点，比赛结束后才做出来），我好菜啊。不过组队打 CTF 还是开心，嘻嘻。
-比赛文件下载：RE - CCM、Pwn2
-0x1. RE - CCM
-拿到 exe，扔进 PEiD 看看。
-
-
-
-
-加了 nSPack 壳，先找个工具脱壳。脱壳后的文件拖进 IDA，按 F5 看伪代码。
-12345......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2018-05-06
     </p>
 
 </div>
