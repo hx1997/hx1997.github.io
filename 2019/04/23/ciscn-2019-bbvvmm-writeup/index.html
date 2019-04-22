@@ -13,11 +13,11 @@
 
     <title>
         
-          《VSI：现代日本》翻译杂谈 - Goulash
+          第十二届全国大学生信息安全竞赛初赛 bbvvmm 解题报告（writeup） - Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/2019/03/09/on-vsi-modern-japan-translation/">
+    <link rel="canonical" href="https://hx1997.github.io/2019/04/23/ciscn-2019-bbvvmm-writeup/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -183,17 +183,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#翻译" title="翻译">翻译</a>
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
                         
-                          <a class="tag" href="/tags/#VSI" title="VSI">VSI</a>
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
                         
                     </div>
-                    <h1>《VSI：现代日本》翻译杂谈</h1>
+                    <h1>第十二届全国大学生信息安全竞赛初赛 bbvvmm 解题报告（writeup）</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by HX on
-                        2019-03-09 | 
-                        <span id="/2019/03/09/on-vsi-modern-japan-translation/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                        2019-04-23 | 
+                        <span id="/2019/04/23/ciscn-2019-bbvvmm-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
                             <span class="pre-meta-item-text">👓 </span>
                             <span class="leancloud-visitors-count"></span>
                             <span class="post-meta-item-text"> views</span>
@@ -216,70 +218,64 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>前段时间看了译林出版社《牛津通识读本》（Very Short Introductions, VSI）系列的《现代日本》，感觉讲得不错，安利一下。书里从德川幕府讲起，经过黑船来航、明治维新、帝国时期、二战时期、战后被美国占领、否认战争罪行，最后讲到本世纪日本经济。书的篇幅较短，中文翻译仅一百三十余页，只能算是走马观花了。</p>
-<p>翻译总的来说还是可以的，有些我觉得不对或不合适的地方，挑出来说一说。只对比了前四十多页，其余的我没看中文。</p>
-<blockquote>
-<p>(Page 4) At this vulgar level of analysis, Japan is presented as intriguing because it has a rich history of ‘Eastern’ traditions and an oddly ‘Western’ present: modernity and the West being <strong><em>difficult</em></strong> for the audience (or for the BBC) <strong><em>to disentangle</em></strong>.</p>
-</blockquote>
-<blockquote>
-<p>（第 4 页）从这一通俗的层面来分析，日本显现吸引力，是因为它兼有“东方”传统的悠久历史和奇妙的“西方现状”，观众（或者说英国广播公司）<strong><em>难以消化</em></strong>其中的现代性和西方元素。</p>
-</blockquote>
-<p>前文提到现代化起源于西方，人们往往假设“现代”和“西方”是不分家的，因此一旦在一个东方国家（i.e. 日本）出现了现代的面貌，那就让人觉得有点意思了。显然这里的 difficult to disentangle 是“<strong><em>难解难分</em></strong>”的意思，说是观众（或者只是 BBC）由于思维定势将现代性和西方紧紧联系在一起，无法分离开来，所以日本同时拥有东方式的传统历史和出奇地西方式的现在（an oddly ‘Western’ present），这一点是（BBC 的影片中想展现的）日本令人着迷的一面。</p>
-<blockquote>
-<p>(Page 5) Indeed, the history of modern Japan, since the end of its <strong><em>apparent</em></strong> international isolation in the mid-19th century to the present day, is the document of a nation grappling with the effects of its encounter with Western powers and its simultaneous exposure to the ideas and technologies of modernity.</p>
-</blockquote>
-<p>书里把 apparent 译成了明显的，但这里的 apparent 是“<strong><em>貌似</em></strong>”的意思，就是看起来（appear =&gt; apparent）是这样，实则未必。这里说日本是貌似锁国，下一段作者就表明了态度，说日本其实并未完全与外国断绝联系。翻译成“明显的国际孤立”完全译反了。</p>
-<blockquote>
-<p>(Page 5) We will consider some of the ways in which cultural and social continuity and change interact through the period, even over apparent <strong><em>singularities</em></strong> such as the catastrophic conclusion to World War II in the Pacific, hence challenging the assumption that postwar Japan is somehow discontinuous with its own traditions.</p>
-</blockquote>
-<p>apparent 又译错了… 还有 singularities 给翻译成了“（日本显然）处境孤立”，这是不对的。其实这一句里起码有两处可以推断出 singularities 的意思：一是 social continuity，二是 discontinuous with its own traditions. 那么它到底是啥意思？singularity 在数学上是“奇点”的意思，这里多扯一点，数学上 singular（奇、奇异）用来表示某个东西性质不好<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，比如奇异矩阵是不可逆的，经过奇异矩阵变换损失了信息，这是不好的性质。奇点本身也有不同定义，其中一个是指函数的间断点，即函数不连续的点。到此上述两处文字和 singularities 的关系应该很明显了，singularities 就是 continuity 的反面——discontinuity. 放到语境里，是指“<strong><em>社会/文化的断裂、剧变</em></strong>”，apparent singularities 就是说日本看似经历了文化断层，实则不然，作者也说了要质疑战后日本与自己的传统习俗间产生了割裂这种假设。</p>
-<blockquote>
-<p>(Page 7) Is Japan modern and, if so, how can we explain why it looks so different from, say, the United Kingdom? To paraphrase this important question: which elements of the modern are <strong><em>essential</em></strong>, and which are <strong><em>culturally contingent</em></strong>?</p>
-<p>（第 7 页）日本现代吗？如果答案为是，如何解释日本的现代显得迥异于（比如说）英国的现代？这一重要问题也可以换一种提法，即现代有哪些元素是<strong><em>本质的</em></strong>，又有哪些<strong><em>附着于文化土壤</em></strong>？</p>
-</blockquote>
-<p>显然 essential 和 culturally contingent 是对立的，前者指现代所<strong><em>固有的</em></strong>、与文化无关的特征，后者指现代<strong><em>随文化不同而不同的</em></strong>那些元素。这一节都是在讨论何谓“现代”，我们如何判断一个国家是否“现代化”，由于日本与西方国家的现代面貌大相径庭，我们自然提出这样的问题：现代有什么特征？哪些特征是固有的、只要是现代化的国家就有的，哪些特征又是日本和西方之间有别的？</p>
-<blockquote>
-<p>(Page 7) Is the modern already in the past in some places, and not in the present at all? Are there locations where it <strong><em>remains in the future</em></strong>?</p>
-<p>（第 7 页）现代在有些地方是否已成为过去、是否已完全出离当代？现在是否<strong><em>在未来保有位置</em></strong>？</p>
-</blockquote>
-<p>这里书上的翻译有点…故弄玄虚，这本书翻译的风格好像就是这样，还有后半句译者似乎误解成了 Will there be locations where it remains/resides in the future? 的意思。上面讨论了现代的特征，通过这些特征我们得以辨认一个国家是否处于现代，现在作者发出了两问：是否有的地方已经步过现代而进入后现代？是否有的地方还未达到现代化，也即对于他们来说，现代<strong><em>仍是将来时</em></strong>？</p>
-<blockquote>
-<p>(Page 21) The edict also restricted contact with Japan’s neighbours, at least in principle (if not in practice) <strong><em>limiting</em></strong> trade with China <strong><em>to</em></strong> passage through the island chain of the Ryûkyû Kingdom (present-day Okinawa) and with Korea to the tiny island domain of Tsushima.</p>
-<p>（第 19 页）法令同时限制了与日本近邻的接触，至少在原则上（即便不是在事实上）<strong><em>限制</em></strong>经琉球王国（今冲绳）列岛与中国进行的贸易以及在狭小的对马岛领域与朝鲜进行的贸易。</p>
-</blockquote>
-<p>limit A to B 是把 A 限制在 B 的范围内，这里是说日本限制与中朝的贸易往来，与中国只能在琉球王国列岛的水道上开展贸易，与朝鲜则只能在对马岛。翻译的意思好像是限制这些地区的贸易，其实是限制<strong>只能</strong>在这些地区贸易。</p>
-<blockquote>
-<p>(Page 32) For Sorai, no matter what the chivalrous merits of the 47 <em>rônin</em>, their actions <strong><em>betrayed</em></strong> an anachronistic sense of loyalty to one’s daimyo rather than to the laws of the land.</p>
-<p>（第 29 页）在徂徕看来，无论47浪士拥有何种侠义价值，他们的行为都是<strong><em>背叛</em></strong>了一种过时的、对于某个大名的忠诚，而不是背叛了日本这片土地上的法令。</p>
-</blockquote>
-<p>betray 是有背叛的意思，但在这里的意思是“<strong><em>流露出</em></strong>”（betray 的原义是把秘密<strong><em>泄露</em></strong>给敌人）。例：His words were calm, but his voice betrayed his very real concern and anxiety. 他的话很平静，但他的声音却透露出十分真切的担忧和焦虑。</p>
-<p>前文刚说 47 浪士为自己的大名复仇，怎么到这里成了背叛忠诚了，翻译真是没头没脑的。rather than (loyalty) to the laws 的 to 也被翻译吃了，跟背叛法令有什么关系？？？</p>
-<blockquote>
-<p>(Page 35) Whilst his intention may have been to build a national consensus, which was certainly important in the face of the threat, the effect was rather to suggest that the<em>bakufu</em> lacked the necessary <strong><em>powers of leadership</em></strong> at this critical moment.</p>
-<p>（第 32 页）阿部的出发点可能是要建立一种国家共识，这在面临威胁之时固然很重要，但就结果而言，却更像是意味着幕府在紧要关头缺乏<strong><em>统领所需的权限</em></strong>。</p>
-</blockquote>
-<p>powers 显然是 ability 的意思，powers of leadership = 领导能力，怎么会是权限…</p>
-<blockquote>
-<p>(Page 40) Emperor Meiji processed triumphantly from the ancient capital of Kyoto to Edo in 1868, and within a year his temporary palace in <strong><em>the eastern city</em></strong> was declared the new Imperial Palace.</p>
-<p>（第 36 页）1868 年，明治天皇以胜利的姿态从古都京都迁至江户，不出一年，他就将<strong><em>东边的</em></strong>临时行宫定为新皇居。</p>
-</blockquote>
-<p>英语原文里 the eastern city 就是指 Edo，这是很明确的，中文翻译成“东边的”则好像没那么清楚是指江户了，不过问题不大。这种换名指代是英语写作很常见的，如果从头到尾都用 Edo 未免有些乏味，可以偶尔换称之 the eastern city（这座东边的城市）。如果写中国，一直用 China 也是很无聊的，可以换称之 the sleeping giant（沉睡的巨人），出自拿破仑对中国的评价，当然这是要用在表现中国潜力的语境下。此外还有把微软称为 the software giant，把 IBM 称为 the Big Blue 等，这些是比较公认的外号，也可以自己起外号，只要指代清楚就行。</p>
-<blockquote>
-<p>(Page 43) The <strong><em>effective</em></strong> concentration of power in the hands of a relatively small group of tozama daimyo represented a radical shift in the domestic balance of power, and it was met with serious resistance in some areas.</p>
-<p>（第 38 页）权力<strong><em>有效地</em></strong>集中在相对较小的外样大名集团手中，这显示了日本国内实力均衡的根本变化，并在一些地方遭到了严重抵触。</p>
-</blockquote>
-<p>effective 的确有“有效”的意思，但是这里意思是“实际效果上的”“事实上的”，和“理论上的”“名义上的”相对。比如有一个组织的领袖是 A，后来 B 篡权，把 A 架空了，虽然 A 名头上还是领袖，但其实真正管事的是 B 了，那么 B 就叫 the effective leader. 书里的意思大概是权力理论上是在别人（大众）手里，但事实上说话算数的只是一小部分外样大名。</p>
-<blockquote>
-<p>(Page 46) This particular command had two serious <strong><em>implications</em></strong> for the new regime: […]</p>
-<p>（第 41 页）这样一条命令对新政权有两点重大的<strong><em>暗示</em></strong>：[…]</p>
-</blockquote>
-<p>implications: 暗示；<strong><em>影响；后果</em></strong></p>
-<h3 id="references">References</h3>
-<div class="footnotes">
-<hr>
-<ol>
-<li id="fn1"><p><a href="https://www.zhihu.com/question/35318893" target="_blank" rel="external">知乎：为什么称可逆矩阵为“非奇异”？</a><a href="#fnref1">↩</a></p></li>
-</ol>
+                <p>看题目名大概是虚拟机（VM）题。先运行一下，提示输入用户名和密码，输错后提示错误退出。看 <code>main</code> 函数，拉到最后：</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af2b2bd1.png">
+
+</div>
+<p>可见要打印出 flag，需要 <code>v5</code> 和 <code>v8</code> 同时为 0。<code>v5</code> 是一个字符串比较的结果，<code>v8</code> 是一块内存的值。做题时发现 <code>v5</code> 不涉及虚拟机，比较好搞，先看它。</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af3b097c.jpg">
+
+</div>
+<p><code>v5</code> 和一串疑似 base64 编码的字符串比较，在 <code>base64_encode</code> 函数中可以确认的确是 base64 算法，但字母表改过：</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af337301.png">
+
+</div>
+<p>用这个字母表解码那串 base64，得到 <code>EF468DBAF985B2509C9E200CF3525AB6</code>。</p>
+<p>再前一个函数 <code>convert_to_binascii</code> 只是把数组转换成字符串，如 0x61, 0x62, 0x63 转换成 616263。</p>
+<p>前面两个函数看起来是加密算法，搜索其中魔术数 <code>0xA3B1BAC6</code> 可知是 SM4 算法，其密钥在前面的一串赋值语句里。<a href="https://github.com/fantapsody/libsms4" class="uri" target="_blank" rel="external">https://github.com/fantapsody/libsms4</a> 这里找了个解密库，自己改一下解密 <code>EF468DBAF985B2509C9E200CF3525AB6</code>。</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af5c79ca.png">
+
+</div>
+<p>得到 <code>6261647265723132</code>。这应该是输入正确的用户名和密码时，提供给加密函数 <code>sub_4018C4()</code> 的输入，即 <code>v13</code> 的内容，而 <code>v13</code> 由前面一个函数 <code>sub_4066C0()</code> 对用户名进行变换得到，测试了下，这个变换应该是把用户名转成十六进制的 ASCII 码串，比如 abc 转成616263。那么 <code>6261647265723132</code> 对应的用户名就是 <code>badrer12</code>。</p>
+<p>用户名解决了，接着是密码，整个 <code>v5</code> 都没涉及到密码，因此 <code>v8</code> 应该和密码有关，看看密码输入后存到哪：</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af41e506.png">
+
+</div>
+<p>是存到 <code>ptr</code> 为首地址的一块内存里。上下又有两个函数引起注意：<code>vm_init()</code> 和 <code>vm_execute()</code>，<code>vm_init()</code> 里是大量的赋值，可能是对某个结构进行初始化，这个结构随后传给 <code>vm_execute()</code>，<code>vm_execute()</code> 本身只是一个循环里调用另一个函数，进入这个函数 <code>sub_40656D()</code> 可以看到很明显是解释 opcode 的虚拟机：</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af4f0bc6.png">
+
+</div>
+<p>看到这里，再回去 <code>vm_init()</code>，这时一些初始化操作的意义就比较清楚了。</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af3cff9a.png">
+
+</div>
+<p>像这样的初始化，上面是 opcode，下面是这个 opcode 对应的函数即 handler。大概是虚拟机会对输入的密码进行操作，最后得到一个值，这个值赋给 <code>v8</code> 然后判断是否为 0。直接从 IDA 里把虚拟机部分的代码复制出来，写一个 C 程序模拟这个虚拟机，并根据最终值是否为 0 分别打印 Right 和 Wrong，然后用 angr 符号执行一下就得到密码了。angr 脚本：</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af71aa70.png">
+
+</div>
+<p>运行脚本，等几分钟就有结果。</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af439ffc.png">
+
+</div>
+<p>所以密码是 <code>xyz{|}</code>。</p>
+<p>本地测试一下，成功。</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8af515ad3.png">
+
+</div>
+<p><code>nc</code> 连远程服务器有个坑，密码的结尾不能有换行符，也就是输完密码不能用回车来结束输入… 不然打印不出 flag。所以输完密码立即按 Ctrl+D 输入 <code>EOF</code>，就可以得到 flag。</p>
+<div class="figure">
+<img src="https://i.loli.net/2019/04/21/5cbc8c68d85ea.png">
+
 </div>
 
 
@@ -289,13 +285,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2019/04/23/ciscn-2019-bbvvmm-writeup/" data-toggle="tooltip" data-placement="top" title="第十二届全国大学生信息安全竞赛初赛 bbvvmm 解题报告（writeup）">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2019/01/09/x86-instructions-notes/" data-toggle="tooltip" data-placement="top" title="x86 指令笔记">Next Post &rarr;</a>
+                            <a href="/2019/03/09/on-vsi-modern-japan-translation/" data-toggle="tooltip" data-placement="top" title="《VSI：现代日本》翻译杂谈">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
