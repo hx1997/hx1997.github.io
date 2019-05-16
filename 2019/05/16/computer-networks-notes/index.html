@@ -13,11 +13,11 @@
 
     <title>
         
-          Goulash
+          计算机网络笔记（草稿） - Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/archives/2016/">
+    <link rel="canonical" href="https://hx1997.github.io/2019/05/16/computer-networks-notes/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -165,7 +165,176 @@
 
 
     <!-- Main Content -->
-    <!-- Default Archive layout, we use archives instead. -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s2.ax1x.com/2019/05/03/EUBBFO.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                        
+                          <a class="tag" href="/tags/#CS" title="CS">CS</a>
+                        
+                          <a class="tag" href="/tags/#计算机网络" title="计算机网络">计算机网络</a>
+                        
+                    </div>
+                    <h1>计算机网络笔记（草稿）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2019-05-16 | 
+                        <span id="/2019/05/16/computer-networks-notes/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>参考教材：谢希仁《计算机网络（第 7 版）》、Douglas E. Comer《计算机网络与因特网（第六版）》、James F. Kurose, Keith W. Ross《计算机网络：自顶向下方法（第 7 版）》、王道论坛《计算机网络考研复习指导》</p>
+<h3 id="概述">概述</h3>
+<h4 id="计算机网络基本知识">计算机网络基本知识</h4>
+<p>三网：计算机网络、电信网、有线电视网</p>
+<p>计算机网络：以能够共享资源的方式互联起来的自治计算机系统的集合</p>
+<ul>
+<li><p>计算机网络的最基本功能：数据通信</p></li>
+<li><p>计算机网络的目的：资源共享</p></li>
+</ul>
+<blockquote>
+<p>早期设计计算机网络的时候，计算机都是<strong>昂贵</strong>的大型机，而且设计的主要动机是为了<strong>资源共享</strong>。例如，网络只是被设计成将多用户终端（只有显示器和键盘）连接到一台<strong>中心的大型计算机</strong>。后来，网络又允许多用户终端可以<strong>共享外部设备</strong>（如打印机等）。</p>
+</blockquote>
+<p>internet（互连网）：即网络的网络（network of networks），是由多个计算机网络互相连接形成的网络。</p>
+<p>Internet（因特网）：全球最大的 internet，采用 TCP/IP 协议栈，前身是美国军方项目 ARPANET。</p>
+<ul>
+<li>ISP：Internet Service Provider. 因特网商用后，由各商业公司共同运营，这些商业公司即 ISP. ISP 拥有大量 IP 地址及网络设备，用户购买 ISP 的服务，通过 ISP 接入因特网。中国最大的 ISP 有中国电信、中国移动和中国联通。</li>
+</ul>
+<h4 id="因特网的组成结构">因特网的组成结构</h4>
+<p>因特网由核心部分、边缘部分和接入网组成。</p>
+<ul>
+<li><p>核心部分：网络和连接各网络的路由器。核心部分为边缘部分提供<strong>联通性</strong>和<strong>交换</strong>的服务。</p></li>
+<li><p>边缘部分：所有连接在因特网核心部分上的主机，即端系统（end systems），意思是因特网末端的计算机系统，不会再从这向外延伸。我们平常在家上网用的设备（电脑、手机等）都是端系统。</p></li>
+<li><p>接入网：连接核心部分与边缘部分的网络。</p></li>
+</ul>
+<p>如下图，黄圈内为核心部分，绿圈内为接入网，红圈内为边缘部分。</p>
+<div class="figure">
+<img src="./computer-networks-notes/1.PNG">
+
+</div>
+<h4 id="计算机网络的分类">计算机网络的分类</h4>
+<h5 id="按作用范围分">按作用范围分</h5>
+<ul>
+<li>个人区域网、个域网（PAN）：如两台蓝牙设备互连形成的网络，范围仅十米左右。</li>
+<li>局域网（LAN）：如家里的路由器组成的接入网、学校的校园网，范围可达 1km 左右。局域网即俗话说的“内网”，与“外网”即因特网相对。</li>
+<li>城域网（MAN）：如有线电视的城域网，范围大概横跨一座城市，5-50km 左右。</li>
+<li>广域网（WAN）：如跨省跨国公司各分部之间建立的网络，范围达几十到几千公里。</li>
+</ul>
+<h5 id="按使用者分">按使用者分</h5>
+<ul>
+<li>公用网（public network）：由 ISP 拥有，供公众使用。</li>
+<li>专用网（private network）：由各单位拥有，仅供单位内部使用。如军队、银行都有自己的专用网。</li>
+</ul>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/04/23/ciscn-2019-bbvvmm-writeup/" data-toggle="tooltip" data-placement="top" title="2019 第十二届全国大学生信息安全竞赛初赛 bbvvmm 解题报告（writeup）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
 
     <!-- Footer -->
     <!-- Footer -->
