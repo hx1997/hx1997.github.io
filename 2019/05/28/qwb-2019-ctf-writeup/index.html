@@ -13,11 +13,11 @@
 
     <title>
         
-          Goulash
+          2019 第三届强网杯解题报告（writeup） - Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/archives/2019/">
+    <link rel="canonical" href="https://hx1997.github.io/2019/05/28/qwb-2019-ctf-writeup/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -165,7 +165,176 @@
 
 
     <!-- Main Content -->
-    <!-- Default Archive layout, we use archives instead. -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s2.ax1x.com/2019/05/03/EUBBFO.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                        
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                    </div>
+                    <h1>2019 第三届强网杯解题报告（writeup）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2019-05-28 | 
+                        <span id="/2019/05/28/qwb-2019-ctf-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="x0.-misc-签到">0x0. MISC – 签到</h3>
+<p>打开题目，大喊“隐藏着黑暗力量的钥匙啊，在我面前显示你真正的力量！跟你定下约定的cxk命令你，封印解除！” flag就会自己把自己解出来。 <span class="math display">\[
+flag\{welcome\_to\_qwb\_2019\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeR2Hf.png"></p>
+<h3 id="x1.-misc-强网先锋-打野">0x1. MISC – 强网先锋-打野</h3>
+<p>比赛时没做出来（我打 CTF 像 cxk），搜了一下，用 <code>zsteg</code> 看一下隐写数据就得到 flag。（🐓你太美 <span class="math display">\[
+qwxf\{you\_say\_chick\_beautiful?\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeIh5V.png"></p>
+<h3 id="x2.-crypto-强网先锋-辅助">0x2. CRYPTO – 强网先锋-辅助</h3>
+<p>打开下载到的 Python 脚本，看到 <span class="math inline">\(p, q, e, n\)</span> 几个字母就知道是 RSA 题。进行了两次 RSA 加密，一次是将 flag 加密，另一次是将 32 个 1 组成的字符串加密。题目给出了 <span class="math inline">\(c, e, n\)</span>，观察代码，发现第一次加密使用的素数 <span class="math inline">\(q\)</span> 重复用到了第二次加密中，这意味着两次加密的 <span class="math inline">\(n_1=p_1 q\)</span>, <span class="math inline">\(n_2=p_2 q\)</span> 有公因数 <span class="math inline">\(q\)</span>。使用模不互素攻击，求 <span class="math inline">\(n_1\)</span> 与 <span class="math inline">\(n_2\)</span> 的最大公因数，可直接得到 <span class="math inline">\(q\)</span> 和 <span class="math inline">\(p_1\)</span>。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRgDP.png">
+
+</div>
+<p>分解了大素数乘积，RSA的难题就攻克了，接下来就是常规套路按公式解出明文。</p>
+<p>求欧拉函数值 <span class="math inline">\(\varphi(n_1)=(p_1-1)(q-1)​\)</span></p>
+<p>求私钥，即 <span class="math inline">\(e​\)</span> 关于 <span class="math inline">\(\varphi(n_1)​\)</span> 的模反元素，<code>d = gmpy2.invert(e, phi)</code></p>
+<p>解密：<span class="math inline">\(m = c^d \mod n_1\)</span> <span class="math display">\[
+flag\{i\_am\_very\_sad\_233333333333\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeRcut.png"></p>
+<h3 id="x3.-reverse-强网先锋-ad">0x3. REVERSE – 强网先锋-AD</h3>
+<p>直接上 IDA。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRyjI.png">
+
+</div>
+<p><code>main()</code> 函数里接受输入，一串赋值后执行 <code>sub_4005B7()</code>，最后循环比较字符。先看看比较的两个字符串，<code>v4</code> 是传入 <code>sub_4005B7()</code> 的参数，而 <code>v5</code> 在上面的一串赋值里初始化，看下 <code>v5</code> 的值。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRsgA.png">
+
+</div>
+<p>这些都是 ASCII 码，转成字符来看。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRh4g.png">
+
+</div>
+<p>局部变量一般是按声明顺序分配栈空间，因此连续的声明就会分配到连续的内存，<code>v5</code>, <code>v6</code>, <code>v7</code>… 其实是同一个字符串里的连续字符，这个字符串以 <code>==</code> 结尾，怀疑是 base64 编码，带着这种猜测继续看代码。</p>
+<p>在 <code>sub_4005B7()</code> 中发现了 base64 字母表，很明显这个函数就是 base64 编码函数。因此程序流程就是将输入 base64 编码，再和以上固定的字符串比较。将固定字符串 base64 解码就得到 flag。 <span class="math display">\[
+flag\{mafakuailaiqiandaob\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeRWE8.png"></p>
+<h3 id="x3.-reverse-justre">0x3. REVERSE – JUSTRE</h3>
+<p>待更</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/05/16/computer-networks-notes/" data-toggle="tooltip" data-placement="top" title="计算机网络笔记（草稿）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
 
     <!-- Footer -->
     <!-- Footer -->
