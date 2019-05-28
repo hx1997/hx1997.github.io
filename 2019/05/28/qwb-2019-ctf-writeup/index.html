@@ -108,7 +108,7 @@
 
                         
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -122,7 +122,7 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
@@ -183,11 +183,11 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
                         
                           <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
                         
-                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
                         
                     </div>
                     <h1>2019 第三届强网杯解题报告（writeup）</h1>
@@ -219,7 +219,7 @@
                 post-container">
 
                 <h3 id="x0.-misc-签到">0x0. MISC – 签到</h3>
-<p>打开题目，大喊“隐藏着黑暗力量的钥匙啊，在我面前显示你真正的力量！跟你定下约定的cxk命令你，封印解除！” flag就会自己把自己解出来。 <span class="math display">\[
+<p>打开题目，大喊“隐藏着黑暗力量的钥匙啊，在我面前显示你真正的力量！跟你定下约定的 cxk 命令你，封印解除！” flag 就会自己把自己解出来。 <span class="math display">\[
 flag\{welcome\_to\_qwb\_2019\}
 \]</span> <img src="https://s2.ax1x.com/2019/05/28/VeR2Hf.png"></p>
 <h3 id="x1.-misc-强网先锋-打野">0x1. MISC – 强网先锋-打野</h3>
@@ -259,7 +259,123 @@ flag\{i\_am\_very\_sad\_233333333333\}
 flag\{mafakuailaiqiandaob\}
 \]</span> <img src="https://s2.ax1x.com/2019/05/28/VeRWE8.png"></p>
 <h3 id="x3.-reverse-justre">0x3. REVERSE – JUSTRE</h3>
-<p>待更</p>
+<p>直接上 IDA。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRogs.png">
+
+</div>
+<p>这里就是 <code>main()</code> 函数，看字符串很容易找到。逻辑十分简单，可以猜测 <code>sub_401CE0()</code> 是 <code>scanf()</code> 函数，接受输入的字符串并存到 <code>v1</code> 中，然后将 <code>v1</code> 作为参数先后调用 <code>sub_401610()</code> 和 <code>sub_4018A0()</code>，均返回 1 则回显 flag。</p>
+<p>看下 <code>sub_401610()</code>。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeR5CQ.png">
+
+</div>
+<p>一上来是个循环，又 0 又 9 又 A 的，直接猜是将输入字符串转为数字。在 <code>v9</code> 那一行（75 行）下断点可以看到的确如此。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRI3j.png">
+
+</div>
+<p>输入 <code>12ABCD3456</code>，前八位被转成了十六进制数 <code>0x12ABCD34</code> 存到 <code>v3</code> 中。</p>
+<p>至于 <code>v3</code> 外面的两个函数是什么，我们需要翻阅古老的典籍——英特尔内部函数指南（Intel® Intrinsics Guide），里面记载了 XMM 法术的各种细节。首先我们在典籍中检索 <code>_mm_cvtsi32_si28</code>。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRHuq.png">
+
+</div>
+<p>这真是太不可思议了，原来这个函数就是 <code>movd</code> 魔咒的封装，作用是把输入 <code>a</code> 零扩展为 128 位并存到指定 XMM 寄存器中。</p>
+<p>这时我们有必要切换所使用的工具，因为 IDA 对 XMM 寄存器的显示乱七八糟（可能只是我不会用吧）。换用 x32dbg。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRTvn.png">
+
+</div>
+<p>在刚刚调用 <code>_mm_cvtsi32_si28()</code> 函数的附近下断点，可以看到刚才两个函数其实分别对应两条汇编指令 <code>movd</code> 和 <code>pshufd</code>，可以查内部函数指南了解它们具体的功能，但也可以直接观察寄存器内容：经过这两条指令后，XMM0 存入了零扩展后的十六进制数，而 XMM5 则将低 32 位复制到了高 96 位。</p>
+<p>大概知道了这一块代码在做什么，回到 IDA 继续往下看。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRbD0.png">
+
+</div>
+<p>又是一段类似的代码，但这次是对 <code>v10</code> 即 <code>v2+8</code> 的位置进行操作，<code>v2</code> 就是我们输入的字符串<code>12ABCD3456</code>，<code>v2+8</code> 就是 5 这个位置。再往下看还有一段对 <code>v2+9</code> 的类似操作，<code>v2+9</code> 就是 6 这个位置，因此有理由怀疑这一块代码是将输入的第 9 位和第 10 位转成十六进制数。事实上，我们在这一块代码末尾的下图处下断点就可以知道的确如此。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeROET.png">
+
+</div>
+<p>这里又有三行内部函数对 XMM 寄存器操作，再次切换到 x32dbg，在下图处断点。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRXUU.png">
+
+</div>
+<p>看到 XMM0 变成了输入的第 9 位和第 10 位的重复序列 <code>565656……</code>，并且 <code>movaps</code> 指令还将 XMM0 传送到了栈上。结合上上张图 IDA 的伪代码，栈上这个位置就是局部变量 <code>v27</code>，也就是说 <code>v27</code> 里现在存着 <code>565656……</code>。</p>
+<p>回到 IDA 往下看，接下来有一串 XMM 操作，看着眼花，还好我们快到函数末尾了，先拉到最底看看什么情况。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRqbV.png">
+
+</div>
+<p>回忆一下，在 <code>main()</code> 函数中要求这个函数返回值为 1，因此流程必须要走到最里面。这里是在比较两块内存的值是否相等，比较 96 字节如果全部相等则进入最内层。比较的两块内存首地址是 <code>&amp;xmmword_405018</code> 和 <code>&amp;loc_404148</code>，前者在我们刚才跳过的部分里修改了，后者则是固定的。在最内层中，有一个反调试，可以 patch 掉，最后是 <code>WriteProcessMemory()</code> 修改自身内存，将 <code>xmmword_405018</code> 的 96 字节写到 <code>sub_4018A0()</code> 处。而 <code>xmmword_405018</code> 又必须和 <code>loc_404148</code> 相等，因此我们看看 <code>loc_404148</code> 处是什么。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRj5F.png">
+
+</div>
+<p>竟然是一段代码！</p>
+<p>总结一下目前的发现：</p>
+<ol style="list-style-type: decimal">
+<li><p>函数先把输入的前 8 个字符转为十六进制数，然后复制为 128 位存到局部变量中。</p></li>
+<li><p>把输入的第 9 字符和第 10 字符转为十六进制数，然后复制为 128 位存到局部变量中。</p></li>
+<li><p>对这两个局部变量进行一些运算，结果存到 <code>&amp;xmmword_405018</code> 为首地址的一块内存中。</p></li>
+<li><p>比较 <code>xmmword_405018</code> 与固定值 <code>loc_404148</code>，比较 96 字节。</p></li>
+<li><p>若全部相等，则将 <code>xmmword_405018</code> 处的代码复制到 <code>sub_4018A0()</code> 处。</p></li>
+</ol>
+<p>现在回头看刚刚跳过的部分。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRxC4.png">
+
+</div>
+<p>最开始的 <code>if</code> 是个反调试，可以 patch 掉。然后是一串 XMM 操作，参与运算的操作数有 <code>v27</code>, <code>v9</code>, <code>v21</code>，<code>v9</code> 就是上述“目前发现”的第 1 步结果，<code>v27</code> 是上述“目前发现”的第 2 步结果，<code>v21</code> 是对 <code>v27</code> 运算的结果，因此真正的输入只有两个：<code>v9</code>, <code>v21</code>，我们需要找出什么样的输入经过这些运算能与固定值 <code>loc_404148</code> 相等。具体的运算可以查英特尔内部函数指南，这里不赘述，我们重点看第 152 行到第 157 行，这几行的运算最简单，看懂了就可以反推出正确的输入。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRz8J.png">
+
+</div>
+<p><code>xmmword_404360</code> 和 <code>xmmword_404340</code> 是预设的固定值，<code>_mm_add_epi32</code> 将它们每 32 位为一组相加（例如，0x1000000020000000+0x30000000F0000000=0x4000000010000000），结果再与 <code>v9</code> 每 32 位为一组相加，这个结果我们记为 <code>a</code>。<code>xmmword_405038</code> 也是固定值，它和 <code>v21</code> 每 32 位为一组相加，结果记为 <code>b</code>。最后 <code>xmmword_405038</code> 的值赋为 <code>a</code> 和 <code>b</code> 按位异或。155 行的运算类似。</p>
+<p><code>xmmword_405038</code> 其实就是 <code>xmmword_405018</code> 往后 0x20 字节处，也就是 <code>loc_404148</code> 往后 0x20 字节处，因此输入应满足方程：</p>
+<p><code>a XOR b == *(xmmword *)((BYTE *)&amp;loc_404148 + 0x20)</code></p>
+<p>155 行可以类似列出一条方程，两条方程解两个未知数 <code>v9</code> 和 <code>v21</code>，用 Z3 求解。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWPDx.png">
+
+</div>
+<p>运行，解出 <code>v9</code> 和 <code>v21</code>。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWS29.png">
+
+</div>
+<p>转为十六进制数即 <code>0x13242208</code> 和 <code>0x19</code>，所以程序输入的前十个字符应该是 <code>1324220819</code>。</p>
+<p>前十个字符正确后，<code>sub_4018A0()</code> 处的原本代码会被覆盖，也就是代码进行了自修改。看看修改后的函数。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWCK1.png">
+
+</div>
+<p>IDA 现在无法反编译为伪代码，不过我们可以直接修改 exe，手动把 <code>sub_4018A0()</code> 处的字节覆盖为新函数的字节。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWpvR.png">
+
+</div>
+<p>在这里覆盖，然后重新用 IDA 打开，找到函数就可以反编译。简单看了下，是 3DES 加密，密钥在：</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWib6.png">
+
+</div>
+<p>注意小端序，顺序是反的。</p>
+<p>函数对输入的后 16 个字符进行 3DES 加密，并和固定值比较。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWkVK.png">
+
+</div>
+<p>对固定值用密钥解密，得到输入的后 16 字符。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWAUO.png">
+
+</div>
+<p>因此，最终正确输入就是 <code>13242208190dcc509a6f75849b</code>。 <span class="math display">\[
+flag\{13242208190dcc509a6f75849b\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeWE5D.png"></p>
 
 
                 <hr>
