@@ -359,13 +359,13 @@ flag\{mafakuailaiqiandaob\}
 </div>
 <p>在这里覆盖，然后重新用 IDA 打开，找到函数就可以反编译。简单看了下，是 3DES 加密，密钥在：</p>
 <div class="figure">
-<img src="https://s2.ax1x.com/2019/05/28/VeWib6.png">
+<img src="https://s2.ax1x.com/2019/05/28/VeWkVK.png">
 
 </div>
 <p>注意小端序，顺序是反的。</p>
 <p>函数对输入的后 16 个字符进行 3DES 加密，并和固定值比较。</p>
 <div class="figure">
-<img src="https://s2.ax1x.com/2019/05/28/VeWkVK.png">
+<img src="https://s2.ax1x.com/2019/05/28/VeWib6.png">
 
 </div>
 <p>对固定值用密钥解密，得到输入的后 16 字符。</p>
