@@ -17,7 +17,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/">
+    <link rel="canonical" href="https://hx1997.github.io/page/3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -202,259 +202,21 @@
 
 <div class="post-preview">
 
-    <a href="/2019/06/02/liu-xin-trish-talk/">
+    <a href="/2016/11/06/hello-world/">
         <h2 class="post-title">
-            刘欣翠西辩论
+            Hello World
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            
-您的浏览器不支持 video 标签。
-
-...
+            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Q......
         </div>
     </a>
     <p class="post-meta">
         Posted by HX on
-        2019-06-02
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2019/05/28/qwb-2019-ctf-writeup/">
-        <h2 class="post-title">
-            2019 第三届强网杯解题报告（writeup）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            0x0. MISC – 签到
-打开题目，大喊“隐藏着黑暗力量的钥匙啊，在我面前显示你真正的力量！跟你定下约定的 cxk 命令你，封印解除！” flag 就会自己把自己解出来。 \[
-flag\{welcome\_to\_qwb\_2019\}
-\] 
-0x1. MISC – 强网先锋-打野
-比赛时没做出来（我打 CTF 像 cxk），搜了一下，用 zsteg 看一下隐写数据就得到 ......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2019-05-28
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2019/05/16/computer-networks-notes/">
-        <h2 class="post-title">
-            计算机网络笔记（草稿）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            参考教材：谢希仁《计算机网络（第 7 版）》、Douglas E. Comer《计算机网络与因特网（第六版）》、James F. Kurose, Keith W. Ross《计算机网络：自顶向下方法（第 7 版）》、王道论坛《计算机网络考研复习指导》
-概述
-计算机网络基本知识
-三网：计算机网络、电信网、有线电视网
-计算机网络：以能够共享资源的方式互联起来的自治计算机系统的集合
-
-......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2019-05-16
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2019/04/23/ciscn-2019-bbvvmm-writeup/">
-        <h2 class="post-title">
-            2019 第十二届全国大学生信息安全竞赛初赛 bbvvmm 解题报告（writeup）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            看题目名大概是虚拟机（VM）题。先运行一下，提示输入用户名和密码，输错后提示错误退出。看 main 函数，拉到最后：
-
-
-
-
-可见要打印出 flag，需要 v5 和 v8 同时为 0。v5 是一个字符串比较的结果，v8 是一块内存的值。做题时发现 v5 不涉及虚拟机，比较好搞，先看它。
-
-
-
-
-v5 和一串疑似 base64 编码的字符串比较，在 base64_encod......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2019-04-23
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2019/03/09/on-vsi-modern-japan-translation/">
-        <h2 class="post-title">
-            《VSI：现代日本》翻译杂谈
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            前段时间看了译林出版社《牛津通识读本》（Very Short Introductions, VSI）系列的《现代日本》，感觉讲得不错，安利一下。书里从德川幕府讲起，经过黑船来航、明治维新、帝国时期、二战时期、战后被美国占领、否认战争罪行，最后讲到本世纪日本经济。书的篇幅较短，中文翻译仅一百三十余页，只能算是走马观花了。
-翻译总的来说还是可以的，有些我觉得不对或不合适的地方，挑出来说一说。只......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2019-03-09
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2019/01/09/x86-instructions-notes/">
-        <h2 class="post-title">
-            x86 指令笔记
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            最近在写一个辣鸡 x86 反汇编器，做点笔记。
-概述
-x86 指令有 6 部分，并不是每条指令都要有全部部分：
-
-指令前缀（0 - 4 字节）
-指令码（opcode，1 - 2 字节）
-ModR/M（0 - 1 字节）
-SIB（0 - 1 字节）
-偏移（0/1/2/4 字节）
-立即数（0/1/2/4 字节）
-
-另外，第一操作数是指两个操作数中较复杂的那个，第二操作数是指......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2019-01-09
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/12/02/pcb-2018-ctf-writeup/">
-        <h2 class="post-title">
-            2018 鹏城杯 CTF 部分解题报告（writeup）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            0x0. 前言
-最近连续参加了几场 CTF，这算是打得最好的一场了，虽然还是很菜。题目 pwn 比较多，只做出最简单的一道… 总体来说玩得还是很开心。
-0x1. Misc - Traffic Light - 100 pt
-图片隐写题。
-给了一个 GIF 图，以为是 LSB 那种套路题，结果不是。文件很大，有 18MB，动画内容是一个红绿灯不停地闪，看了一会儿发现闪的灯有猫腻，并不是简......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2018-12-02
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/11/25/xnuca-2018-ctf-writeup/">
-        <h2 class="post-title">
-            X-NUCA（全国高校网安联赛）2018 Code Interpreter 解题报告（writeup）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            0x0. 前言
-8 个人只做出了这唯一的一道题，太惨了… 不过第一次做虚拟机的题，做出来很开心。有道密码学热身题是 RSA，解出来的人多到都降分到 100+ 了，还是不会解，我真的好菜。另外一道逆向题看了下，想起和看雪 CTF 的叹息之墙很像，搜了一下，发现这种混淆叫做控制流平坦化（control flow flattening），第一次见，解不出来。用了腾讯实验室的脚本 deflat.p......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2018-11-25
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/10/23/on-inanimate-subjects/">
-        <h2 class="post-title">
-            对无灵主语的一点观察
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            今天（原文成于国庆）提着行李回家，有个袋子太重，裂开了。后来我就在想这件事用英语怎么说，上网搜了一下，说法是 The bag was too heavy and it tore/ripped. 袋子自己怎么能 tear/rip（撕扯）呢？不应该是 it got torn/ripped 吗？查了词典，发现 rip 的定义是（tear 的类似）：to tear something or to b......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2018-10-23
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/10/16/ustc-hackergame-2018-writeup/">
-        <h2 class="post-title">
-            中科大第五届信息安全大赛部分解题报告（writeup）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            0x0. 前言
-作为校外其他组参赛，最后总排名 94，其他高校组排名 69，我还是好菜啊。
-0x1. 猫咪和键盘 150
-题目是一个 C++ 源文件，似乎每一行的顺序被打乱了，但各行打乱的规律都是相同的。
-
-
-
-
-写 Python 脚本逐行恢复原本顺序。
-1234567891011newline = ''for line in open('./typed_printf.cp......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2018-10-16
+        2016-11-06
     </p>
 
 </div>
@@ -466,10 +228,10 @@ SIB（0 - 1 字节）
 
 <ul class="pager">
     
-    
-        <li class="next">
-            <a href="/page/2/">Older Posts &rarr;</a>
+        <li class="previous">
+            <a href="/page/2/">&larr; Newer Posts</a>
         </li>
+    
     
 </ul>
 
