@@ -108,14 +108,14 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -223,59 +223,59 @@
 <p>先运行观察下行为，提示输入 flag，随便输入后程序退出。</p>
 <p>拖进 IDA 看代码，<code>main</code> 函数一上来进入 <code>sub_804865B</code>，这是第一处反调试。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcTc6.png" alt="NBcTc6.png">
-<p class="caption">NBcTc6.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcTc6.png">
+
 </div>
 <p>Linux 下，程序无调试器运行时，环境变量_会是程序自身路径，有调试器时，这个环境变量会被调试器改变，可以据此区分程序是否被调试。</p>
 <p>回到 <code>main</code>，把下图两条指令 <code>nop</code> 掉，去掉这个反调试。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBc4hR.png" alt="NBc4hR.png">
-<p class="caption">NBc4hR.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBc4hR.png">
+
 </div>
 <p>接着，程序提示输入 flag，将其作为整数存入全局变量 <code>dword_804A038</code>。在块 <code>loc_80486E7</code> 和 <code>loc_80486F5</code> 中，将其值加 1 并存回。</p>
 <p>块 <code>loc_80486F5</code> 中调用函数 <code>sub_804857B</code>，这是第二处反调试。函数中，首先布置好系统调用所需的参数和调用号。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBco1x.png" alt="NBco1x.png">
-<p class="caption">NBco1x.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBco1x.png">
+
 </div>
 <p>然后跳到 <code>loc_80485A0</code> 进行系统调用。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcI91.png" alt="NBcI91.png">
-<p class="caption">NBcI91.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcI91.png">
+
 </div>
 <p>查表知 Linux x86 的系统调用号 0x20 是 <code>ptrace</code>，这个系统调用以 C 语言写出相当于 <code>ptrace(0,0,1,0);</code> 这是个典型的反调试。在上图中，根据 <code>ptrace</code> 的返回值决定是否进入错误的分支。将 <code>jl short loc_80485AE</code> 这条指令 <code>nop</code> 掉，去掉这个反调试。</p>
 <p>回到 <code>main</code>，在块 <code>loc_804870D</code> 和 <code>loc_8048701</code> 中，再次将全局变量 <code>dword_804A038</code> 加 1 并存回。接着调用 <code>sub_80485C4</code>，在此函数中布置系统调用号 0x14，然后跳到 <code>loc_80485F8</code> 进行系统调用，相当于 C 语言 <code>getpid();</code>，作用是获取当前进程 PID。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBchN9.png" alt="NBchN9.png">
-<p class="caption">NBchN9.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBchN9.png">
+
 </div>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcbnO.png" alt="NBcbnO.png">
-<p class="caption">NBcbnO.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcbnO.png">
+
 </div>
 <p>同时 <code>loc_80485F8</code> 还布置了下一个系统调用号 0x40，接着，跳到 <code>loc_804860B</code> 进行系统调用，相当于 C 语言 <code>getppid();</code>，作用是获取父进程 PID。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcqBD.png" alt="NBcqBD.png">
-<p class="caption">NBcqBD.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcqBD.png">
+
 </div>
 <p>同时 <code>loc_804860B</code> 还布置了下一个系统调用号 0x93，接着，跳到 <code>loc_804861E</code> 进行系统调用，参数是刚才获取的当前进程 PID，相当于 C 语言 <code>getsid(getpid());</code>，作用是获取当前进程 SID。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcLHe.png" alt="NBcLHe.png">
-<p class="caption">NBcLHe.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcLHe.png">
+
 </div>
 <p>上图将 <code>getsid(getpid())</code> 与 <code>getppid()</code> 比较，不相等则进入错误分支。将 <code>jnz short loc_8048634</code> 这条指令 <code>nop</code> 掉，去掉这个反调试。</p>
 <p>回到 <code>main</code>，在 <code>loc_8048727</code> 和 <code>loc_804871B</code> 将全局变量 <code>dword_804A038</code> 加上 0xCCCCCCCC 并存回。接着调用 <code>sub_80485C4</code>，即刚才的第二处反调试，因为已经处理，所以不管它，接着往下看。</p>
 <p>在 <code>loc_804873B</code> 中将全局变量 <code>dword_804A038</code> 加 1 并存回，调用 <code>sub_8048753</code>。此函数中又调用 <code>sub_8048691</code>，进入查看。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcXAH.png" alt="NBcXAH.png">
-<p class="caption">NBcXAH.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcXAH.png">
+
 </div>
 <p><code>sub_8048691</code> 的功能是把 <code>eax</code> 所指向的内存地址存储的字节替换为 0x90（即 <code>nop</code> 指令）。前面操作全局变量 <code>dword_804A038</code> 时以 <code>eax</code> 为中介，所以 <code>eax</code> 里现在存的就是 <code>dword_804A038</code> 的值。但是这个函数有什么意义呢？现在还不清楚，先接着往后看。</p>
 <p>回到 <code>sub_8048753</code>，将 <code>eax</code> 加 1 后再次调用 <code>sub_8048691</code>。所以，这一块代码应该是把内存某个位置连续的两个字节 <code>nop</code> 掉了。</p>
 <p>接着，程序直接跳入了错误分支，与此同时 IDA 中可以看到正确分支就在附近，且如果不经过 0x8048765 处的 <code>jmp</code>，就可以进入正确分支。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcz9I.png" alt="NBcz9I.png">
-<p class="caption">NBcz9I.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcz9I.png">
+
 </div>
 <p>这时就明白了上面 <code>sub_8048691</code> 的功能，它给了我们 <code>nop</code> 掉 0x8048765 的 <code>jmp</code> 的能力，这个 <code>jmp</code> 正好占两字节。</p>
 <p>到此，程序就分析完了。流程整理如下（不考虑反调试）：</p>
@@ -291,8 +291,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flag+0xCCCCCCCF==0x8048765</div></pre></td></tr></table></figure>
 <p>注意是对 32 位整数运算，所以结果要对 0x1 0000 0000 取模。解得 flag 为 0x3B37BA96 ，即十进制 993507990。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcv4A.png" alt="NBcv4A.png">
-<p class="caption">NBcv4A.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcv4A.png">
+
 </div>
 <p>最后按 flag 格式，提交 <span class="math display">\[
 flag\{993507990\}
@@ -301,30 +301,30 @@ flag\{993507990\}
 <p>涉及指令 gadget 的题，本来这种技术在 pwn 里很常见，现在搬到了 re 里…</p>
 <p>先看 <code>main</code>，很简单，要求两个参数，然后 <code>sub_400D19</code> 验证第二个参数，返回值为 1 则正确。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcjNd.png" alt="NBcjNd.png">
-<p class="caption">NBcjNd.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBcjNd.png">
+
 </div>
 <p>重点看 <code>sub_400D19</code>，只有三条指令，将变量 <code>data</code> 的地址传送给 <code>rsp</code>，然后返回到这个地址。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBgS3t.png" alt="NBgS3t.png">
-<p class="caption">NBgS3t.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBgS3t.png">
+
 </div>
 <p>显然 <code>data</code> 是代码了，进去看。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBgpgP.png" alt="NBgpgP.png">
-<p class="caption">NBgpgP.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBgpgP.png">
+
 </div>
 <p>这里有许多指针，每个都指向一个 gadget，依次执行这些 gadget 进行运算，最后产生结果。</p>
 <p>因为指令被打散成 gadget，分析起来很麻烦，再加上这种进行一堆运算，最后根据返回值进入正确或错误分支的题一般可以尝试下走捷径，所以先偷懒试下符号执行。</p>
 <p>IDA 里看到正确分支在 0x400481，编写 angr 脚本如下。之所以知道 flag 是 21 位，是因为换题目之前的旧题里透露了 flag 位数，定长一点也行，angr 一样能解出来。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBgiDS.png" alt="NBgiDS.png">
-<p class="caption">NBgiDS.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBgiDS.png">
+
 </div>
 <p>运行，等几秒就得到 flag 了。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBg9jf.png" alt="NBg9jf.png">
-<p class="caption">NBg9jf.png</p>
+<img src="https://s1.ax1x.com/2020/06/25/NBg9jf.png">
+
 </div>
 <h3 id="x2.-总结">0x2. 总结</h3>
 <p>太菜了，twice 那题栈溢出都没做出来… 另外等一个 rev 正经解法的 writeup。</p>
