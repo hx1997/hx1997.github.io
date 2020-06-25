@@ -13,11 +13,11 @@
 
     <title>
         
-          《线性代数》笔记（1） - Goulash
+          2020年“第五空间”智能安全大赛初赛两道RE解题报告（writeup） - Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/2017/07/30/Linear-Algebra-Notes-1/">
+    <link rel="canonical" href="https://hx1997.github.io/2020/06/25/5space-2020-re-writeup/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -183,19 +183,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#笔记" title="笔记">笔记</a>
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
                         
-                          <a class="tag" href="/tags/#数学" title="数学">数学</a>
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
                         
-                          <a class="tag" href="/tags/#线性代数" title="线性代数">线性代数</a>
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
                         
                     </div>
-                    <h1>《线性代数》笔记（1）</h1>
+                    <h1>2020年“第五空间”智能安全大赛初赛两道RE解题报告（writeup）</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by HX on
-                        2017-07-30 | 
-                        <span id="/2017/07/30/Linear-Algebra-Notes-1/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                        2020-06-25 | 
+                        <span id="/2020/06/25/5space-2020-re-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
                             <span class="pre-meta-item-text">👓 </span>
                             <span class="leancloud-visitors-count"></span>
                             <span class="post-meta-item-text"> views</span>
@@ -218,86 +218,116 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>使用的教材及参考资料包括但不限于丘维声《简明线性代数》、同济《线性代数》第六版。</p>
-<hr>
-<h3 id="线性方程组的基本理论">线性方程组的基本理论</h3>
-<p>每个方程中，左端都是未知量 <span class="math inline">\(x_1, x_2, \dots\)</span> 的<em>一次</em>齐次式，右端是常数，像这样的方程组称为<strong>线性方程组</strong>.</p>
-<p>含 <span class="math inline">\(n\)</span> 个未知量的线性方程组称为 <strong><span class="math inline">\(\boldsymbol{n}\)</span> 元线性方程组</strong>，它的一般形式是</p>
-<p><span class="math display">\[
-\begin {equation*}
-    \left\{
-        \begin {array}{c}
-            a_{11} x_{1} &amp; + &amp; a_{12} x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{1n} x_{n} &amp; = &amp; b_{1}, \\
-            a_{21} x_{1} &amp; + &amp; a_{22} x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{2n} x_{n} &amp; = &amp; b_{2}, \\
-            \vdots &amp; &amp; \vdots &amp; &amp; \ddots &amp; &amp; \vdots &amp; &amp; \vdots \\
-            a_{s1} x_{1} &amp; + &amp; a_{s2} x_{2} &amp; + &amp; \cdots &amp; + &amp; a_{sn} x_{n} &amp; = &amp; b_{s}.
-        \end {array}
-    \right.
-\end {equation*}
+                <h3 id="x0.-nop-127pt">0x0. nop-127pt</h3>
+<p>这题主要考察的是 Linux 下的反调试技巧。</p>
+<p>先运行观察下行为，提示输入 flag，随便输入后程序退出。</p>
+<p>拖进 IDA 看代码，<code>main</code> 函数一上来进入 <code>sub_804865B</code>，这是第一处反调试。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcTc6.png" alt="NBcTc6.png">
+<p class="caption">NBcTc6.png</p>
+</div>
+<p>Linux 下，程序无调试器运行时，环境变量_会是程序自身路径，有调试器时，这个环境变量会被调试器改变，可以据此区分程序是否被调试。</p>
+<p>回到 <code>main</code>，把下图两条指令 <code>nop</code> 掉，去掉这个反调试。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBc4hR.png" alt="NBc4hR.png">
+<p class="caption">NBc4hR.png</p>
+</div>
+<p>接着，程序提示输入 flag，将其作为整数存入全局变量 <code>dword_804A038</code>。在块 <code>loc_80486E7</code> 和 <code>loc_80486F5</code> 中，将其值加 1 并存回。</p>
+<p>块 <code>loc_80486F5</code> 中调用函数 <code>sub_804857B</code>，这是第二处反调试。函数中，首先布置好系统调用所需的参数和调用号。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBco1x.png" alt="NBco1x.png">
+<p class="caption">NBco1x.png</p>
+</div>
+<p>然后跳到 <code>loc_80485A0</code> 进行系统调用。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcI91.png" alt="NBcI91.png">
+<p class="caption">NBcI91.png</p>
+</div>
+<p>查表知 Linux x86 的系统调用号 0x20 是 <code>ptrace</code>，这个系统调用以 C 语言写出相当于 <code>ptrace(0,0,1,0);</code> 这是个典型的反调试。在上图中，根据 <code>ptrace</code> 的返回值决定是否进入错误的分支。将 <code>jl short loc_80485AE</code> 这条指令 <code>nop</code> 掉，去掉这个反调试。</p>
+<p>回到 <code>main</code>，在块 <code>loc_804870D</code> 和 <code>loc_8048701</code> 中，再次将全局变量 <code>dword_804A038</code> 加 1 并存回。接着调用 <code>sub_80485C4</code>，在此函数中布置系统调用号 0x14，然后跳到 <code>loc_80485F8</code> 进行系统调用，相当于 C 语言 <code>getpid();</code>，作用是获取当前进程 PID。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBchN9.png" alt="NBchN9.png">
+<p class="caption">NBchN9.png</p>
+</div>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcbnO.png" alt="NBcbnO.png">
+<p class="caption">NBcbnO.png</p>
+</div>
+<p>同时 <code>loc_80485F8</code> 还布置了下一个系统调用号 0x40，接着，跳到 <code>loc_804860B</code> 进行系统调用，相当于 C 语言 <code>getppid();</code>，作用是获取父进程 PID。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcqBD.png" alt="NBcqBD.png">
+<p class="caption">NBcqBD.png</p>
+</div>
+<p>同时 <code>loc_804860B</code> 还布置了下一个系统调用号 0x93，接着，跳到 <code>loc_804861E</code> 进行系统调用，参数是刚才获取的当前进程 PID，相当于 C 语言 <code>getsid(getpid());</code>，作用是获取当前进程 SID。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcLHe.png" alt="NBcLHe.png">
+<p class="caption">NBcLHe.png</p>
+</div>
+<p>上图将 <code>getsid(getpid())</code> 与 <code>getppid()</code> 比较，不相等则进入错误分支。将 <code>jnz short loc_8048634</code> 这条指令 <code>nop</code> 掉，去掉这个反调试。</p>
+<p>回到 <code>main</code>，在 <code>loc_8048727</code> 和 <code>loc_804871B</code> 将全局变量 <code>dword_804A038</code> 加上 0xCCCCCCCC 并存回。接着调用 <code>sub_80485C4</code>，即刚才的第二处反调试，因为已经处理，所以不管它，接着往下看。</p>
+<p>在 <code>loc_804873B</code> 中将全局变量 <code>dword_804A038</code> 加 1 并存回，调用 <code>sub_8048753</code>。此函数中又调用 <code>sub_8048691</code>，进入查看。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcXAH.png" alt="NBcXAH.png">
+<p class="caption">NBcXAH.png</p>
+</div>
+<p><code>sub_8048691</code> 的功能是把 <code>eax</code> 所指向的内存地址存储的字节替换为 0x90（即 <code>nop</code> 指令）。前面操作全局变量 <code>dword_804A038</code> 时以 <code>eax</code> 为中介，所以 <code>eax</code> 里现在存的就是 <code>dword_804A038</code> 的值。但是这个函数有什么意义呢？现在还不清楚，先接着往后看。</p>
+<p>回到 <code>sub_8048753</code>，将 <code>eax</code> 加 1 后再次调用 <code>sub_8048691</code>。所以，这一块代码应该是把内存某个位置连续的两个字节 <code>nop</code> 掉了。</p>
+<p>接着，程序直接跳入了错误分支，与此同时 IDA 中可以看到正确分支就在附近，且如果不经过 0x8048765 处的 <code>jmp</code>，就可以进入正确分支。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcz9I.png" alt="NBcz9I.png">
+<p class="caption">NBcz9I.png</p>
+</div>
+<p>这时就明白了上面 <code>sub_8048691</code> 的功能，它给了我们 <code>nop</code> 掉 0x8048765 的 <code>jmp</code> 的能力，这个 <code>jmp</code> 正好占两字节。</p>
+<p>到此，程序就分析完了。流程整理如下（不考虑反调试）：</p>
+<ol style="list-style-type: decimal">
+<li><p>输入 flag，为一个整数</p></li>
+<li><p>将 flag+1</p></li>
+<li><p>将 flag+1</p></li>
+<li><p>将 flag+0xCCCCCCCC</p></li>
+<li><p>将 flag+1</p></li>
+<li><p>将 flag 所指向的内存地址连续的两字节 <code>nop</code> 掉</p></li>
+</ol>
+<p>我们希望把 0x8048765 的 <code>jmp</code> 替换为 <code>nop</code>，所以可以列出方程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flag+0xCCCCCCCF==0x8048765</div></pre></td></tr></table></figure>
+<p>注意是对 32 位整数运算，所以结果要对 0x1 0000 0000 取模。解得 flag 为 0x3B37BA96 ，即十进制 993507990。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcv4A.png" alt="NBcv4A.png">
+<p class="caption">NBcv4A.png</p>
+</div>
+<p>最后按 flag 格式，提交 <span class="math display">\[
+flag\{993507990\}
 \]</span></p>
-<p>常数项全为 <span class="math inline">\(0\)</span> 的线性方程组称为<strong>齐次线性方程组</strong>. 任何一个齐次线性方程组都有零解，如果一个齐次线性方程组除了零解，还有其他的解，则称其他的解为<strong>非零解</strong>. 常数项不全为 <span class="math inline">\(0\)</span> 的线性方程组称为<strong>非齐次线性方程组</strong>.</p>
-<p><strong>定义 1</strong>　由 <span class="math inline">\(s \cdot m\)</span> 个数排成 <span class="math inline">\(s\)</span> 行、<span class="math inline">\(m\)</span> 列的一张表称为一个 <span class="math inline">\(s \times m\)</span> <strong>矩阵</strong>，其中的每一个数称为这个矩阵的一个<strong>元素</strong>，第 <span class="math inline">\(i\)</span> 行与第 <span class="math inline">\(j\)</span> 列交叉位置的元素称为矩阵的 <strong><span class="math inline">\(\boldsymbol{(i,j)}\)</span> 元</strong>.</p>
-<p>对于一个线性方程组，可以只写出它的系数和常数项，并且把它们按照原来的次序排成一个矩阵，这个矩阵称为线性方程组的<strong>增广矩阵</strong>. 而只列出系数的矩阵称为方程组的<strong>系数矩阵</strong>. 例如，线性方程组 (1) 的增广矩阵和系数矩阵依次是：</p>
-<p><span class="math display">\[
-\begin {bmatrix}
-    a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; b_1 \\
-    a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} &amp; b_2 \\
-    \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
-    a_{s1} &amp; a_{s2} &amp; \cdots &amp; a_{sn} &amp; b_s \\
-\end {bmatrix}
-\]</span></p>
-<p><span class="math display">\[
-\begin {bmatrix}
-    a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
-    a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
-    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-    a_{s1} &amp; a_{s2} &amp; \cdots &amp; a_{sn} \\
-\end {bmatrix}
-\]</span></p>
-<p>元素全为 <span class="math inline">\(0\)</span> 的矩阵称为<strong>零矩阵</strong>，简记作 <span class="math inline">\(\boldsymbol{0}\)</span>. 如果一个矩阵 <span class="math inline">\(\boldsymbol{A}\)</span> 行数与列数相等，则称它为<strong>方阵</strong>. <span class="math inline">\(m\)</span> 行 <span class="math inline">\(m\)</span> 列的方阵也称为 <strong><span class="math inline">\(\boldsymbol{m}\)</span> 阶矩阵</strong>.</p>
-<p>矩阵的<strong>初等行变换</strong>有三种：</p>
-<ol style="list-style-type: decimal">
-<li>用一个非零数乘某一行；</li>
-<li>互换两行的位置；</li>
-<li>把一行的倍数加到另一行上.</li>
-</ol>
-<p>它们分别对应线性方程组的三种<strong>初等变换</strong>：</p>
-<ol style="list-style-type: decimal">
-<li>用一个非零数乘某一个方程；</li>
-<li>互换两个方程的位置；</li>
-<li>把一个方程的倍数加到另一个方程上.</li>
-</ol>
-<p>显然初等变换 2 不改变原方程组，而由于等式的替代性，初等变换 1 产生的新方程与原方程等价。初等变换 3 等于是先施行初等变换 1，产生一个中间方程，再把中间方程与另一方程相加，同样由等式的替代性知，新方程与原方程等价。因此，线性方程组施行初等变换后的方程组与原方程组等价，即<strong>初等变换不改变方程组的解集</strong>。</p>
-<p>具有如下特点的矩阵称为<strong>行阶梯形矩阵</strong>：</p>
-<ol style="list-style-type: decimal">
-<li>元素全为 <span class="math inline">\(0\)</span> 的行（称为<strong>零行</strong>）在非零行下方（如有零行）；</li>
-<li>非零行从左边数起第一个不为 <span class="math inline">\(0\)</span> 的元素（称为<strong>主元</strong>），它们的列指标随行指标的递增而严格增大.</li>
-</ol>
-<p>具有如下特点的矩阵称为<strong>简化行阶梯形矩阵</strong>：</p>
-<ol style="list-style-type: decimal">
-<li>它是行阶梯形矩阵；</li>
-<li>每个非零行的主元都是 <span class="math inline">\(1\)</span>；</li>
-<li>每个主元所在列的其余元素都是 <span class="math inline">\(0\)</span>.</li>
-</ol>
-<p>可以证明，任何一个矩阵都能经过一系列初等行变换化成行阶梯形矩阵，并且能进一步用初等行变换化成简化行阶梯形矩阵.</p>
-<p><strong>定理 1</strong>　<span class="math inline">\(n\)</span> 元线性方程组的解的情况只有三种可能：无解、有惟一解、有无穷多个解. 把 <span class="math inline">\(n\)</span> 元线性方程组的增广矩阵经过初等行变换化成阶梯形矩阵，如果相应的阶梯形方程组出现“<span class="math inline">\(0 = d\)</span>（<span class="math inline">\(d\)</span> 为非零数）”这样的方程，则原方程组无解；否则，有解. 当有解时，如果阶梯形矩阵的非零行个数 <span class="math inline">\(r\)</span> 等于未知量个数 <span class="math inline">\(n\)</span>，则原方程组有惟一解；如果非零行个数 <span class="math inline">\(r &lt; n\)</span>，则原方程组有无穷多个解.</p>
-<p><strong>推论 2</strong>　<span class="math inline">\(n\)</span> 元齐次线性方程组有非零解的充分必要条件是：其系数矩阵经过初等行变换化为阶梯形矩阵后，非零行个数 <span class="math inline">\(r &lt; n\)</span>.</p>
-<p><strong>推论 3</strong>　<span class="math inline">\(n\)</span> 元齐次线性方程组如果方程的个数 <span class="math inline">\(s &lt; n\)</span>，则它一定有非零解.</p>
-<p><strong>证</strong>　该方程组的系数矩阵有 <span class="math inline">\(s\)</span> 行，对其施行初等行变换化为阶梯形矩阵后，非零行个数 <span class="math inline">\(r \leq s &lt; n\)</span>，由推论 2 知该方程组有非零解.　<span class="math inline">\(\Box\)</span></p>
-<h3 id="数域">数域</h3>
-<p><strong>定义 1</strong>　设 <span class="math inline">\(K\)</span> 是复数集的一个子集，如果 <span class="math inline">\(K\)</span> 满足：</p>
-<p>（1）<span class="math inline">\(0, 1 \in K\)</span>；（加法单位元、乘法单位元）</p>
-<p>（2）对任意的 <span class="math inline">\(a, b \in K\)</span>，都有 <span class="math inline">\(a \pm b, ab \in K\)</span>，并且当 <span class="math inline">\(b \neq 0\)</span> 时有 <span class="math inline">\(\frac{a}{b} \in K\)</span>，（对四则运算封闭）</p>
-<p>则称 <span class="math inline">\(K\)</span> 为一个数域.</p>
-<p><strong>命题 1</strong>　任一数域都包含有理数域.</p>
-<p><strong>证</strong>　设 <span class="math inline">\(K\)</span> 为一数域，则有 <span class="math inline">\(0, 1 \in K\)</span>，且</p>
-<p><span class="math display">\[2 = 1 + 1 \in K, 3 = 1 + 2 \in K, \dots, n = 1 + (n - 1) \in K，\]</span></p>
-<p>即 <span class="math inline">\(\mathbb{N} \subset K\)</span>，又</p>
-<p><span class="math display">\[-1 = 0 - 1 \in K, -2 = 0 - 2 \in K, \dots, -n = 0 - n \in K，\]</span></p>
-<p>从而 <span class="math inline">\(\mathbb{Z} \subset K\)</span>，于是任意分数</p>
-<p><span class="math display">\[\frac{a}{b} \in K (b \neq 0)，\]</span></p>
-<p>因此，<span class="math inline">\(\mathbb{Q} \subset K​\)</span>.　<span class="math inline">\(\Box​\)</span></p>
-<p><strong>命题 2</strong>　复数域包含所有的数域.</p>
+<h3 id="x1.-逆向-rev-232pt">0x1. 逆向-rev-232pt</h3>
+<p>涉及指令 gadget 的题，本来这种技术在 pwn 里很常见，现在搬到了 re 里…</p>
+<p>先看 <code>main</code>，很简单，要求两个参数，然后 <code>sub_400D19</code> 验证第二个参数，返回值为 1 则正确。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcjNd.png" alt="NBcjNd.png">
+<p class="caption">NBcjNd.png</p>
+</div>
+<p>重点看 <code>sub_400D19</code>，只有三条指令，将变量 <code>data</code> 的地址传送给 <code>rsp</code>，然后返回到这个地址。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBgS3t.png" alt="NBgS3t.png">
+<p class="caption">NBgS3t.png</p>
+</div>
+<p>显然 <code>data</code> 是代码了，进去看。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBgpgP.png" alt="NBgpgP.png">
+<p class="caption">NBgpgP.png</p>
+</div>
+<p>这里有许多指针，每个都指向一个 gadget，依次执行这些 gadget 进行运算，最后产生结果。</p>
+<p>因为指令被打散成 gadget，分析起来很麻烦，再加上这种进行一堆运算，最后根据返回值进入正确或错误分支的题一般可以尝试下走捷径，所以先偷懒试下符号执行。</p>
+<p>IDA 里看到正确分支在 0x400481，编写 angr 脚本如下。之所以知道 flag 是 21 位，是因为换题目之前的旧题里透露了 flag 位数，定长一点也行，angr 一样能解出来。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBgiDS.png" alt="NBgiDS.png">
+<p class="caption">NBgiDS.png</p>
+</div>
+<p>运行，等几秒就得到 flag 了。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBg9jf.png" alt="NBg9jf.png">
+<p class="caption">NBg9jf.png</p>
+</div>
+<h3 id="x2.-总结">0x2. 总结</h3>
+<p>太菜了，twice 那题栈溢出都没做出来… 另外等一个 rev 正经解法的 writeup。</p>
 
 
                 <hr>
@@ -306,13 +336,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2017/09/26/big-o-notation/" data-toggle="tooltip" data-placement="top" title="大 O 记号及算法的时间复杂度">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2016/11/06/hello-world/" data-toggle="tooltip" data-placement="top" title="Hello World">Next Post &rarr;</a>
+                            <a href="/2019/05/28/qwb-2019-ctf-writeup/" data-toggle="tooltip" data-placement="top" title="2019 第三届强网杯解题报告（writeup）">Next Post &rarr;</a>
                         </li>
                     
                 </ul>

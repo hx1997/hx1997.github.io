@@ -202,6 +202,35 @@
 
 <div class="post-preview">
 
+    <a href="/2020/06/25/5space-2020-re-writeup/">
+        <h2 class="post-title">
+            2020年“第五空间”智能安全大赛初赛两道RE解题报告（writeup）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            0x0. nop-127pt
+这题主要考察的是 Linux 下的反调试技巧。
+先运行观察下行为，提示输入 flag，随便输入后程序退出。
+拖进 IDA 看代码，main 函数一上来进入 sub_804865B，这是第一处反调试。
+
+
+NBcTc6.png
+
+Linux 下，程序无调试器运行时，环境变量_会是程序自身路径，有调试器时，这个环境变量会被调试器改变，可以据此区分程序......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2020-06-25
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2019/05/28/qwb-2019-ctf-writeup/">
         <h2 class="post-title">
             2019 第三届强网杯解题报告（writeup）
@@ -431,31 +460,6 @@ SIB（0 - 1 字节）
     <p class="post-meta">
         Posted by HX on
         2018-10-16
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/22/anheng-july-re-youngter-drive/">
-        <h2 class="post-title">
-            安恒杯 7 月月赛逆向 Youngter-drive 解题报告（writeup）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            0x0. 前言
-这次这道题 100 分，但是大家都说（并不）比上个月 500 分的题还难。其实我比赛时也没做出来，之后才做出来的，毕竟下午三点才开始做…
-0x1. 反调试
-题目文件在这里。
-查壳，是 UPX，直接用 upx -d 命令脱壳，结果运行不起来。发现是原文件需要 msvcr100d.dll 这个库，而且这是 Debug 版本的库，光装 VC++ 运行时是没有的，要装 Vis......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2018-07-22
     </p>
 
 </div>
