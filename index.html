@@ -101,6 +101,13 @@
 
                         
                         <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/about/">ABOUT</a>
                         </li>
                         
@@ -109,13 +116,6 @@
                         
                         <li>
                             <a href="/animal-farm/">Animal Farm</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -199,6 +199,39 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2020/08/24/2020-qwb-writeup/">
+        <h2 class="post-title">
+            2020 第四届强网杯解题报告（writeup）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            0x0. 前言
+只做出两道水题，还是记录一下吧。
+0x1. 强网先锋（Pwn） - babymessage - 52pt
+菜单选 1 输入 name，选 2 输入 message。message 的长度由栈上变量 v1 决定，与 256 做有符号比较，大于的话长度设为 256，然后用此长度调用 leave_message。
+
+
+
+
+
+
+
+
+第一次循环，v1（不是 le......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2020-08-24
+    </p>
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -428,36 +461,6 @@ SIB（0 - 1 字节）
     <p class="post-meta">
         Posted by HX on
         2018-10-23
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/10/16/ustc-hackergame-2018-writeup/">
-        <h2 class="post-title">
-            中科大第五届信息安全大赛部分解题报告（writeup）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            0x0. 前言
-作为校外其他组参赛，最后总排名 94，其他高校组排名 69，我还是好菜啊。
-0x1. 猫咪和键盘 150
-题目是一个 C++ 源文件，似乎每一行的顺序被打乱了，但各行打乱的规律都是相同的。
-
-
-
-
-写 Python 脚本逐行恢复原本顺序。
-1234567891011newline = ''for line in open('./typed_printf.cp......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2018-10-16
     </p>
 
 </div>
