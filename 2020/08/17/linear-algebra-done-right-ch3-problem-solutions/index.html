@@ -108,13 +108,6 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/archive/">ARCHIVES</a>
                         </li>
                         
@@ -123,6 +116,13 @@
                         
                         <li>
                             <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -216,7 +216,8 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>做题顺便试下 Mathpix。</p>
+                <p>做题顺便试下 Mathpix。书是第 2 版，不同版本习题可能不同。</p>
+<p>（以后不随便挖坑了… 如果不一次把文章写完过后就会忘记思路==）</p>
 <h3 id="section">3.1</h3>
 <blockquote>
 <p>证明每个从一维向量空间到其自身的线性映射都是乘以某个标量. 准确地说，证明：如果 <span class="math inline">\(\dim V = 1,\,T \in \mathcal{L}(V,V)\)</span>，那么有 <span class="math inline">\(a \in \mathbb{F}\)</span> 使得对所有 <span class="math inline">\(\boldsymbol{v} \in V\)</span> 都有 <span class="math inline">\(T \boldsymbol{v} = a \boldsymbol{v}\)</span>.</p>
@@ -224,6 +225,49 @@
 <p><strong>证明</strong>　因为 <span class="math inline">\(\dim V = 1\)</span>，所以存在 <span class="math inline">\(V\)</span> 的一个基 <span class="math inline">\(\boldsymbol{u}\)</span> 使得对所有 <span class="math inline">\(\boldsymbol{v} \in V\)</span> 都有 <span class="math inline">\(\boldsymbol{v} = b \boldsymbol{u}, \, b \in \mathbb{F}\)</span>. 特别地，对 <span class="math inline">\(T \boldsymbol{u} \in V\)</span> 也有 <span class="math inline">\(T \boldsymbol{u} = b_0 \boldsymbol{u}, \, b_0 \in \mathbb{F}\)</span>，于是对所有 <span class="math inline">\(\boldsymbol{v} \in V\)</span>， <span class="math display">\[
 T \boldsymbol{v} = Tb \boldsymbol{u} = bT \boldsymbol{u} = bb_0 \boldsymbol{u}.
 \]</span> 令 <span class="math inline">\(a = bb_0\)</span> 即为所证.　<span class="math inline">\(\Box\)</span></p>
+<h3 id="section-1">3.2</h3>
+<blockquote>
+<p>给出一个非线性函数 <span class="math inline">\(f: \mathbf{R}^{2} \rightarrow \mathbf{R}\)</span> 使得对所有 <span class="math inline">\(a \in \mathbf{R}\)</span> 和所有 <span class="math inline">\(\boldsymbol{v} \in \mathbf{R}^{2}\)</span> 都有 <span class="math display">\[
+f(a \boldsymbol{v})=a f(\boldsymbol{v}).
+\]</span></p>
+</blockquote>
+<p><strong>解</strong>　<span class="math inline">\(f(x, y) = \frac{y^2}{x}\)</span> 是满足题设要求的一个非线性函数，因为对所有 <span class="math inline">\(a \in \mathbf{R}\)</span> 和所有 <span class="math inline">\(\boldsymbol{v} \in \mathbf{R}^{2}\)</span>， <span class="math display">\[
+\begin {align*}
+    f(a \boldsymbol{v}) &amp; = f(ax, ay) \\
+    &amp; = \frac{(ay)^2}{ax} \\
+    &amp; = \frac{ay^2}{x} \\
+    &amp; = a f(x, y) \\
+    &amp; = a f(\boldsymbol{v}),
+\end {align*}
+\]</span> 但是，存在 <span class="math inline">\(\boldsymbol{u}, \boldsymbol{v} \in \mathbf{R}^{2}\)</span> 使得 <span class="math display">\[
+\begin {align*}
+    f(\boldsymbol{u}) + f(\boldsymbol{v}) &amp; = f(w, z) + f(x, y) \\
+    &amp; = \frac{z^2}{w} + \frac{y^2}{x} \\
+    &amp; \neq \frac{(z+y)^2}{w+x} \\
+    &amp; = f(w+x, z+y) \\
+    &amp; = f(\boldsymbol{u} + \boldsymbol{v}).
+\end {align*}
+\]</span> 这题主要想说明的是，加性和齐性并不是等价的。</p>
+<h3 id="section-2">3.3</h3>
+<blockquote>
+<p>设 <span class="math inline">\(V\)</span> 是有限维的. 证明 <span class="math inline">\(V\)</span> 的子空间上的线性映射可以扩张成 <span class="math inline">\(V\)</span> 上的线性映射. 也就是说，证明：如果 <span class="math inline">\(U\)</span> 是 <span class="math inline">\(V\)</span> 的子空间，<span class="math inline">\(S \in \mathcal{L}(U, W)\)</span>，那么存在 <span class="math inline">\(T \in \mathcal{L}(V, W)\)</span>，使得对所有 <span class="math inline">\(\boldsymbol{u} \in U\)</span> 都有 <span class="math inline">\(T \boldsymbol{u}=S \boldsymbol{u}\)</span>.</p>
+</blockquote>
+<p><strong>证明</strong>　取 <span class="math inline">\(U\)</span> 的一组基，扩充成 <span class="math inline">\(V\)</span> 的一组基，然后定义从 <span class="math inline">\(V\)</span> 到 <span class="math inline">\(U\)</span> 的线性变换 <span class="math inline">\(Q\)</span>，对 <span class="math inline">\(U, V\)</span> 的基中共同的向量系数取 1，<span class="math inline">\(V\)</span> 独有的向量系数取 0. 那么线性变换 <span class="math inline">\(SQ\)</span> 即为所求的 <span class="math inline">\(T\)</span>. 具体证明略.（懒得写）</p>
+<h3 id="section-3">3.5</h3>
+<blockquote>
+<p>设 <span class="math inline">\(T \in \mathcal{L}(V, W)\)</span> 是单的，并且 <span class="math inline">\(\left(\boldsymbol{v}_{1}, \cdots, \boldsymbol{v}_{n}\right)\)</span> 在 <span class="math inline">\(V\)</span> 中线性无关. 证明 <span class="math inline">\(\left(T \boldsymbol{v}_{1}, \cdots, T \boldsymbol{v}_{n}\right)\)</span> 在 <span class="math inline">\(W\)</span> 中线性无关.</p>
+</blockquote>
+<p><strong>证明</strong>　因为 <span class="math inline">\(T\)</span> 是单的，所以 <span class="math inline">\(\operatorname{null} T=\{\mathbf{0}\}\)</span>. 因为 <span class="math inline">\(\left(\boldsymbol{v}_{1}, \cdots, \boldsymbol{v}_{n}\right)\)</span> 线性无关，所以有 <span class="math display">\[
+\begin {align}
+    &amp; a_1 \boldsymbol{v}_{1} + \cdots + a_n \boldsymbol{v}_{n} = \mathbf{0} \\
+    \implies &amp; a_1 = \cdots = a_n = 0.
+\end {align}
+\]</span> 将 <span class="math inline">\(T\)</span> 作用于上述第一行式子左右两端，有 <span class="math display">\[
+\begin {align}
+    &amp; T a_1 \boldsymbol{v}_{1} + \cdots + T a_n \boldsymbol{v}_{n} = T \mathbf{0} \\
+    \implies &amp; a_1 T \boldsymbol{v}_{1} + \cdots + a_n T \boldsymbol{v}_{n} = \mathbf{0}.
+\end {align}
+\]</span> 因为 <span class="math inline">\(a_1 = \cdots = a_n = 0\)</span>，所以 <span class="math inline">\(\left(T \boldsymbol{v}_{1}, \cdots, T \boldsymbol{v}_{n}\right)\)</span> 线性无关.　<span class="math inline">\(\Box\)</span></p>
 
 
                 <hr>
