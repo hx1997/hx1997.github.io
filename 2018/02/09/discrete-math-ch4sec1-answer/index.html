@@ -108,14 +108,14 @@
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -232,7 +232,7 @@
 <p>假设 <span class="math inline">\(n = k \; (k &gt; 1)\)</span> 时公式成立，即有 <span class="math inline">\(H_k = 2^k - 1\)</span>.</p>
 <p><span class="math inline">\(n = k + 1 \; (k &gt; 1)\)</span> 时，先用 <span class="math inline">\(H_k\)</span> 步将原塔柱最上面 <span class="math inline">\(k\)</span> 片圆盘移动到辅助塔柱，再用 <span class="math inline">\(1\)</span> 步将原塔柱剩下的 <span class="math inline">\(1\)</span> 片圆盘移动到目标塔柱，最后用 <span class="math inline">\(H_k\)</span> 步将辅助塔柱所有圆盘移动到目标塔柱. 因此有</p>
 <p><span class="math display">\[ H_{k+1} = 2 H_k + 1 = 2 \cdot (2^k - 1) + 1 = 2^{k+1} - 1, \]</span></p>
-<p>得证.　<span class="math inline">\(\Box​\)</span></p>
+<p>得证.　<span class="math inline">\(\Box\)</span></p>
 <h4 id="section-1">4.1.2</h4>
 <blockquote>
 <p>A vending machine dispensing books of stamps accepts only one-dollar coins, <span class="math inline">\(\$1\)</span> bills, and <span class="math inline">\(\$5\)</span> bills.</p>
@@ -246,7 +246,7 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 投入 10 美元购买一套邮票，共有多少种投币方法？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 投入 <span class="math inline">\(n​\)</span> 美元可分为两种情况：其一，先投入 <span class="math inline">\(n - 1​\)</span> 美元，再投入 <span class="math inline">\(1​\)</span> 美元；其二，先投入 <span class="math inline">\(n - 5​\)</span> 美元，再投入 <span class="math inline">\(5​\)</span> 美元. 记投入 <span class="math inline">\(n​\)</span> 美元的投法数为 <span class="math inline">\(f(n)​\)</span>，则根据分步计数乘法原理，前者有 <span class="math inline">\(f(n-1) \cdot 2​\)</span> 种投法（投入 <span class="math inline">\(1​\)</span> 美元有硬币和纸币两种投法），后者有 <span class="math inline">\(f(n-5) \cdot 1​\)</span> 种投法. 由分类计数加法原理，递推式为</p>
+<p><strong>解</strong>　<strong>1)</strong> 投入 <span class="math inline">\(n\)</span> 美元可分为两种情况：其一，先投入 <span class="math inline">\(n - 1\)</span> 美元，再投入 <span class="math inline">\(1\)</span> 美元；其二，先投入 <span class="math inline">\(n - 5\)</span> 美元，再投入 <span class="math inline">\(5\)</span> 美元. 记投入 <span class="math inline">\(n\)</span> 美元的投法数为 <span class="math inline">\(f(n)\)</span>，则根据分步计数乘法原理，前者有 <span class="math inline">\(f(n-1) \cdot 2\)</span> 种投法（投入 <span class="math inline">\(1\)</span> 美元有硬币和纸币两种投法），后者有 <span class="math inline">\(f(n-5) \cdot 1\)</span> 种投法. 由分类计数加法原理，递推式为</p>
 <p><span class="math display">\[f(n) = 2 f(n-1) + f(n-5), \; n &gt; 1.\]</span></p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
@@ -281,7 +281,7 @@
 <p><strong>解</strong>　待解</p>
 <h4 id="section-3">4.1.4</h4>
 <blockquote>
-<p><strong>a)</strong> Find a recurrence relation for the number of bit strings of length <span class="math inline">\(n​\)</span> that contain a pair of consecutive 0s.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of bit strings of length <span class="math inline">\(n\)</span> that contain a pair of consecutive 0s.</p>
 <p><strong>b)</strong> What are the initial conditions?</p>
 <p><strong>c)</strong> How many strings of length seven contain two consecutive 0s?</p>
 </blockquote>
@@ -290,7 +290,7 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 包含两个连续的 0 且长度为 7 的二进制串有多少个？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)​\)</span>. 分两种情况：其一，最后一位为 1，则最后一位和前 <span class="math inline">\(n - 1​\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-1)​\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1，最后两位和前 <span class="math inline">\(n - 2​\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-2)​\)</span> 个这样的串，若倒数第二位为 0，前 <span class="math inline">\(n -2​\)</span> 位不管如何组合，结果都是含 00 的串，前 <span class="math inline">\(n - 2​\)</span> 位有 <span class="math inline">\(2^{n-2}​\)</span> 种可能，最后两位已确定只有一种可能，即有 <span class="math inline">\(2^{n-2} \cdot 1​\)</span> 个这样的串. 因此总数为</p>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：其一，最后一位为 1，则最后一位和前 <span class="math inline">\(n - 1\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-1)\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1，最后两位和前 <span class="math inline">\(n - 2\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-2)\)</span> 个这样的串，若倒数第二位为 0，前 <span class="math inline">\(n -2\)</span> 位不管如何组合，结果都是含 00 的串，前 <span class="math inline">\(n - 2\)</span> 位有 <span class="math inline">\(2^{n-2}\)</span> 种可能，最后两位已确定只有一种可能，即有 <span class="math inline">\(2^{n-2} \cdot 1\)</span> 个这样的串. 因此总数为</p>
 <p><span class="math display">\[f(n) = f(n-1) + f(n-2) + 2^{n-2}, \; n &gt; 2.\]</span></p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
@@ -344,7 +344,7 @@
 \]</span></p>
 <h4 id="section-5">4.1.6</h4>
 <blockquote>
-<p><strong>a)</strong> Find a recurrence relation for the number of ways to climb <span class="math inline">\(n​\)</span> stairs if the person climbing the stairs can take one stair or two stairs at a time.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of ways to climb <span class="math inline">\(n\)</span> stairs if the person climbing the stairs can take one stair or two stairs at a time.</p>
 <p><strong>b)</strong> What are the initial conditions?</p>
 <p><strong>c)</strong> In how many ways can this person climb a flight of eight stairs?</p>
 </blockquote>
@@ -353,7 +353,7 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 这个人爬 8 级楼梯有多少种方法？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 记这样的方法数为 <span class="math inline">\(f(n)​\)</span>. 分两种情况：先爬 <span class="math inline">\(n - 2​\)</span> 级楼梯，再一次爬 <span class="math inline">\(2​\)</span> 级楼梯；先爬 <span class="math inline">\(n - 1​\)</span> 级楼梯，再爬 <span class="math inline">\(1​\)</span> 级楼梯. 因此 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2​\)</span>.</p>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的方法数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：先爬 <span class="math inline">\(n - 2\)</span> 级楼梯，再一次爬 <span class="math inline">\(2\)</span> 级楼梯；先爬 <span class="math inline">\(n - 1\)</span> 级楼梯，再爬 <span class="math inline">\(1\)</span> 级楼梯. 因此 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2\)</span>.</p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
     \left\{
@@ -386,8 +386,8 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 不包含两个连续的 0 且长度为 6 的三进制串有多少个？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 记这样的三进制串个数为 <span class="math inline">\(f(n)​\)</span>. 分两种情况：其一，最后一位为 1 或 2，则最后一位和前 <span class="math inline">\(n - 1​\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(2 f(n-1)​\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1 或 2，最后两位和前 <span class="math inline">\(n - 2​\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(2 f(n-2)​\)</span> 个这样的串，因此总数为</p>
-<p><span class="math display">\[f(n) = 2 f(n-1) + 2 f(n-2), \; n &gt; 2.​\]</span></p>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的三进制串个数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：其一，最后一位为 1 或 2，则最后一位和前 <span class="math inline">\(n - 1\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(2 f(n-1)\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1 或 2，最后两位和前 <span class="math inline">\(n - 2\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(2 f(n-2)\)</span> 个这样的串，因此总数为</p>
+<p><span class="math display">\[f(n) = 2 f(n-1) + 2 f(n-2), \; n &gt; 2.\]</span></p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
     \left\{
@@ -418,7 +418,7 @@
 <p><strong>2)</strong> 初始条件是什么？</p>
 <p><strong>3)</strong> 使用这两种信号、传输需时 10 微秒的不同消息有多少种？</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 思路与 4.1.6 完全类似。递推式为 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2​\)</span>.</p>
+<p><strong>解</strong>　<strong>1)</strong> 思路与 4.1.6 完全类似。递推式为 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2\)</span>.</p>
 <p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
 \begin {equation*}
     \left\{
@@ -449,7 +449,7 @@
 <p><strong>1)</strong> 求 <span class="math inline">\(R_n\)</span> 所满足的递推式，<span class="math inline">\(R_n\)</span> 是指 <span class="math inline">\(n\)</span> 条直线可将一个平面分成的区域数（假设任意两条直线不平行，任意三条直线不经过同一点）。</p>
 <p><strong>2)</strong> 用迭代法求 <span class="math inline">\(R_n\)</span>。</p>
 </blockquote>
-<p><strong>解</strong>　<strong>1)</strong> 注意到条件“任意两条直线不平行，任意三条直线不经过同一点”，因此在已有 <span class="math inline">\(n - 1​\)</span> 条直线的情况下，再画一条直线，该直线必与现有直线有 <span class="math inline">\(n - 1​\)</span> 个交点，且将平面划分出 <span class="math inline">\(n​\)</span> 个新区域。因此递推式为 <span class="math inline">\(R_n = R_{n-1} + n, \; n \ge 1​\)</span>. 初始条件为 <span class="math inline">\(R_0 = 1​\)</span>.</p>
+<p><strong>解</strong>　<strong>1)</strong> 注意到条件“任意两条直线不平行，任意三条直线不经过同一点”，因此在已有 <span class="math inline">\(n - 1\)</span> 条直线的情况下，再画一条直线，该直线必与现有直线有 <span class="math inline">\(n - 1\)</span> 个交点，且将平面划分出 <span class="math inline">\(n\)</span> 个新区域。因此递推式为 <span class="math inline">\(R_n = R_{n-1} + n, \; n \ge 1\)</span>. 初始条件为 <span class="math inline">\(R_0 = 1\)</span>.</p>
 <p><strong>2)</strong> 迭代可得 <span class="math display">\[
 \begin {align*}
     R_n &amp; = R_{n-1} + n \\
@@ -466,7 +466,7 @@
 <blockquote>
 <p>包含偶数个 0 且长度为 7 的二进制串有多少个？</p>
 </blockquote>
-<p><strong>解一</strong>　先研究包含偶数个 0 且长度为 3 和 4 的二进制串的个数，寻找规律. 长度为 3 的这样的串有 111（0 个 0）、001、010、100（2 个 0）共 4 个，长度为 4 的这样的串有 1111（0 个 0）、0011、0110、1100、0101、1001、1010（2 个 0）、0000（4 个 0）共 8 个。注意到长度为 4 的这样的串有两种：其一，长度为 3 且含偶数个 0 的串接一个 1；其二，长度为 3 且含奇数个 0 的串接一个 0，故长度为 4 的这样的串有 <span class="math inline">\(f(3) + (2^{3} - f(3)) = 2^3 = 8\)</span> 个. 可猜测一般地，长度为 <span class="math inline">\(n\)</span> 的这样的串有 <span class="math inline">\(f(n-1) + (2^{n-1} + f(n-1)) = 2^{n-1}\)</span> 个，并用数学归纳法证明. 因此，包含偶数个 0 且长度为 7 的二进制串有 <span class="math inline">\(f(7) = 2^6 = 64\)</span> 个.</p>
+<p><strong>解一</strong>　先研究包含偶数个 0 且长度为 3 和 4 的二进制串的个数，寻找规律. 长度为 3 的这样的串有 111（0 个 0）、001、010、100（2 个 0）共 4 个，长度为 4 的这样的串有 1111（0 个 0）、0011、0110、1100、0101、1001、1010（2 个 0）、0000（4 个 0）共 8 个。注意到长度为 4 的这样的串有两种：其一，长度为 3 且含偶数个 0 的串接一个 1；其二，长度为 3 且含奇数个 0 的串接一个 0，故长度为 4 的这样的串有 <span class="math inline">\(f(3) + (2^{3} - f(3)) = 2^3 = 8\)</span> 个. 可猜测一般地，长度为 <span class="math inline">\(n\)</span> 的这样的串有 <span class="math inline">\(f(n-1) + (2^{n-1} - f(n-1)) = 2^{n-1}\)</span> 个，并用数学归纳法证明. 因此，包含偶数个 0 且长度为 7 的二进制串有 <span class="math inline">\(f(7) = 2^6 = 64\)</span> 个.</p>
 <p><strong>解二</strong>　分类讨论：长度为 7，且包含 0、2、4、6 个 0 的二进制串各有多少个？其个数相加即为所求. 容易想到这就相当于 7 个物品里选 0、2、4、6 个有多少种选法，即 <span class="math inline">\(7 \choose 0\)</span>、<span class="math inline">\(7 \choose 2\)</span>、<span class="math inline">\(7 \choose 4\)</span>、<span class="math inline">\(7 \choose 6\)</span>. 问题的答案为它们之和 64.</p>
 <h4 id="section-10">4.1.14</h4>
 <blockquote>
@@ -504,7 +504,7 @@
 <p><strong>b)</strong> Check your result with the closed formula for <span class="math inline">\(C_5\)</span> mentioned in the solution of Example 5.</p>
 </blockquote>
 <blockquote>
-<p><strong>1)</strong> 用例 5 中得出的递推式求 <span class="math inline">\(C_5​\)</span>，即给六个数的乘积加括号以确定乘法顺序的不同方法数.</p>
+<p><strong>1)</strong> 用例 5 中得出的递推式求 <span class="math inline">\(C_5\)</span>，即给六个数的乘积加括号以确定乘法顺序的不同方法数.</p>
 <p><strong>2)</strong> 将你的结果与例 5 的解中提到的 <span class="math inline">\(C_5\)</span> 的闭式解相比较.</p>
 </blockquote>
 <p><strong>解</strong>　<strong>1)</strong> 例 5 中得出的递推式为 <span class="math display">\[
@@ -532,20 +532,20 @@ C_5 = \frac{C(10,5)}{6} = 42.
 \]</span> 这与递推式的解相同.</p>
 <h4 id="section-12">4.1.24</h4>
 <blockquote>
-<p>Let <span class="math inline">\(\{a_n\}​\)</span> be a sequence of real numbers. The <strong>backward differences</strong> of this sequence are define recursively as shown next. The <strong>first difference</strong> <span class="math inline">\(\nabla a_n​\)</span> is <span class="math display">\[
+<p>Let <span class="math inline">\(\{a_n\}\)</span> be a sequence of real numbers. The <strong>backward differences</strong> of this sequence are define recursively as shown next. The <strong>first difference</strong> <span class="math inline">\(\nabla a_n\)</span> is <span class="math display">\[
 \nabla a_n = a_n - a_{n-1}.
-\]</span> The <strong>(k+1)st difference</strong> <span class="math inline">\(\nabla^{k+1} a_n​\)</span> is obtained from <span class="math inline">\(\nabla^k a_n​\)</span> by <span class="math display">\[
+\]</span> The <strong>(k+1)st difference</strong> <span class="math inline">\(\nabla^{k+1} a_n\)</span> is obtained from <span class="math inline">\(\nabla^k a_n\)</span> by <span class="math display">\[
 \nabla^{k+1} a_n = \nabla^k a_n - \nabla^k a_{n-1}.
 \]</span> Find <span class="math inline">\(\nabla^2 a_n\)</span> for the following sequences.</p>
-<p><strong>a)</strong> <span class="math inline">\(a_n = 4.​\)</span> <strong>b)</strong> <span class="math inline">\(a_n = 2n.​\)</span></p>
-<p><strong>c)</strong> <span class="math inline">\(a_n = n^2.​\)</span> <strong>d)</strong> <span class="math inline">\(a_n = 2^n.​\)</span></p>
+<p><strong>a)</strong> <span class="math inline">\(a_n = 4.\)</span> <strong>b)</strong> <span class="math inline">\(a_n = 2n.\)</span></p>
+<p><strong>c)</strong> <span class="math inline">\(a_n = n^2.\)</span> <strong>d)</strong> <span class="math inline">\(a_n = 2^n.\)</span></p>
 </blockquote>
 <blockquote>
 <p>设 <span class="math inline">\(\{a_n\}\)</span> 为实数序列. 该序列的<strong>后向差分</strong>递归定义如下. <strong>一阶差分</strong> <span class="math inline">\(\nabla a_n\)</span> 为 <span class="math display">\[
 \nabla a_n = a_n - a_{n-1}.
 \]</span> <strong>k+1 阶差分</strong> <span class="math inline">\(\nabla^{k+1} a_n\)</span> 从 <span class="math inline">\(\nabla^k a_n\)</span> 得出 <span class="math display">\[
 \nabla^{k+1} a_n = \nabla^k a_n - \nabla^k a_{n-1}.
-\]</span> 对以下序列，求 <span class="math inline">\(\nabla^2 a_n​\)</span>.</p>
+\]</span> 对以下序列，求 <span class="math inline">\(\nabla^2 a_n\)</span>.</p>
 <p><strong>1)</strong> <span class="math inline">\(a_n = 4.\)</span> <strong>2)</strong> <span class="math inline">\(a_n = 2n.\)</span></p>
 <p><strong>3)</strong> <span class="math inline">\(a_n = n^2.\)</span> <strong>4)</strong> <span class="math inline">\(a_n = 2^n.\)</span></p>
 </blockquote>
