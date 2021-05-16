@@ -101,6 +101,13 @@
 
                         
                         <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/about/">ABOUT</a>
                         </li>
                         
@@ -109,13 +116,6 @@
                         
                         <li>
                             <a href="/tags/">TAGS</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -199,6 +199,39 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2021/05/16/ciscn-2021-writeup/">
+        <h2 class="post-title">
+            2021 第十四届全国大学生信息安全竞赛初赛两道逆向解题报告（writeup）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            又只做了两道水题，太久没打了，啥都不会了qaq
+0x0. glass - Reverse
+拿到一个 apk 文件，先反编译。
+
+
+
+
+经过checkFlag函数检查，对就输出right!这个函数是 native 函数，在 libnative-lib.so 文件里，用 7z 提取出来拖进 IDA。
+
+
+
+
+checkFlag函数就是这样，v3是用户输入，检查长度为 39......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2021-05-16
+    </p>
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -446,27 +479,6 @@ SIB（0 - 1 字节）
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/10/23/on-inanimate-subjects/">
-        <h2 class="post-title">
-            对无灵主语的一点观察
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            今天（原文成于国庆）提着行李回家，有个袋子太重，裂开了。后来我就在想这件事用英语怎么说，上网搜了一下，说法是 The bag was too heavy and it tore/ripped. 袋子自己怎么能 tear/rip（撕扯）呢？不应该是 it got torn/ripped 吗？查了词典，发现 rip 的定义是（tear 的类似）：to tear something or to b......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2018-10-23
-    </p>
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -597,7 +609,7 @@ SIB（0 - 1 字节）
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Goulash 2020 
+                    Copyright &copy; Goulash 2021 
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
