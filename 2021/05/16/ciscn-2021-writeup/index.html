@@ -101,6 +101,13 @@
 
                         
                         <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/about/">ABOUT</a>
                         </li>
                         
@@ -109,13 +116,6 @@
                         
                         <li>
                             <a href="/animal-farm/">Animal Farm</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -183,11 +183,11 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
                         
                           <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
                         
-                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
                         
                     </div>
                     <h1>2021 第十四届全国大学生信息安全竞赛初赛两道逆向解题报告（writeup）</h1>
@@ -260,7 +260,7 @@
 CISCN\{6654d84617f627c88846c172e0f4d46c\}
 \]</span> <img src="https://i.loli.net/2021/05/16/eCrpBSWxKPG8JLt.png"></p>
 <h3 id="x1.-baby_bc---reverse">0x1. baby_bc - Reverse</h3>
-<p>拿到一个 .bc 后缀文件，搜索一下，是 LLVM bitcode，用<code>llvm-dis</code>工具反汇编成 LLVM IR，然后再用 GitHub 上面一个叫<code>llvm2c</code>的工具转成 C 代码，丢进 IDE 里改一改就可以编译出可执行文件。再拖进 IDA 分析。</p>
+<p>拿到一个 .bc 后缀文件，搜索一下，是 LLVM bitcode，用<code>llvm-dis</code>工具反汇编成 LLVM IR，然后再用 GitHub 上面一个叫<code>llvm2c</code>的工具转成 C 代码，丢进 IDE 里改一改就可以编译出可执行文件。（5/17 更新：看了其他师傅 writeup，.bc 文件可以用<code>llc</code>直接生成目标文件再用<code>gcc</code>链接，这里画蛇添足了）再拖进 IDA 分析。</p>
 <div class="figure">
 <img src="https://i.loli.net/2021/05/16/UC3q8FoPzeBm4p6.png">
 
