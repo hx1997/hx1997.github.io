@@ -101,13 +101,6 @@
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">ABOUT</a>
                         </li>
                         
@@ -116,6 +109,13 @@
                         
                         <li>
                             <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
@@ -240,16 +240,13 @@
 <img src="https://i.loli.net/2021/05/16/kcByijY9aneM3lq.png">
 
 </div>
-<p>分上下两个循环处理，第一个循环以三个字符为一组，加密产生新串，第一、三字符异或得到新串第一字符，三字符一起异或得到新串第二字符，第二、三字符异或得到新串第三字符，如下（新串第二个字符少画了个异或符号）：</p>
+<p>分上下两个循环处理，第一个循环以三个字符为一组（组密码），加密产生新串，第一、三字符异或得到新串第一字符，三字符一起异或得到新串第二字符，第二、三字符异或得到新串第三字符，如下（新串第二个字符少画了个异或符号）：</p>
 <div class="figure">
 <img src="https://i.loli.net/2021/05/16/TMVs4wl6ib2vn3y.png">
 
 </div>
-<p>第二个循环就是每个字符自己一组异或，解密直接是对称的。第一个循环的解密需要改一下代码。以下是这整个函数的解密代码：</p>
-<div class="figure">
-<img src="https://i.loli.net/2021/05/16/ABdVmgFso12IwXa.png">
-
-</div>
+<p>第二个循环就是每个字符自己一组异或（流密码），解密直接和加密算法相同。第一个循环的解密需要改一下代码。以下是这整个函数的解密代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> v5;</div><div class="line">  <span class="keyword">char</span> v6, v7, v8;</div><div class="line">  <span class="keyword">int</span> a4 = <span class="number">8</span>;</div><div class="line">  <span class="keyword">int</span> a2 = <span class="number">39</span>;</div><div class="line">  <span class="keyword">char</span> a3[<span class="number">8</span>] = &#123;<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>&#125;;</div><div class="line">  <span class="keyword">char</span> result[<span class="number">39</span>] = &#123;<span class="number">0xa3</span>, <span class="number">0x1a</span>, <span class="number">0xe3</span>, <span class="number">0x69</span>, <span class="number">0x2f</span>, <span class="number">0xbb</span>, <span class="number">0x1a</span>, <span class="number">0x84</span>, <span class="number">0x65</span>, <span class="number">0xc2</span>, <span class="number">0xad</span>, <span class="number">0xad</span>,</div><div class="line">      <span class="number">0x9e</span>, <span class="number">0x96</span>, <span class="number">0x5</span>, <span class="number">0x2</span>, <span class="number">0x1f</span>, <span class="number">0x8e</span>, <span class="number">0x36</span>, <span class="number">0x4f</span>, <span class="number">0xe1</span>, <span class="number">0xeb</span>, <span class="number">0xaf</span>, <span class="number">0xf0</span>, <span class="number">0xea</span>, <span class="number">0xc4</span>,</div><div class="line">      <span class="number">0xa8</span>, <span class="number">0x2d</span>, <span class="number">0x42</span>, <span class="number">0xc7</span>, <span class="number">0x6e</span>, <span class="number">0x3f</span>, <span class="number">0xb0</span>, <span class="number">0xd3</span>, <span class="number">0xcc</span>, <span class="number">0x78</span>, <span class="number">0xf9</span>, <span class="number">0x98</span>, <span class="number">0x3f</span>&#125;;</div><div class="line">  <span class="keyword">char</span> *addr = result;</div><div class="line">  <span class="keyword">for</span> ( <span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a2; j += a4 )</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> k = <span class="number">0</span>; (a4 &amp; ~(a4 &gt;&gt; <span class="number">31</span>)) != k &amp;&amp; j + k &lt; a2; ++k )</div><div class="line">      *(<span class="keyword">char</span> *)(addr + k) ^= *(<span class="keyword">char</span> *)(a3 + k);</div><div class="line">    addr = addr + a4;</div><div class="line">  &#125;</div><div class="line">  addr = result;</div><div class="line">  <span class="keyword">for</span> ( <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a2; i += <span class="number">3</span> )</div><div class="line">  &#123;</div><div class="line">    v5 = (<span class="keyword">int</span>)addr + i;</div><div class="line">    v6 = *(<span class="keyword">char</span> *)(addr + i + <span class="number">2</span>);</div><div class="line">    v7 = *(<span class="keyword">char</span> *)(addr + i + <span class="number">1</span>);</div><div class="line">    v8 = *(<span class="keyword">char</span> *)(addr + i);</div><div class="line">    *(<span class="keyword">char</span> *)(addr + i) = (v6 ^ v7) &amp; <span class="number">0xff</span>;</div><div class="line">    *(<span class="keyword">char</span> *)(v5 + <span class="number">1</span>) = (v8 ^ v7) &amp; <span class="number">0xff</span>;</div><div class="line">    *(<span class="keyword">char</span> *)(v5 + <span class="number">2</span>) = (v8 ^ v6 ^ v7) &amp; <span class="number">0xff</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a2; i++)</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%x "</span>, result[i] &amp; <span class="number">0xff</span>);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>result</code>数组是从<code>checkFlag</code>函数最后<code>memcmp</code>的参数提取出来的。</p>
 <p>运行得到：</p>
 <blockquote>
