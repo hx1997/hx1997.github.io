@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          英汉翻译乱谈 - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2017/12/03/on-en-ch-translation/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#翻译" title="翻译">翻译</a>
+                        
+                    </div>
+                    <h1>英汉翻译乱谈</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2017-12-03 | 
+                        <span id="/2017/12/03/on-en-ch-translation/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>说到翻译，大家一定不陌生。我们从小接受的英语教育（起码在中国）充斥着大量的英汉汉英翻译，比如学 mind 的时候，老师告诉我们这是「思想」，我们就记住英文的 mind = 中文的「思想」，这种外语教学方法，我们称之为<a href="https://zh.wikipedia.org/wiki/%E6%96%87%E6%B3%95%E7%BF%BB%E8%AD%AF%E6%B3%95" target="_blank" rel="external">语法翻译法</a>（自备梯子） 。但是，这种词词对应的翻译（word-for-word translation），与其叫翻译，不如叫映射。随着英语成为一门通用语（lingua franca），我国洋文好的人也日益增多，再加上语法翻译法的普及，似乎只要会洋文的人就可以搞翻译了。然而，许多人的译文质量却不敢恭维：各种翻译腔、文白不分暂且不提，连原文意思都没有理解就边看边译的大有人在。 因此，我写这篇文章来「乱谈」一下翻译的基础知识。我没有系统学习过翻译，错误疏漏在所难免，如果说错了，那就错了呗。</p>
+<h3 id="一简单英汉句法">一、简单英汉句法</h3>
+<p>具备高中英语水平的人都应该知道，英语句子可以分为简单句、并列句和复合句，而简单句又有五种基本句型，即：</p>
+<ol style="list-style-type: decimal">
+<li>SV（主谓）</li>
+<li>SVO（主谓宾）</li>
+<li>SVOO（主谓双宾）</li>
+<li>SVOC（主谓宾宾补）</li>
+<li>SVC（主系表）</li>
+</ol>
+<p>我就不打算具体说了，不懂的回去翻高中英语书吧。</p>
+<p>我要重点说的，是汉语的句法，准确地说，是现代汉语的句法。现代汉语语法受到西方语言语法影响相当大，英语的五种基本句型，汉语都可以直接用相似的句式表达出来（符不符合习惯是另一回事了），这是汉语的第一种句式结构：<strong>主谓句</strong>。如：</p>
+<blockquote>
+<p>孔乙己死了。<br>
+我爱你。<br>
+我买了件礼物给你。<br>
+专家认为强人工智能遥不可及。<br>
+城北的徐公是齐国的美男子。</p>
+</blockquote>
+<p>以上分别对应英语基本句型的 1~5。</p>
+<p>有时，汉语中的一些句子不适合套用英语的主谓结构来分析，取而代之的是汉语的第二种句式结构：<strong>主题评述句</strong>（topic-comment sentence）。这种句子一般以主题开头，后接的是对主题的评论或描述。如：</p>
+<blockquote>
+<p>这支笔（主题）颜色很好看（评述）。<br>
+书（主题）你买了吗（评述）？<br>
+他（主题）个子有一米八（评述）。<br>
+西方的哪一个国家（主题）我没去过（评述）？</p>
+</blockquote>
+<p>还有时，汉语句子中根本没有主语，这是汉语的第三种句式结构：<strong>无主句</strong>（null-subject sentence）。如：</p>
+<blockquote>
+<p>下雨了。<br>
+识得唔识得啊？<br>
+未经允许，不得入内。<br>
+穿过县界长长的隧道，便是雪国。</p>
+</blockquote>
+<p>英汉翻译时，应视情况选择汉语句式（这句也是无主句），而不能一味翻译成主谓句，否则就会出现翻译腔。如：</p>
+<blockquote>
+<p>SVC: She is a good swimmer.<br>
+主题评述句：她游泳游得不错。 / 她水性好。<br>
+主谓句：她是个好游泳者。</p>
+</blockquote>
+<p>上句采用主题评述句就显然要好过主谓句。</p>
+<h3 id="二形合与意合">二、形合与意合</h3>
+<p>具备高中英语水平的人都应该知道，英语句子之间要用恰当的标点符号断开，或者用连词连接，像中文一样一路逗号接到底是不可饶恕的语法错误。即两个句子必须要符合下列公式之一：</p>
+<ul>
+<li>Sentence A. Sentence B.</li>
+<li>Sentence A? Sentence B.</li>
+<li>Sentence A! Sentence B.</li>
+<li>Sentence A; sentence B.</li>
+<li>Sentence A: sentence B.</li>
+<li>Sentence A — sentence B.</li>
+<li>Sentence A [连词] sentence B.</li>
+</ul>
+<p>绝对绝对不允许的写法（除非你是个诗人或者莎士比亚级的可以开创英文用法的文豪）：</p>
+<ul>
+<li>Sentence A, sentence B.</li>
+</ul>
+<p>这种特点叫做<strong>形合</strong>（hypotaxis，字面意思是<strong>从属</strong>），即句与句之间要用显性的语法形式接合，在英语中就体现为用连词接合句子。所以，英语句子中的连词并不一定有实在的意思，可能只是为了句法正确才加入。</p>
+<p>相对地，汉语则是偏<strong>意合</strong>（parataxis，字面意思是<strong>并列</strong>）的语言，即句与句之间通过语意接合，没有明显的从属关系，好像是一个个句子直接拼在了一起。</p>
+<p>对比下句：</p>
+<blockquote>
+<p>Without saying a word, he stood up and left.<br>
+他一言不发，起身离去。<br>
+他一言不发，起身然后离去了。</p>
+</blockquote>
+<blockquote>
+<p>The boy ran so fast that I couldn’t catch him.<br>
+那男生跑得太快了，我抓不住他。<br>
+那男生跑得如此之快，以至于我抓不住他。</p>
+</blockquote>
+<p>这里英文的连词 and 和 that 是句法需要，译成汉语时无需译出，否则就会出现如上两例最后一句的翻译腔。</p>
+<p>需要注意的是，英语并非全形合，汉语也并非全意合。形合与意合，靠译者取舍。</p>
+<h3 id="三归化与异化">三、归化与异化</h3>
+<p>看过美剧的人都应该知道（没看过也不要紧），某些字幕组常常把美国人说的 Twitter, Facebook 翻译成「微博」、「人人网」。这种翻译策略，就叫<strong>归化</strong>（domestication，字面意思<strong>国内化</strong>、<strong>本土化</strong>），也就是使译文贴近目的语的文化。类似的例子还有很多，如西方的 God，专指基督教、伊斯兰教和犹太教所信仰的唯一的神，翻译过来变成了「老天爷」，然而二者并非完全对等（即使是「上帝」也不是完全对等）。再如谚语 “The spirit is willing but the flesh is weak.” 意译成「心有余而力不足」，而不是直译成「精神上愿意，肉体却软弱」。</p>
+<p><strong>异化</strong>（foreignization，字面意思<strong>国外化</strong>、<strong>陌生化</strong>）则是使译文贴近源语言的文化，丰富目的语的表达。比如 rock and roll 介绍到汉语成了「摇滚」，饺子介绍到英语成了 Jiaozi（早年间译为 dumpling，该词实际泛指任何包起来的面食，近年更提倡将饺子一词异化为 Jiaozi）。</p>
+<p>有时，一些翻译即可归化，也可异化，如：</p>
+<blockquote>
+<p>kill two birds with one stone<br>
+归化：一箭双雕<br>
+异化：一石二鸟</p>
+</blockquote>
+<p>而有时，归化与异化需要谨慎选择、把握尺度，如：</p>
+<blockquote>
+<p>I couldn’t agree more.<br>
+归化：（我）十分赞同。<br>
+异化：（我）不能同意更多。</p>
+</blockquote>
+<blockquote>
+<p>The great earth makes herself hospitable with the help of the grass.<br>
+归异适当：大地借助于绿草，显出她自己的殷勤好客。（郑振铎 译）<br>
+过度归化：有了绿草，大地变得挺骚。（冯唐 译）</p>
+</blockquote>
+<p>归化与异化并非只体现在直译和意译上，刘慈欣的《三体》翻译到英文时，由于西方女权主义思想深入人心，译者对作品中带有性别歧视的文字进行了处理，这也算是归化（对英语来说）策略的应用。</p>
+<h3 id="四原文分析">四、原文分析</h3>
+<p>上过知乎的人都应该知道（没上过也不要紧），严复说过译事三难是「信、达、雅」。严复当时所说的今天是否还适用我们按下不表，「信」字却是每个译者都应当遵守的信条。简单来说，「信」即是忠于原文。译者必须在理解原文的基础上再翻译，而理解原文又有许多方面，如语义、语体（文还是白）、语气、文化背景等。</p>
+<p>知乎上有个问题问李宗盛的「越过山丘，才发现无人等候」怎么翻译成英语，我摘选几个回答：</p>
+<blockquote>
+<p>Climb over the hill, alone still.<br>
+Across the hill waits no Jill.<br>
+Over the mountains, mountains.<br>
+One trudged over the hill, only to find no one waits still.<br>
+I kept my promise but who cares?</p>
+</blockquote>
+<p>你觉得哪个翻译好？事实上我觉得问题下的回答都不够好，但我喜欢上面的第二句和第四句。</p>
+<p>第一句语法就不对，一棍子打死，更别谈什么理解原文了。</p>
+<p>第三句违背了「信」的原则，「才发现」的那种意外感呢？「无人等候」的无奈呢？这一句给人的感觉更像是「山峦重重」吧？</p>
+<p>第五句看似理解了原文所以意译，实则也违背了「信」的原则，问问自己，原文和译文是一个意思吗？是吗？吗？</p>
+<p>第二句好在它押韵，而且用了典（不知道算不算典啦），Jill 来自 Jack and Jill（英文中对男女的代指）。本可以是一个很好的翻译，可惜的是，它似也没有达到「信」：「无人等候」里的那个人一定是女人吗？一定是「我」的爱人吗？其实这句话可以表达的意思有很多，但最主要的意思（个人认为）应该是「我以为千辛万苦登上巅峰就能得到我追求的东西（爱人、别人的关注、理想等等），但我错了」。</p>
+<p>第四句是唯一勉强达到了「信」的译文，问题是若是这么翻译，是强行押韵了，而且总是差点韵味（那是「雅」的层次了）。</p>
+<p>以上是语义和语气两方面，除了这两方面，还经常有人不分析语体，如：</p>
+<blockquote>
+<p>FOR PAUL（《速度与激情7》中致保罗·沃克的献辞）<br>
+别后悠悠心相念，几回梦里与君同。</p>
+</blockquote>
+<blockquote>
+<p>Sometimes it lasts in love but sometimes it hurts instead.<br>
+情堪隽永，也善心潮掀狂澜。</p>
+</blockquote>
+<p>需知日常使用的英语，包括一些书面语，都是大白话，没必要也不可以用古汉语去翻译。除非英语原文的确是正式公文，或者写作的时代的确是较早，像<a href="https://www.zhihu.com/question/22362541" target="_blank" rel="external">英国女王对图灵的赦免</a>，或者是<a href="https://zh.wikipedia.org/wiki/%E8%93%8B%E8%8C%B2%E5%A0%A1%E6%BC%94%E8%AA%AA#.E6.9E.97.E8.82.AF.E7.9A.84.E8.93.8B.E8.8C.B2.E5.A0.A1.E6.BC.94.E8.AA.AA" target="_blank" rel="external">葛底斯堡演说</a>（自备梯子）。</p>
+<p>:)</p>
+<p>EOF</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/02/09/discrete-math-ch4sec1-answer/" data-toggle="tooltip" data-placement="top" title="《离散数学及其应用》第四章第一节习题解">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/12/03/i-am-a-feminist-emma-watson/" data-toggle="tooltip" data-placement="top" title="\[译\] Emma Watson 于联合国：《我是一名女权主义者》">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

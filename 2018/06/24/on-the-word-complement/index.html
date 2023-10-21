@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          谈“complement” - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2018/06/24/on-the-word-complement/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#数学" title="数学">数学</a>
+                        
+                          <a class="tag" href="/tags/#英语" title="英语">英语</a>
+                        
+                    </div>
+                    <h1>谈“complement”</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2018-06-24 | 
+                        <span id="/2018/06/24/on-the-word-complement/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>complement 这个词以及它的形容词 complementary 和 complete 是同源的。所以 complement 是“使某物完整的东西”/“补充物”的意思，动词“使某物完整”/“补充某物”是后起义。</p>
+<p>其实 complement 本身并没有什么有趣的，有趣的是它在各个领域中作为专门术语的意思以及相应的中文翻译。</p>
+<p>语法中的补语，就是 complement 的翻译，取的是“使谓语部分完整的东西”的意思。例如 He is mad. 中，mad 是补语，单独的 He is 意思是不完整的，加上补语才完整。He drove her mad. 中，mad 也是补语，或称宾补，单独的 He drove her 意思也是不完整的。（语言学上的补语意思很广，不同的语法流派对补语也有不同定义）</p>
+<p>几何上的余角，是 complementary angle 的翻译，取“使另一个角完整的角”的意思，这里的完整就是指 <span class="math inline">\(90\)</span> 度（当然“完整”的定义各术语不同），一个角加上它的余角就完整了（相加等于 <span class="math inline">\(90\)</span> 度）。</p>
+<p>余弦、余切、余割分别是 cosine, cotangent, cosecant 的翻译，里面的 co- 是 complementary 的缩写，所以一个角的 cosine（余弦值）就是这个角的 complementary angle（余角）的 sine（正弦值）。</p>
+<p>计算机科学里的反码，是 ones’ complement 的翻译（也有地方翻译成“一补数”），取“使另一个数完整的数”的意思，这里的完整就是指 n 个 <span class="math inline">\(1\)</span>（所以叫 ones’ complement, one 是复数表明有多个 <span class="math inline">\(1\)</span>），n 是原码的位数。换句话说，一个数的 ones’ complement 是使得二者相加等于 n 个 <span class="math inline">\(1\)</span> 的数。举个例子（下面都是二进制数）：</p>
+<p><span class="math inline">\(10000010\)</span> 的反码是 <span class="math inline">\(01111101\)</span>，因为 <span class="math inline">\(10000010 + 01111101 = 11111111\)</span>.</p>
+<p>（对补码不清楚的人就别看这段了，以免混乱）</p>
+<p>同样还有补码，是 two’s complement 的翻译（也有地方翻译成“二补数”），也取“使另一个数完整的数”的意思，这里的完整是指 <span class="math inline">\(2\)</span>（对于小数）或者 <span class="math inline">\(2^n\)</span>（对于整数），n 是原码的位数，所以叫 two’s complement。换句话说，一个数的 two’s complement 是使得二者相加等于 <span class="math inline">\(2\)</span> 或者 <span class="math inline">\(2^n\)</span> 的数。注意，英语里 two’s complement of x 和 two’s complement notation/representation of x 是不一样的，前者是对 x 求补后的数，后者是 x 的补码表示形式，中文里常说的“正数的补码和原码相同”指的是后者，即“正数的补码<strong>表示</strong>与原码<strong>表示</strong>相同”。求补运算就是上面说的，用 <span class="math inline">\(2\)</span> 或 <span class="math inline">\(2^n\)</span> 减去 x。</p>
+<p>为什么偏偏是 <span class="math inline">\(2^n\)</span> 呢？（从英语科普变成 CS 科普）</p>
+<p><span class="math inline">\(2^n\)</span> 的二进制形式是 <span class="math inline">\(1\)</span> 后面跟 n 个 <span class="math inline">\(0\)</span>，比如 <span class="math inline">\(2^4\,_{(10)}\)</span> = <span class="math inline">\(10000\,_{(2)}\)</span>，这有 <span class="math inline">\(5\)</span> 位，而原来的数是 <span class="math inline">\(n=4\)</span> 位，多出来的最高位 <span class="math inline">\(1\)</span> 会作为溢出扔掉，所以 <span class="math inline">\(2^n\)</span> 其实会被当成 <span class="math inline">\(0\)</span>（如果机器数只能存 <span class="math inline">\(4\)</span> 位的话），这相当于 一个数（用补码表示） + 它自己求补后的数 = <span class="math inline">\(0\)</span>。所以正数的补码表示是其本身，而负数的补码表示是相应正数求补后的数。例如，<span class="math inline">\(0001\)</span>（<span class="math inline">\(1\)</span> 的补码表示） + <span class="math inline">\(1111\)</span>（<span class="math inline">\(-1\)</span> 的补码表示） = <span class="math inline">\(10000\)</span>，扔掉溢出位等于 <span class="math inline">\(0\)</span>. 而原码和反码不具有这样的性质。至于为什么要搞这么多，是因为把减法转换为加法来做，就可以只用加法器同时做加减两种运算，而现在的计算机也的确是这么设计的…（也可以设计减法器但那样加减要用不同元件有开销的问题）</p>
+<p>当然我只是从英语的角度来看，我知道有大佬可以从群论或者环论的角度来解释这个补码，向大佬低头orz</p>
+<p>就扯这么些吧。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/07/05/simple-web-server-c-implementation/" data-toggle="tooltip" data-placement="top" title="C 写的一个简单的 Web 服务器">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/05/06/2018-redhat-online-re-ccm-writeup/" data-toggle="tooltip" data-placement="top" title="2018 红帽杯线上赛一道 RE + 一道 Pwn 解题报告（writeup）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

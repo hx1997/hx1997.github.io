@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          2019 第三届强网杯解题报告（writeup） - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2019/05/28/qwb-2019-ctf-writeup/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                        
+                    </div>
+                    <h1>2019 第三届强网杯解题报告（writeup）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2019-05-28 | 
+                        <span id="/2019/05/28/qwb-2019-ctf-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="x0.-misc-签到">0x0. MISC – 签到</h3>
+<p>打开题目，大喊“隐藏着黑暗力量的钥匙啊，在我面前显示你真正的力量！跟你定下约定的 cxk 命令你，封印解除！” flag 就会自己把自己解出来。 <span class="math display">\[
+flag\{welcome\_to\_qwb\_2019\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeR2Hf.png"></p>
+<h3 id="x1.-misc-强网先锋-打野">0x1. MISC – 强网先锋-打野</h3>
+<p>比赛时没做出来（我打 CTF 像 cxk），搜了一下，用 <code>zsteg</code> 看一下隐写数据就得到 flag。（🐓你太美 <span class="math display">\[
+qwxf\{you\_say\_chick\_beautiful?\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeIh5V.png"></p>
+<h3 id="x2.-crypto-强网先锋-辅助">0x2. CRYPTO – 强网先锋-辅助</h3>
+<p>打开下载到的 Python 脚本，看到 <span class="math inline">\(p, q, e, n\)</span> 几个字母就知道是 RSA 题。进行了两次 RSA 加密，一次是将 flag 加密，另一次是将 32 个 1 组成的字符串加密。题目给出了 <span class="math inline">\(c, e, n\)</span>，观察代码，发现第一次加密使用的素数 <span class="math inline">\(q\)</span> 重复用到了第二次加密中，这意味着两次加密的 <span class="math inline">\(n_1=p_1 q\)</span>, <span class="math inline">\(n_2=p_2 q\)</span> 有公因数 <span class="math inline">\(q\)</span>。使用模不互素攻击，求 <span class="math inline">\(n_1\)</span> 与 <span class="math inline">\(n_2\)</span> 的最大公因数，可直接得到 <span class="math inline">\(q\)</span> 和 <span class="math inline">\(p_1\)</span>。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRgDP.png">
+
+</div>
+<p>分解了大素数乘积，RSA的难题就攻克了，接下来就是常规套路按公式解出明文。</p>
+<p>求欧拉函数值 <span class="math inline">\(\varphi(n_1)=(p_1-1)(q-1)​\)</span></p>
+<p>求私钥，即 <span class="math inline">\(e​\)</span> 关于 <span class="math inline">\(\varphi(n_1)​\)</span> 的模反元素，<code>d = gmpy2.invert(e, phi)</code></p>
+<p>解密：<span class="math inline">\(m = c^d \mod n_1\)</span> <span class="math display">\[
+flag\{i\_am\_very\_sad\_233333333333\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeRcut.png"></p>
+<h3 id="x3.-reverse-强网先锋-ad">0x3. REVERSE – 强网先锋-AD</h3>
+<p>直接上 IDA。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRyjI.png">
+
+</div>
+<p><code>main()</code> 函数里接受输入，一串赋值后执行 <code>sub_4005B7()</code>，最后循环比较字符。先看看比较的两个字符串，<code>v4</code> 是传入 <code>sub_4005B7()</code> 的参数，而 <code>v5</code> 在上面的一串赋值里初始化，看下 <code>v5</code> 的值。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRsgA.png">
+
+</div>
+<p>这些都是 ASCII 码，转成字符来看。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRh4g.png">
+
+</div>
+<p>局部变量一般是按声明顺序分配栈空间，因此连续的声明就会分配到连续的内存，<code>v5</code>, <code>v6</code>, <code>v7</code>… 其实是同一个字符串里的连续字符，这个字符串以 <code>==</code> 结尾，怀疑是 base64 编码，带着这种猜测继续看代码。</p>
+<p>在 <code>sub_4005B7()</code> 中发现了 base64 字母表，很明显这个函数就是 base64 编码函数。因此程序流程就是将输入 base64 编码，再和以上固定的字符串比较。将固定字符串 base64 解码就得到 flag。 <span class="math display">\[
+flag\{mafakuailaiqiandaob\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeRWE8.png"></p>
+<h3 id="x3.-reverse-justre">0x3. REVERSE – JUSTRE</h3>
+<p>直接上 IDA。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRogs.png">
+
+</div>
+<p>这里就是 <code>main()</code> 函数，看字符串很容易找到。逻辑十分简单，可以猜测 <code>sub_401CE0()</code> 是 <code>scanf()</code> 函数，接受输入的字符串并存到 <code>v1</code> 中，然后将 <code>v1</code> 作为参数先后调用 <code>sub_401610()</code> 和 <code>sub_4018A0()</code>，均返回 1 则回显 flag。</p>
+<p>看下 <code>sub_401610()</code>。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeR5CQ.png">
+
+</div>
+<p>一上来是个循环，又 0 又 9 又 A 的，直接猜是将输入字符串转为数字。在 <code>v9</code> 那一行（75 行）下断点可以看到的确如此。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRI3j.png">
+
+</div>
+<p>输入 <code>12ABCD3456</code>，前八位被转成了十六进制数 <code>0x12ABCD34</code> 存到 <code>v3</code> 中。</p>
+<p>至于 <code>v3</code> 外面的两个函数是什么，我们需要翻阅古老的典籍——英特尔内部函数指南（Intel® Intrinsics Guide），里面记载了 XMM 法术的各种细节。首先我们在典籍中检索 <code>_mm_cvtsi32_si28</code>。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRHuq.png">
+
+</div>
+<p>这真是太不可思议了，原来这个函数就是 <code>movd</code> 魔咒的封装，作用是把输入 <code>a</code> 零扩展为 128 位并存到指定 XMM 寄存器中。</p>
+<p>这时我们有必要切换所使用的工具，因为 IDA 对 XMM 寄存器的显示乱七八糟（可能只是我不会用吧）。换用 x32dbg。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRTvn.png">
+
+</div>
+<p>在刚刚调用 <code>_mm_cvtsi32_si28()</code> 函数的附近下断点，可以看到刚才两个函数其实分别对应两条汇编指令 <code>movd</code> 和 <code>pshufd</code>，可以查内部函数指南了解它们具体的功能，但也可以直接观察寄存器内容：经过这两条指令后，XMM0 存入了零扩展后的十六进制数，而 XMM5 则将低 32 位复制到了高 96 位。</p>
+<p>大概知道了这一块代码在做什么，回到 IDA 继续往下看。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRbD0.png">
+
+</div>
+<p>又是一段类似的代码，但这次是对 <code>v10</code> 即 <code>v2+8</code> 的位置进行操作，<code>v2</code> 就是我们输入的字符串<code>12ABCD3456</code>，<code>v2+8</code> 就是 5 这个位置。再往下看还有一段对 <code>v2+9</code> 的类似操作，<code>v2+9</code> 就是 6 这个位置，因此有理由怀疑这一块代码是将输入的第 9 位和第 10 位转成十六进制数。事实上，我们在这一块代码末尾的下图处下断点就可以知道的确如此。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeROET.png">
+
+</div>
+<p>这里又有三行内部函数对 XMM 寄存器操作，再次切换到 x32dbg，在下图处断点。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRXUU.png">
+
+</div>
+<p>看到 XMM0 变成了输入的第 9 位和第 10 位的重复序列 <code>565656……</code>，并且 <code>movaps</code> 指令还将 XMM0 传送到了栈上。结合上上张图 IDA 的伪代码，栈上这个位置就是局部变量 <code>v27</code>，也就是说 <code>v27</code> 里现在存着 <code>565656……</code>。</p>
+<p>回到 IDA 往下看，接下来有一串 XMM 操作，看着眼花，还好我们快到函数末尾了，先拉到最底看看什么情况。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRqbV.png">
+
+</div>
+<p>回忆一下，在 <code>main()</code> 函数中要求这个函数返回值为 1，因此流程必须要走到最里面。这里是在比较两块内存的值是否相等，比较 96 字节如果全部相等则进入最内层。比较的两块内存首地址是 <code>&amp;xmmword_405018</code> 和 <code>&amp;loc_404148</code>，前者在我们刚才跳过的部分里修改了，后者则是固定的。在最内层中，有一个反调试，可以 patch 掉，最后是 <code>WriteProcessMemory()</code> 修改自身内存，将 <code>xmmword_405018</code> 的 96 字节写到 <code>sub_4018A0()</code> 处。而 <code>xmmword_405018</code> 又必须和 <code>loc_404148</code> 相等，因此我们看看 <code>loc_404148</code> 处是什么。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRj5F.png">
+
+</div>
+<p>竟然是一段代码！</p>
+<p>总结一下目前的发现：</p>
+<ol style="list-style-type: decimal">
+<li><p>函数先把输入的前 8 个字符转为十六进制数，然后复制为 128 位存到局部变量中。</p></li>
+<li><p>把输入的第 9 字符和第 10 字符转为十六进制数，然后复制为 128 位存到局部变量中。</p></li>
+<li><p>对这两个局部变量进行一些运算，结果存到 <code>&amp;xmmword_405018</code> 为首地址的一块内存中。</p></li>
+<li><p>比较 <code>xmmword_405018</code> 与固定值 <code>loc_404148</code>，比较 96 字节。</p></li>
+<li><p>若全部相等，则将 <code>xmmword_405018</code> 处的代码复制到 <code>sub_4018A0()</code> 处。</p></li>
+</ol>
+<p>现在回头看刚刚跳过的部分。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRxC4.png">
+
+</div>
+<p>最开始的 <code>if</code> 是个反调试，可以 patch 掉。然后是一串 XMM 操作，参与运算的操作数有 <code>v27</code>, <code>v9</code>, <code>v21</code>，<code>v9</code> 就是上述“目前发现”的第 1 步结果，<code>v27</code> 是上述“目前发现”的第 2 步结果，<code>v21</code> 是对 <code>v27</code> 运算的结果，因此真正的输入只有两个：<code>v9</code>, <code>v21</code>，我们需要找出什么样的输入经过这些运算能与固定值 <code>loc_404148</code> 相等。具体的运算可以查英特尔内部函数指南，这里不赘述，我们重点看第 152 行到第 157 行，这几行的运算最简单，看懂了就可以反推出正确的输入。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeRz8J.png">
+
+</div>
+<p><code>xmmword_404360</code> 和 <code>xmmword_404340</code> 是预设的固定值，<code>_mm_add_epi32</code> 将它们每 32 位为一组相加（例如，0x1000000020000000+0x30000000F0000000=0x4000000010000000），结果再与 <code>v9</code> 每 32 位为一组相加，这个结果我们记为 <code>a</code>。<code>xmmword_405038</code> 也是固定值，它和 <code>v21</code> 每 32 位为一组相加，结果记为 <code>b</code>。最后 <code>xmmword_405038</code> 的值赋为 <code>a</code> 和 <code>b</code> 按位异或。155 行的运算类似。</p>
+<p><code>xmmword_405038</code> 其实就是 <code>xmmword_405018</code> 往后 0x20 字节处，也就是 <code>loc_404148</code> 往后 0x20 字节处，因此输入应满足方程：</p>
+<p><code>a XOR b == *(xmmword *)((BYTE *)&amp;loc_404148 + 0x20)</code></p>
+<p>155 行可以类似列出一条方程，两条方程解两个未知数 <code>v9</code> 和 <code>v21</code>，用 Z3 求解。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWPDx.png">
+
+</div>
+<p>运行，解出 <code>v9</code> 和 <code>v21</code>。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWS29.png">
+
+</div>
+<p>转为十六进制数即 <code>0x13242208</code> 和 <code>0x19</code>，所以程序输入的前十个字符应该是 <code>1324220819</code>。</p>
+<p>前十个字符正确后，<code>sub_4018A0()</code> 处的原本代码会被覆盖，也就是代码进行了自修改。看看修改后的函数。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWCK1.png">
+
+</div>
+<p>IDA 现在无法反编译为伪代码，不过我们可以直接修改 exe，手动把 <code>sub_4018A0()</code> 处的字节覆盖为新函数的字节。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWpvR.png">
+
+</div>
+<p>在这里覆盖，然后重新用 IDA 打开，找到函数就可以反编译。简单看了下，是 3DES 加密，密钥在：</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWkVK.png">
+
+</div>
+<p>注意小端序，顺序是反的。</p>
+<p>函数对输入的后 16 个字符进行 3DES 加密，并和固定值比较。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWib6.png">
+
+</div>
+<p>对固定值用密钥解密，得到输入的后 16 字符。</p>
+<div class="figure">
+<img src="https://s2.ax1x.com/2019/05/28/VeWAUO.png">
+
+</div>
+<p>因此，最终正确输入就是 <code>13242208190dcc509a6f75849b</code>。 <span class="math display">\[
+flag\{13242208190dcc509a6f75849b\}
+\]</span> <img src="https://s2.ax1x.com/2019/05/28/VeWE5D.png"></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2020/06/25/5space-2020-re-writeup/" data-toggle="tooltip" data-placement="top" title="2020 “第五空间”智能安全大赛初赛两道 RE 解题报告（writeup）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/04/23/ciscn-2019-bbvvmm-writeup/" data-toggle="tooltip" data-placement="top" title="2019 第十二届全国大学生信息安全竞赛初赛 bbvvmm 解题报告（writeup）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          《离散数学及其应用》第四章第一节习题解 - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2018/02/09/discrete-math-ch4sec1-answer/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#数学" title="数学">数学</a>
+                        
+                          <a class="tag" href="/tags/#离散数学" title="离散数学">离散数学</a>
+                        
+                    </div>
+                    <h1>《离散数学及其应用》第四章第一节习题解</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2018-02-09 | 
+                        <span id="/2018/02/09/discrete-math-ch4sec1-answer/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>下学期学算法设计与分析，预习了下，发现递推方程十分重要，这本来是大一离散数学的内容，但是我们课程精简掉了这部分… 于是找出大一买的《离散数学及其应用》<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，顺便刷下题。我的这本是精编版，章节和原版可能不同，第四章是 Advanced Counting Techniques（高级计数技巧），第一节是 Applications of Recurrence Relations（递推式的应用）。</p>
+<h3 id="习题解">习题解</h3>
+<h4 id="section">4.1.1</h4>
+<blockquote>
+<p>Use mathematical induction to verify the formula derived in Example 2 for the number of moves required to complete the <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi" target="_blank" rel="external">Tower of Hanoi</a> puzzle.</p>
+</blockquote>
+<blockquote>
+<p>用数学归纳法验证例 2 中导出的解决<a href="https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%BA%E5%A1%94" target="_blank" rel="external">河内塔问题（汉诺塔问题）</a>所需步数的公式。</p>
+</blockquote>
+<p>解决河内塔问题所需步数的公式为</p>
+<p><span class="math display">\[ H_n = 2^n - 1. \]</span></p>
+<p>现在用数学归纳法验证之.</p>
+<p><strong>证</strong>　当 <span class="math inline">\(n = 1\)</span> 时，<span class="math inline">\(H_1 = 2^1 - 1 = 1\)</span>. 原塔柱只有 <span class="math inline">\(1\)</span> 片圆盘时，只需用 <span class="math inline">\(1\)</span> 步将该片圆盘移动到目标塔柱即可，该情况成立.</p>
+<p>假设 <span class="math inline">\(n = k \; (k &gt; 1)\)</span> 时公式成立，即有 <span class="math inline">\(H_k = 2^k - 1\)</span>.</p>
+<p><span class="math inline">\(n = k + 1 \; (k &gt; 1)\)</span> 时，先用 <span class="math inline">\(H_k\)</span> 步将原塔柱最上面 <span class="math inline">\(k\)</span> 片圆盘移动到辅助塔柱，再用 <span class="math inline">\(1\)</span> 步将原塔柱剩下的 <span class="math inline">\(1\)</span> 片圆盘移动到目标塔柱，最后用 <span class="math inline">\(H_k\)</span> 步将辅助塔柱所有圆盘移动到目标塔柱. 因此有</p>
+<p><span class="math display">\[ H_{k+1} = 2 H_k + 1 = 2 \cdot (2^k - 1) + 1 = 2^{k+1} - 1, \]</span></p>
+<p>得证.　<span class="math inline">\(\Box\)</span></p>
+<h4 id="section-1">4.1.2</h4>
+<blockquote>
+<p>A vending machine dispensing books of stamps accepts only one-dollar coins, <span class="math inline">\(\$1\)</span> bills, and <span class="math inline">\(\$5\)</span> bills.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of ways to deposit <span class="math inline">\(n\)</span> dollars in the vending machine, where the order in which the coins and bills are deposited matters.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> How many ways are there to deposit <span class="math inline">\(\$10\)</span> for a book of stamps?</p>
+</blockquote>
+<blockquote>
+<p>现有一台贩卖整套邮票的机器，只接收 1 美元硬币、1 美元纸币、5 美元纸币.</p>
+<p><strong>1)</strong> 求投入 <span class="math inline">\(n\)</span> 美元的不同投法数的递推式，要考虑硬币和纸币投入的顺序.</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 投入 10 美元购买一套邮票，共有多少种投币方法？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 投入 <span class="math inline">\(n\)</span> 美元可分为两种情况：其一，先投入 <span class="math inline">\(n - 1\)</span> 美元，再投入 <span class="math inline">\(1\)</span> 美元；其二，先投入 <span class="math inline">\(n - 5\)</span> 美元，再投入 <span class="math inline">\(5\)</span> 美元. 记投入 <span class="math inline">\(n\)</span> 美元的投法数为 <span class="math inline">\(f(n)\)</span>，则根据分步计数乘法原理，前者有 <span class="math inline">\(f(n-1) \cdot 2\)</span> 种投法（投入 <span class="math inline">\(1\)</span> 美元有硬币和纸币两种投法），后者有 <span class="math inline">\(f(n-5) \cdot 1\)</span> 种投法. 由分类计数加法原理，递推式为</p>
+<p><span class="math display">\[f(n) = 2 f(n-1) + f(n-5), \; n &gt; 1.\]</span></p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+        \begin {array}{c}
+            f(n) = 0, &amp; \quad n &lt; 0 \\
+            f(0) = 1, &amp; \\
+            f(1) = 2. &amp; \\
+        \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 将 <span class="math inline">\(n = 10\)</span> 代入递推式得 <span class="math display">\[
+\begin {align*}
+    f(10) &amp; = 2 f(9) + f(5) \\
+    &amp; = 2 \cdot [2 f(8) + f(4)] + 2 f(4) + f(0) \\
+    &amp; = 2^2 f(8) + 2^2 f(4) + 1 \\
+    &amp; = 2^2 \cdot [2 f(7) + f(3)] + 2^2 \cdot [2 f(3) + f(-1)] + 1 \\
+    &amp; = 2^3 f(7) + 3 \cdot 2^2 f(3) + 1 \\
+    &amp; = \cdots \\
+    &amp; = 2^5 \cdot [2^4 f(1) + 1] + 5 \cdot 2^4 f(1) + 1 \\
+    &amp; = 2^{10} + 6 \times 2^5 + 1 \\
+    &amp; = 1217.
+\end {align*}
+\]</span></p>
+<h4 id="section-2">4.1.3</h4>
+<blockquote>
+<p>A country uses as currency coins with values of 1 peso, 2 pesos, 5 pesos, and 10 pesos and bills with values of 5 pesos, 10 pesos, 20 pesos, 50 pesos, and 100 pesos. How many ways are there to pay a bill of 17 pesos, where the order in which coins and bills are paid matters?</p>
+</blockquote>
+<blockquote>
+<p>某国用比索作为货币单位，有面值为 1 比索、2 比索、5 比索、10 比索的硬币，以及面值为 5 比索、10 比索、20 比索、50 比索、100 比索的纸币。现要付 17 比索的账单，有多少种方法？要考虑硬币和纸币的顺序.</p>
+</blockquote>
+<p><strong>解</strong>　待解</p>
+<h4 id="section-3">4.1.4</h4>
+<blockquote>
+<p><strong>a)</strong> Find a recurrence relation for the number of bit strings of length <span class="math inline">\(n\)</span> that contain a pair of consecutive 0s.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> How many strings of length seven contain two consecutive 0s?</p>
+</blockquote>
+<blockquote>
+<p><strong>1)</strong> 求包含两个连续的 0 且长度为 <span class="math inline">\(n\)</span> 的二进制串个数的递推式。</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 包含两个连续的 0 且长度为 7 的二进制串有多少个？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：其一，最后一位为 1，则最后一位和前 <span class="math inline">\(n - 1\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-1)\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1，最后两位和前 <span class="math inline">\(n - 2\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(f(n-2)\)</span> 个这样的串，若倒数第二位为 0，前 <span class="math inline">\(n -2\)</span> 位不管如何组合，结果都是含 00 的串，前 <span class="math inline">\(n - 2\)</span> 位有 <span class="math inline">\(2^{n-2}\)</span> 种可能，最后两位已确定只有一种可能，即有 <span class="math inline">\(2^{n-2} \cdot 1\)</span> 个这样的串. 因此总数为</p>
+<p><span class="math display">\[f(n) = f(n-1) + f(n-2) + 2^{n-2}, \; n &gt; 2.\]</span></p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+        \begin {array}{c}
+            f(1) = 0, \\
+            f(2) = 1. \\
+        \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
+\begin {align*}
+    f(3) &amp; = f(2) + f(1) + 2^1 = 3, \\
+    f(4) &amp; = f(3) + f(2) + 2^2 = 8, \\
+    f(5) &amp; = f(4) + f(3) + 2^3 = 19, \\
+    f(6) &amp; = f(5) + f(4) + 2^4 = 43, \\
+    f(7) &amp; = f(6) + f(5) + 2^5 = 94.
+\end {align*}
+\]</span></p>
+<h4 id="section-4">4.1.5</h4>
+<blockquote>
+<p><strong>a)</strong> Find a recurrence relation for the number of bit strings of length <span class="math inline">\(n\)</span> that do not contain three consecutive 0s.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> How many strings of length seven do not contain three consecutive 0s?</p>
+</blockquote>
+<blockquote>
+<p><strong>1)</strong> 求不包含三个连续的 0 且长度为 <span class="math inline">\(n\)</span> 的二进制串个数的递推式。</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 不包含三个连续的 0 且长度为 7 的二进制串有多少个？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的二进制串个数为 <span class="math inline">\(f(n)\)</span>. 若串的最后一位为 1，则 <span class="math inline">\(f(n) = f(n-1)\)</span>. 否则（最后一位为 0），若倒数第二位为 1，则 <span class="math inline">\(f(n) = f(n-2)\)</span>. 否则（串以 00 结尾），若倒数第三位为 1，则 <span class="math inline">\(f(n) = f(n-3)\)</span>. 否则（串以 000 结尾），<span class="math inline">\(f(n) = 0\)</span>.</p>
+<p>综上，</p>
+<p><span class="math display">\[f(n) = f(n-1) + f(n-2) + f(n-3), \; n &gt; 3.\]</span></p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+            \begin {array} {c}
+                f(1) = 2, \\
+                f(2) = 4, \\
+                f(3) = 7.
+            \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
+\begin {align*}
+    f(4) &amp; = f(3) + f(2) + f(1) = 13, \\
+    f(5) &amp; = f(4) + f(3) + f(2) = 24, \\
+    f(6) &amp; = f(5) + f(4) + f(3) = 44, \\
+    f(7) &amp; = f(6) + f(5) + f(4) = 81.
+\end {align*}
+\]</span></p>
+<h4 id="section-5">4.1.6</h4>
+<blockquote>
+<p><strong>a)</strong> Find a recurrence relation for the number of ways to climb <span class="math inline">\(n\)</span> stairs if the person climbing the stairs can take one stair or two stairs at a time.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> In how many ways can this person climb a flight of eight stairs?</p>
+</blockquote>
+<blockquote>
+<p><strong>1)</strong> 一个人一次能爬一级或两级楼梯，求这个人爬 <span class="math inline">\(n\)</span> 级楼梯的不同方法数的递推式。</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 这个人爬 8 级楼梯有多少种方法？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的方法数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：先爬 <span class="math inline">\(n - 2\)</span> 级楼梯，再一次爬 <span class="math inline">\(2\)</span> 级楼梯；先爬 <span class="math inline">\(n - 1\)</span> 级楼梯，再爬 <span class="math inline">\(1\)</span> 级楼梯. 因此 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2\)</span>.</p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+            \begin {array} {c}
+                f(1) = 1, \\
+                f(2) = 2.
+            \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
+\begin {align*}
+    f(3) &amp; = f(2) + f(1) = 3, \\
+    f(4) &amp; = f(3) + f(2)  = 5, \\
+    f(5) &amp; = f(4) + f(3) = 8, \\
+    f(6) &amp; = f(5) + f(4) = 13, \\
+    f(7) &amp; = f(6) + f(5) = 21, \\
+    f(8) &amp;= f(7) + f(6) = 34.
+\end {align*}
+\]</span></p>
+<h4 id="section-6">4.1.7</h4>
+<blockquote>
+<p>A string that contains only 0s, 1s, and 2s is called a <strong>ternary string</strong>.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of ternary strings of length <span class="math inline">\(n\)</span> that do not contain two consecutive 0s.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> How many ternary strings of length six do not contain two consecutive 0s?</p>
+</blockquote>
+<blockquote>
+<p>只包含 0, 1, 2 的串称为<strong>三进制串</strong>。</p>
+<p><strong>1)</strong> 求不包含两个连续的 0 且长度为 <span class="math inline">\(n\)</span> 的三进制串个数的递推式。</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 不包含两个连续的 0 且长度为 6 的三进制串有多少个？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 记这样的三进制串个数为 <span class="math inline">\(f(n)\)</span>. 分两种情况：其一，最后一位为 1 或 2，则最后一位和前 <span class="math inline">\(n - 1\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(2 f(n-1)\)</span> 个这样的串；其二，最后一位为 0，则若倒数第二位为 1 或 2，最后两位和前 <span class="math inline">\(n - 2\)</span> 位不可能组成新的 00，所以有 <span class="math inline">\(2 f(n-2)\)</span> 个这样的串，因此总数为</p>
+<p><span class="math display">\[f(n) = 2 f(n-1) + 2 f(n-2), \; n &gt; 2.\]</span></p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+            \begin {array} {c}
+                f(1) = 3, \\
+                f(2) = 8.
+            \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
+\begin {align*}
+    f(3) &amp; = 2 f(2) + 2 f(1) = 22, \\
+    f(4) &amp; = 2 f(3) + 2 f(2) = 60, \\
+    f(5) &amp; = 2 f(4) + 2 f(3) = 164, \\
+    f(6) &amp; = 2 f(5) + 2 f(4) = 448.
+\end {align*}
+\]</span></p>
+<h4 id="section-7">4.1.10</h4>
+<blockquote>
+<p>Messages are transmitted over a communication channel using two signals. The transmittal of one signal requires 1 microsecond, and the transmittal of the other signal requires 2 microseconds.</p>
+<p><strong>a)</strong> Find a recurrence relation for the number of different messages consisting of sequences of these two signals, where each signal in the message is immediately followed by the next signal, that can be sent in <span class="math inline">\(n\)</span> microseconds.</p>
+<p><strong>b)</strong> What are the initial conditions?</p>
+<p><strong>c)</strong> How many different messages can be sent in 10 microseconds using these two signals?</p>
+</blockquote>
+<blockquote>
+<p>消息通过两种信号在一条信道上传输。其中一种信号传输耗时 1 微秒，另一种信号传输耗时 2 微秒。</p>
+<p><strong>1)</strong> 求这两种信号的序列所组成的、传输需时 <span class="math inline">\(n\)</span> 微秒的不同消息数的递推式。</p>
+<p><strong>2)</strong> 初始条件是什么？</p>
+<p><strong>3)</strong> 使用这两种信号、传输需时 10 微秒的不同消息有多少种？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 思路与 4.1.6 完全类似。递推式为 <span class="math inline">\(f(n) = f(n-1) + f(n-2), \; n &gt; 2\)</span>.</p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+            \begin {array} {c}
+                f(1) = 1, \\
+                f(2) = 2.
+            \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
+\begin {align*}
+    f(3) &amp; = f(2) + f(1) = 3, \\
+    f(4) &amp; = f(3) + f(2) = 5, \\
+    f(5) &amp; = f(4) + f(3) = 8, \\
+    f(6) &amp; = f(5) + f(4) = 13, \\
+    f(7) &amp; = f(6) + f(5) = 21, \\
+    f(8) &amp; = f(7) + f(6) = 34, \\
+    f(9) &amp; = f(8) + f(7) = 55, \\
+    f(10) &amp; = f(9) + f(8) = 89.
+\end {align*}
+\]</span></p>
+<h3 id="section-8">4.1.11</h3>
+<blockquote>
+<p><strong>a)</strong> Find the recurrence relation satisfied by <span class="math inline">\(R_n\)</span>, where <span class="math inline">\(R_n\)</span> is the number of regions that a plane is divided into by <span class="math inline">\(n\)</span> lines, if no two of the lines are parallel and no three of the lines go through the same point.</p>
+<p><strong>b)</strong> Find <span class="math inline">\(R_n\)</span> using iteration.</p>
+</blockquote>
+<blockquote>
+<p><strong>1)</strong> 求 <span class="math inline">\(R_n\)</span> 所满足的递推式，<span class="math inline">\(R_n\)</span> 是指 <span class="math inline">\(n\)</span> 条直线可将一个平面分成的区域数（假设任意两条直线不平行，任意三条直线不经过同一点）。</p>
+<p><strong>2)</strong> 用迭代法求 <span class="math inline">\(R_n\)</span>。</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 注意到条件“任意两条直线不平行，任意三条直线不经过同一点”，因此在已有 <span class="math inline">\(n - 1\)</span> 条直线的情况下，再画一条直线，该直线必与现有直线有 <span class="math inline">\(n - 1\)</span> 个交点，且将平面划分出 <span class="math inline">\(n\)</span> 个新区域。因此递推式为 <span class="math inline">\(R_n = R_{n-1} + n, \; n \ge 1\)</span>. 初始条件为 <span class="math inline">\(R_0 = 1\)</span>.</p>
+<p><strong>2)</strong> 迭代可得 <span class="math display">\[
+\begin {align*}
+    R_n &amp; = R_{n-1} + n \\
+    &amp; = R_{n-2} + (n - 1) + n \\
+    &amp; = \cdots \\
+    &amp; = R_0 + 1 + 2 + \cdots + (n - 1) + n \\
+    &amp; = \frac{1}{2} (n^2 + n) + 1.
+\end {align*}
+\]</span></p>
+<h4 id="section-9">4.1.13</h4>
+<blockquote>
+<p>How many bit sequences of length seven contain an even number of 0s?</p>
+</blockquote>
+<blockquote>
+<p>包含偶数个 0 且长度为 7 的二进制串有多少个？</p>
+</blockquote>
+<p><strong>解一</strong>　先研究包含偶数个 0 且长度为 3 和 4 的二进制串的个数，寻找规律. 长度为 3 的这样的串有 111（0 个 0）、001、010、100（2 个 0）共 4 个，长度为 4 的这样的串有 1111（0 个 0）、0011、0110、1100、0101、1001、1010（2 个 0）、0000（4 个 0）共 8 个。注意到长度为 4 的这样的串有两种：其一，长度为 3 且含偶数个 0 的串接一个 1；其二，长度为 3 且含奇数个 0 的串接一个 0，故长度为 4 的这样的串有 <span class="math inline">\(f(3) + (2^{3} - f(3)) = 2^3 = 8\)</span> 个. 可猜测一般地，长度为 <span class="math inline">\(n\)</span> 的这样的串有 <span class="math inline">\(f(n-1) + (2^{n-1} - f(n-1)) = 2^{n-1}\)</span> 个，并用数学归纳法证明. 因此，包含偶数个 0 且长度为 7 的二进制串有 <span class="math inline">\(f(7) = 2^6 = 64\)</span> 个.</p>
+<p><strong>解二</strong>　分类讨论：长度为 7，且包含 0、2、4、6 个 0 的二进制串各有多少个？其个数相加即为所求. 容易想到这就相当于 7 个物品里选 0、2、4、6 个有多少种选法，即 <span class="math inline">\(7 \choose 0\)</span>、<span class="math inline">\(7 \choose 2\)</span>、<span class="math inline">\(7 \choose 4\)</span>、<span class="math inline">\(7 \choose 6\)</span>. 问题的答案为它们之和 64.</p>
+<h4 id="section-10">4.1.14</h4>
+<blockquote>
+<p><strong>a)</strong> Find a recurrence relation for the number of ways to lay out a walkway with slate tiles if the tiles are red, green, or gray, so that no two red tiles are adjacent and tiles of the same color are considered indistinguishable.</p>
+<p><strong>b)</strong> What are the initial conditions for the recurrences relation in part (a)?</p>
+<p><strong>c)</strong> How many ways are there to lay out a path of seven tiles as described in part (a)?</p>
+</blockquote>
+<blockquote>
+<p><strong>1)</strong> 用地砖铺一条小径，地砖有红、绿、灰三色，要求红砖彼此不相邻，求铺法数的递推式，假设同色砖都是完全相同的. （题目的意思假设这条小径是由砖块一个个排成一条直线铺成的，即小径视为一维的）</p>
+<p><strong>2)</strong> (1) 中递推式的初始条件是什么？</p>
+<p><strong>3)</strong> 按 (1) 所述，铺一条 7 块砖的小径有多少种方法？</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 思路与 4.1.7 完全类似. 递推式为 <span class="math inline">\(f(n) = 2 f(n-1) + 2 f(n-2), \; n &gt; 2.\)</span></p>
+<p><strong>2)</strong> 上述递推式的初始条件为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+            \begin {array} {c}
+                f(1) = 3, \\
+                f(2) = 8.
+            \end {array}
+    \right.
+\end {equation*}
+\]</span> <strong>3)</strong> 反复应用递推式可得 <span class="math display">\[
+\begin {align*}
+    f(3) &amp; = 2 f(2) + 2 f(1) = 22, \\
+    f(4) &amp; = 2 f(3) + 2 f(2) = 60, \\
+    f(5) &amp; = 2 f(4) + 2 f(3) = 164, \\
+    f(6) &amp; = 2 f(5) + 2 f(4) = 448, \\
+    f(7) &amp; = 2 f(6) + 2 f(5) = 1224.
+\end {align*}
+\]</span></p>
+<h4 id="section-11">4.1.16</h4>
+<blockquote>
+<p><strong>a)</strong> Use the recurrence relation developed in Example 5 to determine <span class="math inline">\(C_5\)</span>, the number of ways to parenthesize the product of six numbers so as to determine the order of multiplication.</p>
+<p><strong>b)</strong> Check your result with the closed formula for <span class="math inline">\(C_5\)</span> mentioned in the solution of Example 5.</p>
+</blockquote>
+<blockquote>
+<p><strong>1)</strong> 用例 5 中得出的递推式求 <span class="math inline">\(C_5\)</span>，即给六个数的乘积加括号以确定乘法顺序的不同方法数.</p>
+<p><strong>2)</strong> 将你的结果与例 5 的解中提到的 <span class="math inline">\(C_5\)</span> 的闭式解相比较.</p>
+</blockquote>
+<p><strong>解</strong>　<strong>1)</strong> 例 5 中得出的递推式为 <span class="math display">\[
+\begin {equation*}
+    \left\{
+            \begin {array} {c}
+                C_0 = 1, \\
+                C_1 = 1, \\
+                C_n = \sum\limits_{k=0}^{n-1} C_k C_{n-k-1}, \; n &gt;1.
+            \end {array}
+    \right.
+\end {equation*}
+\]</span> 代入 <span class="math inline">\(n = 5\)</span> 得 <span class="math display">\[
+\begin {align*}
+    C_5 &amp; = \sum\limits_{k=0}^{4} C_k C_{4-k} \\
+    &amp; = C_0 C_4 + C_1 C_3 + C_2 C_2 + C_3 C_1 + C_4 C_0 \\
+    &amp; = \cdots \\
+    &amp; = 14 + 5 + 4 + 5 + 14 \\
+    &amp; = 42.
+\end {align*}
+\]</span> <strong>2)</strong> <span class="math inline">\(C_n\)</span> 的闭式解为 <span class="math display">\[
+C_n = \frac{C(2n,n)}{(n+1)}.
+\]</span> 代入 <span class="math inline">\(n = 5\)</span> 得 <span class="math display">\[
+C_5 = \frac{C(10,5)}{6} = 42.
+\]</span> 这与递推式的解相同.</p>
+<h4 id="section-12">4.1.24</h4>
+<blockquote>
+<p>Let <span class="math inline">\(\{a_n\}\)</span> be a sequence of real numbers. The <strong>backward differences</strong> of this sequence are define recursively as shown next. The <strong>first difference</strong> <span class="math inline">\(\nabla a_n\)</span> is <span class="math display">\[
+\nabla a_n = a_n - a_{n-1}.
+\]</span> The <strong>(k+1)st difference</strong> <span class="math inline">\(\nabla^{k+1} a_n\)</span> is obtained from <span class="math inline">\(\nabla^k a_n\)</span> by <span class="math display">\[
+\nabla^{k+1} a_n = \nabla^k a_n - \nabla^k a_{n-1}.
+\]</span> Find <span class="math inline">\(\nabla^2 a_n\)</span> for the following sequences.</p>
+<p><strong>a)</strong> <span class="math inline">\(a_n = 4.\)</span> <strong>b)</strong> <span class="math inline">\(a_n = 2n.\)</span></p>
+<p><strong>c)</strong> <span class="math inline">\(a_n = n^2.\)</span> <strong>d)</strong> <span class="math inline">\(a_n = 2^n.\)</span></p>
+</blockquote>
+<blockquote>
+<p>设 <span class="math inline">\(\{a_n\}\)</span> 为实数序列. 该序列的<strong>后向差分</strong>递归定义如下. <strong>一阶差分</strong> <span class="math inline">\(\nabla a_n\)</span> 为 <span class="math display">\[
+\nabla a_n = a_n - a_{n-1}.
+\]</span> <strong>k+1 阶差分</strong> <span class="math inline">\(\nabla^{k+1} a_n\)</span> 从 <span class="math inline">\(\nabla^k a_n\)</span> 得出 <span class="math display">\[
+\nabla^{k+1} a_n = \nabla^k a_n - \nabla^k a_{n-1}.
+\]</span> 对以下序列，求 <span class="math inline">\(\nabla^2 a_n\)</span>.</p>
+<p><strong>1)</strong> <span class="math inline">\(a_n = 4.\)</span> <strong>2)</strong> <span class="math inline">\(a_n = 2n.\)</span></p>
+<p><strong>3)</strong> <span class="math inline">\(a_n = n^2.\)</span> <strong>4)</strong> <span class="math inline">\(a_n = 2^n.\)</span></p>
+</blockquote>
+<p><strong>解</strong>　按定义有 <span class="math display">\[
+\begin {align*}
+    \nabla^2 a_n &amp; = \nabla a_n - \nabla a_{n-1} \\
+    &amp; = (a_n - a_{n-1}) - (a_{n-1} - a_{n-2}) \\
+    &amp; = a_n - 2 a_{n-1} + a_{n-2}.
+\end {align*}
+\]</span> 四小题依次如下</p>
+<p><span class="math display">\[
+\begin {align*}
+    \nabla^2 a_n &amp; = a_n - 2 a_{n-1} + a_{n-2} = 4 - 2 \times 4 + 4 = 0. \\
+    \nabla^2 a_n &amp; = a_n - 2 a_{n-1} + a_{n-2} = 2n - 4(n-1) + 2(n-2) = 0. \\
+    \nabla^2 a_n &amp; = a_n - 2 a_{n-1} + a_{n-2} = n^2 - 2 (n-1)^2 + (n-2)^2 = 2. \\
+    \nabla^2 a_n &amp; = a_n - 2 a_{n-1} + a_{n-2} = 2^n - 2^n + 2^{n-2} = 2^{n-2}.
+\end {align*}
+\]</span></p>
+<h3 id="参考资料">参考资料</h3>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>K. H. Rosen, <em>《离散数学及其应用（英文精编版·第7版）》</em>. 北京：机械工业出版社, 2016.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/02/19/t3sec-warm-up-writeup/" data-toggle="tooltip" data-placement="top" title="2018 西普杯铁三赛测评题解题报告（writeup）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/12/03/on-en-ch-translation/" data-toggle="tooltip" data-placement="top" title="英汉翻译乱谈">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

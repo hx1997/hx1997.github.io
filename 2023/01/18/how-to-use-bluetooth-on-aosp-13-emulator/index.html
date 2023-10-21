@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          安卓（AOSP）13 源码编译及模拟器使用蓝牙踩坑记 - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2023/01/18/how-to-use-bluetooth-on-aosp-13-emulator/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>安卓（AOSP）13 源码编译及模拟器使用蓝牙踩坑记</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2023-01-18 | 
+                        <span id="/2023/01/18/how-to-use-bluetooth-on-aosp-13-emulator/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>为了编译 AOSP，特地跑去给笔记本升级了内存条、移动硬盘，还买了个 U 盘，好在钱没白花，最后是编译成功了==</p>
+<p>最开始想着用 WSL2 编译然后拿生成的镜像给 Windows 上的 AVD 模拟器跑，结果模拟器部分踩了一堆天坑，到最后也没法解决，可能也是太菜了。其实解决了前面各种坑后日志可以看到模拟器已经成功跑起安卓内核并且运行 init 进程了，说明已经进入到用户态，奈何那个 surfaceflinger 不停崩溃，结果卡在启动它的死循环里…… 所以这篇文章用的是 VMware 里面的 Ubuntu 来跑，我个人因为已经用 WSL2 编译成功了，所以直接把 WSL2 的 vhdx 磁盘转成 VMware 支持的 vhd 格式，然后挂载到了 Ubuntu。其实一开始直接在 Ubuntu 走编译等整套流程应该也没问题。</p>
+<p>开始前先确认你的机器配置符合要求：内存至少 16G，硬盘至少 500G。我这里的系统是 Windows 10（主机）+ Ubuntu 20.04（虚拟机）。</p>
+<p>第一步，装好虚拟机。编译的话可以用 WSL2，也可以用 VMware Workstation，但运行模拟器只能用 VMware，因为 WSL 不支持图形界面（Windows 11 上 WSLg 好像是开始支持了，没试过）。WSL2 编译的话，因为默认只给分配系统的一半内存，所以如果这个一半不到 16G 的话必须手动增加，在 <code>%USERPROFILE%\.wslconfig</code> 中添加如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[wsl2]</div><div class="line">memory=13GB</div><div class="line">swap=32GB</div><div class="line">swapFile=&lt;随便指定一个路径存放交换文件&gt;</div></pre></td></tr></table></figure>
+<p>配置项的意思是，给 WSL 分配 13GB 内存（视情况自己改，有时候太多了会把你系统卡死，太少了编译又会内存不足），创建一个大小为 32GB 的交换文件，存储在你指定的路径。因为编译要 16GB 内存，所以我搞了个虚拟内存来补充不足的 3GB。这个交换文件下次运行时好像要把已有的那个删掉，不然用不了。</p>
+<p><strong>坑点 0：不要在 Windows 的分区（NTFS/FAT32）上放源码，放在 Linux 的分区（ext*）上。</strong>因为编译过程需要一个大小写敏感的文件系统，虽然 NTFS 可以设置某个目录为大小写敏感，但为了避免后面出现其他奇怪的坑（比如 Linux 的符号链接），还是强烈建议把源码放在 ext 文件系统上，比如 WSL 中你的 <code>~</code> 目录（要确保 WSL 的虚拟 vhdx 磁盘所在的 Windows 分区容量足够）。</p>
+<p><strong>坑点 1：不要用 VirtualBox。</strong>VirtualBox 在我这里运行 Ubuntu 比 VMware 明显要慢，而且运行模拟器不知道为啥也跑不起来。VMware 的注册码（没办法，穷人）比想象中要容易找到得多得多，而且它也没有我想象中那么笨重。</p>
+<p>第二步，拉取 AOSP 源码。这个网上很多教程，我用的葫芦娃（hluwa）大佬的，在虚拟机里运行如下四条命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget -c mirrors.tuna.tsinghua.edu.cn/aosp-monthly/aosp-latest.tar</div><div class="line">tar xf aosp-latest.tar</div><div class="line"><span class="built_in">cd</span> AOSP/.repo/repo; git pull origin master</div><div class="line"><span class="built_in">cd</span> ../../; ./.repo/repo/repo sync</div></pre></td></tr></table></figure>
+<p>第三步，安装依赖。运行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig</div></pre></td></tr></table></figure>
+<p>第四步，开始编译。运行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> build/envsetup.sh</div><div class="line">lunch aosp_x86_64-eng</div><div class="line">m -j4</div></pre></td></tr></table></figure>
+<p>如果你想跑模拟器的话，把 <code>lunch aosp_x86_64-eng</code> 换成 <code>lunch sdk_phone_x86_64</code>（前者也可以编译，但我没试过能否跑模拟器）。也有其他架构的，可以运行 <code>lunch</code> 查看。最后 <code>m -j4</code> 里的数字表示线程数，有几颗 CPU（或几核）就设为几吧。接下来就是几个小时的编译时间，不需要模拟器的话到这就结束了。</p>
+<p><strong>坑点 2</strong>：编译中提示 java.lang.OutOfMemoryError: Java heap space 错误时，表示你的<strong>虚拟机内存不足</strong>。确保你分配的内存足够，如果是 WSL2，记得照第一步所说增加内存。</p>
+<p>第五步，配置 VMware 透传蓝牙设备给虚拟机。（如果你不需要模拟器的蓝牙功能，直接跳到第六步。）在 VMware 里关机状态下编辑你的虚拟机设置，在硬件中切换到“USB 控制器”项目下，在右边取消“与虚拟机共享蓝牙设备”（是的，取消，感觉选中其实也有办法让模拟器用蓝牙，暂时懒得研究），然后选中“显示所有 USB 输入设备”。启动虚拟机，在右下角找到一个蓝牙图标，这就代表你主机的蓝牙设备，右键点连接。这会使虚拟机独占该设备，所以主机上就用不了蓝牙了。</p>
+<p>第六步，启动模拟器。如果重新启动过虚拟机，先再次运行如下命令准备环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> build/envsetup.sh</div><div class="line">lunch sdk_phone_x86_64</div></pre></td></tr></table></figure>
+<p>如果不需要蓝牙，在 AOSP 根目录运行如下命令即可启动模拟器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">emulator</div></pre></td></tr></table></figure>
+<p>如果需要蓝牙，先运行如下命令查看蓝牙设备的厂商号和产品号：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsusb</div></pre></td></tr></table></figure>
+<p>打印出来的信息中有设备名，仔细看看哪个是蓝牙设备（我这边笔记本内置蓝牙名字挺怪的，好像叫 Intel Corp. VMware Virtual USB Mouse），再记下前面的厂商号和产品号，形如 <code>xxxx:xxxx</code>，其中 <code>xxxx</code> 是十六进制数。最后以如下命令启动模拟器并将虚拟机的蓝牙设备透传给模拟器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">emulator -usb-passthrough vendorid=aaaa,productid=bbbb</div></pre></td></tr></table></figure>
+<p>其中，<code>aaaa</code> 是刚记下的厂商号<strong>转为十进制</strong>，<code>bbbb</code> 是产品号<strong>转为十进制</strong>。到此，启动后的安卓系统应该就可以用蓝牙了。（在网上搜到的透传参数都是 <code>-usb -device usb-host,vendorid=&lt;usb-vendor-id&gt;,productid=&lt;usb-product-id&gt;</code> 这样的，不知道是不是新版模拟器专门为 USB 透传新加了参数）</p>
+<p>如果启动后模拟器一直黑屏，可以在启动命令加 <code>-show-kernel</code> 参数，看看内核打印出什么信息（不过就算看了我也解决不了，天坑）。</p>
+<p><strong>坑点 3</strong>：记得在 VMware 你的虚拟机设置 -&gt; 处理器里启用 VT-x，在显示器里启用加速 3D 图形，并且<strong>关闭 Windows 上的 Hyper-V</strong>，包括在控制面板 Windows 可选功能中卸载 Hyper-V 相关组件、在 BCD 设置中禁用 Hyper-V。因为 AVD 模拟器其实是一个 QEMU 虚拟机，在虚拟机里跑虚拟机需要 VT-x 嵌套虚拟化的支持，Hyper-V 会影响其他虚拟机软件的嵌套虚拟化。</p>
+<p><strong>2023/2/12 更新：Windows 上的 Android Studio 自带模拟器也可以透传蓝牙，命令跟上面一样，数字如果用十六进制要加 0x 前缀。如果提示 <code>Cannot load Android USB Assistant Driver for USB device</code> 错误，需要安装 <a href="https://android.googlesource.com/platform/external/qemu/+/refs/heads/emu-31-release/android/third_party/usbpassthrough-prebuilt-win32/" target="_blank" rel="external">USB 驱动</a>，点击里面 tgz 下载，然后管理员身份运行 Install_Drivers.bat。</strong></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2023/10/22/using-seccomp-bpf-on-openharmony/" data-toggle="tooltip" data-placement="top" title="OpenHarmony（Linux 内核）上成功使用 Seccomp-BPF">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2022/04/22/escaping-sandboxie-classic-5-55-13/" data-toggle="tooltip" data-placement="top" title="Escaping Sandboxie Classic 5.55.13">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

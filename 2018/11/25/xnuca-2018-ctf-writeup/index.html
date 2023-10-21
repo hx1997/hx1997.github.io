@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          X-NUCA（全国高校网安联赛）2018 Code Interpreter 解题报告（writeup） - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2018/11/25/xnuca-2018-ctf-writeup/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                        
+                    </div>
+                    <h1>X-NUCA（全国高校网安联赛）2018 Code Interpreter 解题报告（writeup）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2018-11-25 | 
+                        <span id="/2018/11/25/xnuca-2018-ctf-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="x0.-前言">0x0. 前言</h3>
+<p>8 个人只做出了这唯一的一道题，太惨了… 不过第一次做虚拟机的题，做出来很开心。有道密码学热身题是 RSA，解出来的人多到都降分到 100+ 了，还是不会解，我真的好菜。另外一道逆向题看了下，想起和看雪 CTF 的叹息之墙很像，搜了一下，发现这种混淆叫做<a href="https://zhuanlan.zhihu.com/p/33641488" target="_blank" rel="external">控制流平坦化</a>（control flow flattening），第一次见，解不出来。用了腾讯实验室的脚本 <a href="https://security.tencent.com/index.php/opensource/detail/18" target="_blank" rel="external">deflat.py</a> 恢复控制流好像也有点问题。总之就还有很多要学…</p>
+<h3 id="x1.-code-interpreter">0x1. Code Interpreter</h3>
+<p>直接拖进 IDA，进 <code>main()</code> 函数看，程序先验证命令行参数个数大于 1，然后将第二个参数作为文件名打开，分配一块与此文件大小相同的缓冲区 <code>buf</code>，把文件内容读到里面。接着提示输入三个数 <code>first</code>, <code>second</code>, <code>third</code>。再把缓冲区 <code>buf</code> 指针传进函数 <code>sub_400806</code> 中，该函数执行结束后，判断全局变量 <code>dword_6024B0</code> 为 0、<code>first</code> 和 <code>third</code> 的低八位为 0x5E、<code>second</code> 的 16~23 位为 0x5E，满足则打印成功并回显 flag。</p>
+<p>由于上述四个全局变量没有在 <code>main()</code> 函数中修改，因此只能是在 <code>sub_400806</code> 中修改了。接下来分析 <code>sub_400806</code>。</p>
+<p>一开始先设置了一些全局变量，尤其是把刚输入的三个数依次存进了 <code>dword_6020A0</code> 数组中，具体什么意思还不清楚，先往下看。一个 <code>while</code> 循环套一个 <code>switch</code>，<code>switch</code> 括号里的东西是 <code>buf[dword_4024B4]</code>，因此很明显 <code>dword_4024B4</code> 是 <code>buf</code> 的偏移指针。</p>
+<p>再看各个 case，大致浏览了下，<code>default</code> 分支会打印出 <code>Invalid opcode!</code> 这个字符串，意思是无效操作码，很明显（如题目名字）这是一个代码解释器，解释 <code>buf</code> 里的 opcode。</p>
+<p><code>case 0</code> 分支只是将变量 <code>v16</code> 设为 0，这样下一次循环就会退出，可以视为停机操作 <code>hlt</code>。</p>
+<p><code>case 1</code> 分支先取指令中第二和第三字节拼接起来，再取第四第五字节和前者再拼接形成一个 DWORD，把这个 DWORD 存到数组 <code>dword_6020A0</code> 中，同时 <code>dword_6024B8</code> 加一。可以猜测，<code>dword_6020A0</code> 相当于一个栈，<code>dword_6024B8</code> 是栈顶指针。这样，<code>case 1</code> 的作用是 <code>push 立即数（小尾序）</code>。</p>
+<p><code>case 2</code> 将栈顶指针减一，可以说相当于 <code>pop</code>，但没有返回栈顶元素。</p>
+<p><code>case 3</code> 使 <code>dword_6024A0[指令第二字节] += dword_6024A0[指令第三字节]</code>，相当于 <code>add</code>，<code>dword_6024A0</code> 是一个数组，有 5 个 <code>int</code> 元素，<code>dword_6024A0[4]</code> 其实就是 <code>main()</code> 里面判断的 <code>dword_6024B0</code>。</p>
+<p><code>case 4</code> 使 <code>dword_6024A0[指令第二字节] -= dword_6024A0[指令第三字节]</code>，相当于 <code>sub</code>。</p>
+<p><code>case 5</code> 使 <code>dword_6024A0[指令第二字节] *= 指令第三字节</code>，相当于 <code>mul [内存], 立即数</code>。</p>
+<p><code>case 6</code> 使 <code>dword_6024A0[指令第二字节] &gt;&gt;= 指令第三字节</code>，相当于 <code>shr [内存], 立即数</code>。</p>
+<p><code>case 7</code> 使 <code>dword_6024A0[指令第二字节] = dword_6024A0[指令第三字节]</code>，相当于 <code>mov</code>。</p>
+<p><code>case 8</code> 使 <code>dword_6024A0[指令第二字节] = 栈[dword_6024A0[指令第三字节]]</code>，也相当于 <code>mov</code> 但是从栈上 <code>mov</code>。</p>
+<p><code>case 9</code> 使 <code>dword_6024A0[指令第二字节] ^= dword_6024A0[指令第三字节]</code>，相当于 <code>xor</code>。</p>
+<p><code>case 10</code> 使 <code>dword_6024A0[指令第二字节] |= dword_6024A0[指令第三字节]</code>，相当于 <code>or</code>。</p>
+<p>到此全部 opcode 分析完，接着要按题目给出的 code 文件里的内容解析指令，应该可以写脚本解析，但是我手工解析的，这是个机械的过程，这里不说了，解析完是这样（我翻译成的 C 伪代码）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">e = <span class="number">0</span>;</div><div class="line">a = <span class="number">0</span>;</div><div class="line">b = first;</div><div class="line">c = second;</div><div class="line">d = third;</div><div class="line">b &gt;&gt;= <span class="number">4</span>;</div><div class="line">b *= <span class="number">0x15</span>;</div><div class="line">a = b;</div><div class="line">a -= d;</div><div class="line">push <span class="number">0x1d7ecc6b</span></div><div class="line">b = pop();</div><div class="line">a -= b;</div><div class="line">e |= a;</div><div class="line">a = <span class="number">0</span>;</div><div class="line">b = first;</div><div class="line">c = second;</div><div class="line">d = third;</div><div class="line">d &gt;&gt;= <span class="number">8</span>;</div><div class="line">d *= <span class="number">3</span>;</div><div class="line">a = d;</div><div class="line">a += c;</div><div class="line">push <span class="number">0x6079797c</span></div><div class="line">b = pop();</div><div class="line">a -= b;</div><div class="line">e |= a;</div><div class="line">a = <span class="number">0</span>;</div><div class="line">b = first;</div><div class="line">c = second;</div><div class="line">d = third;</div><div class="line">b &gt;&gt;= <span class="number">8</span>;</div><div class="line">a = b;</div><div class="line">a += c;</div><div class="line">push <span class="number">0x5fbcbdbd</span></div><div class="line">b = pop();</div><div class="line">a -= b;</div><div class="line">e |= a;</div></pre></td></tr></table></figure>
+<p>最后要求 <code>e == 0</code> 才能通过 <code>main()</code> 函数的判断，整理一下上面代码，<code>e</code> 的表达式可以写成一句：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">e = ((first &gt;&gt; <span class="number">4</span>) * <span class="number">0x15</span> - third - <span class="number">0x1d7ecc6b</span>) | ((third &gt;&gt; <span class="number">8</span>) * <span class="number">3</span> + second - <span class="number">0x6079797c</span>) | ((first &gt;&gt; <span class="number">8</span>) + second - <span class="number">0x5fbcbdbd</span>)</div></pre></td></tr></table></figure>
+<p>再加上 <code>main()</code> 里的另外三条约束条件：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(second &amp; <span class="number">0xff0000</span>) == <span class="number">0x5e0000</span></div><div class="line">(first &amp; <span class="number">0xff</span>) == <span class="number">0x5e</span></div><div class="line">(third &amp; <span class="number">0xff</span>) == <span class="number">0x5e</span></div></pre></td></tr></table></figure>
+<p>有这些方程就足够解出要输入的三个数 first, second, third，写脚本用 Z3 求解即可，脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">sys.path.append(<span class="string">'z3/build/'</span>)</div><div class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</div><div class="line"></div><div class="line">s = Solver()</div><div class="line"></div><div class="line">first = BitVec(<span class="string">'first'</span>,<span class="number">32</span>)</div><div class="line">second = BitVec(<span class="string">'second'</span>,<span class="number">32</span>)</div><div class="line">third = BitVec(<span class="string">'third'</span>,<span class="number">32</span>)</div><div class="line"></div><div class="line">s.add(((first &gt;&gt; <span class="number">4</span>) * <span class="number">0x15</span> - third - <span class="number">0x1d7ecc6b</span>) | ((third &gt;&gt; <span class="number">8</span>) * <span class="number">3</span> + second - <span class="number">0x6079797c</span>) | ((first &gt;&gt; <span class="number">8</span>) + second - <span class="number">0x5fbcbdbd</span>) == <span class="number">0</span>)</div><div class="line">s.add((second &amp; <span class="number">0xff0000</span>) == <span class="number">0x5e0000</span>)</div><div class="line">s.add((first &amp; <span class="number">0xff</span>) == <span class="number">0x5e</span>)</div><div class="line">s.add((third &amp; <span class="number">0xff</span>) == <span class="number">0x5e</span>)</div><div class="line"></div><div class="line">print(s.check())</div><div class="line">mod = s.model()</div><div class="line"></div><div class="line">chars = [</div><div class="line">          mod[first],</div><div class="line">          mod[second],</div><div class="line">          mod[third]</div><div class="line">        ]</div><div class="line"></div><div class="line"><span class="keyword">print</span> chars</div></pre></td></tr></table></figure>
+<p>运行脚本：</p>
+<div class="figure">
+<img src="https://i.loli.net/2018/11/25/5bfac469c6fbd.png">
+
+</div>
+<p>将这三个数输入到题目程序中就得到 flag： <span class="math display">\[
+X-NUCA\{5e5f5e5e5f5e5e5f5e5e5f5e\}
+\]</span> <img src="https://i.loli.net/2018/11/25/5bfac46a8746f.png"></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/12/02/pcb-2018-ctf-writeup/" data-toggle="tooltip" data-placement="top" title="2018 鹏城杯 CTF 部分解题报告（writeup）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/10/23/on-inanimate-subjects/" data-toggle="tooltip" data-placement="top" title="对无灵主语的一点观察">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

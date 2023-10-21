@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          《VSI：现代日本》翻译杂谈 - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2019/03/09/on-vsi-modern-japan-translation/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#翻译" title="翻译">翻译</a>
+                        
+                          <a class="tag" href="/tags/#VSI" title="VSI">VSI</a>
+                        
+                    </div>
+                    <h1>《VSI：现代日本》翻译杂谈</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2019-03-09 | 
+                        <span id="/2019/03/09/on-vsi-modern-japan-translation/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>前段时间看了译林出版社《牛津通识读本》（Very Short Introductions, VSI）系列的《现代日本》，感觉讲得不错，安利一下。书里从德川幕府讲起，经过黑船来航、明治维新、帝国时期、二战时期、战后被美国占领、否认战争罪行，最后讲到本世纪日本经济。书的篇幅较短，中文翻译仅一百三十余页，只能算是走马观花了。</p>
+<p>翻译总的来说还是可以的，有些我觉得不对或不合适的地方，挑出来说一说。只对比了前四十多页，其余的我没看中文。</p>
+<blockquote>
+<p>(Page 4) At this vulgar level of analysis, Japan is presented as intriguing because it has a rich history of ‘Eastern’ traditions and an oddly ‘Western’ present: modernity and the West being <strong><em>difficult</em></strong> for the audience (or for the BBC) <strong><em>to disentangle</em></strong>.</p>
+</blockquote>
+<blockquote>
+<p>（第 4 页）从这一通俗的层面来分析，日本显现吸引力，是因为它兼有“东方”传统的悠久历史和奇妙的“西方现状”，观众（或者说英国广播公司）<strong><em>难以消化</em></strong>其中的现代性和西方元素。</p>
+</blockquote>
+<p>前文提到现代化起源于西方，人们往往假设“现代”和“西方”是不分家的，因此一旦在一个东方国家（i.e. 日本）出现了现代的面貌，那就让人觉得有点意思了。显然这里的 difficult to disentangle 是“<strong><em>难解难分</em></strong>”的意思，说是观众（或者只是 BBC）由于思维定势将现代性和西方紧紧联系在一起，无法分离开来，所以日本同时拥有东方式的传统历史和出奇地西方式的现在（an oddly ‘Western’ present），这一点是（BBC 的影片中想展现的）日本令人着迷的一面。</p>
+<blockquote>
+<p>(Page 5) Indeed, the history of modern Japan, since the end of its <strong><em>apparent</em></strong> international isolation in the mid-19th century to the present day, is the document of a nation grappling with the effects of its encounter with Western powers and its simultaneous exposure to the ideas and technologies of modernity.</p>
+</blockquote>
+<p>书里把 apparent 译成了明显的，但这里的 apparent 是“<strong><em>貌似</em></strong>”的意思，就是看起来（appear =&gt; apparent）是这样，实则未必。这里说日本是貌似锁国，下一段作者就表明了态度，说日本其实并未完全与外国断绝联系。翻译成“明显的国际孤立”完全译反了。</p>
+<blockquote>
+<p>(Page 5) We will consider some of the ways in which cultural and social continuity and change interact through the period, even over apparent <strong><em>singularities</em></strong> such as the catastrophic conclusion to World War II in the Pacific, hence challenging the assumption that postwar Japan is somehow discontinuous with its own traditions.</p>
+</blockquote>
+<p>apparent 又译错了… 还有 singularities 给翻译成了“（日本显然）处境孤立”，这是不对的。其实这一句里起码有两处可以推断出 singularities 的意思：一是 social continuity，二是 discontinuous with its own traditions. 那么它到底是啥意思？singularity 在数学上是“奇点”的意思，这里多扯一点，数学上 singular（奇、奇异）用来表示某个东西性质不好<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，比如奇异矩阵是不可逆的，经过奇异矩阵变换损失了信息，这是不好的性质。奇点本身也有不同定义，其中一个是指函数的间断点，即函数不连续的点。到此上述两处文字和 singularities 的关系应该很明显了，singularities 就是 continuity 的反面——discontinuity. 放到语境里，是指“<strong><em>社会/文化的断裂、剧变</em></strong>”，apparent singularities 就是说日本看似经历了文化断层，实则不然，作者也说了要质疑战后日本与自己的传统习俗间产生了割裂这种假设。</p>
+<blockquote>
+<p>(Page 7) Is Japan modern and, if so, how can we explain why it looks so different from, say, the United Kingdom? To paraphrase this important question: which elements of the modern are <strong><em>essential</em></strong>, and which are <strong><em>culturally contingent</em></strong>?</p>
+<p>（第 7 页）日本现代吗？如果答案为是，如何解释日本的现代显得迥异于（比如说）英国的现代？这一重要问题也可以换一种提法，即现代有哪些元素是<strong><em>本质的</em></strong>，又有哪些<strong><em>附着于文化土壤</em></strong>？</p>
+</blockquote>
+<p>显然 essential 和 culturally contingent 是对立的，前者指现代所<strong><em>固有的</em></strong>、与文化无关的特征，后者指现代<strong><em>随文化不同而不同的</em></strong>那些元素。这一节都是在讨论何谓“现代”，我们如何判断一个国家是否“现代化”，由于日本与西方国家的现代面貌大相径庭，我们自然提出这样的问题：现代有什么特征？哪些特征是固有的、只要是现代化的国家就有的，哪些特征又是日本和西方之间有别的？</p>
+<blockquote>
+<p>(Page 7) Is the modern already in the past in some places, and not in the present at all? Are there locations where it <strong><em>remains in the future</em></strong>?</p>
+<p>（第 7 页）现代在有些地方是否已成为过去、是否已完全出离当代？现在是否<strong><em>在未来保有位置</em></strong>？</p>
+</blockquote>
+<p>这里书上的翻译有点…故弄玄虚，这本书翻译的风格好像就是这样，还有后半句译者似乎误解成了 Will there be locations where it remains/resides in the future? 的意思。上面讨论了现代的特征，通过这些特征我们得以辨认一个国家是否处于现代，现在作者发出了两问：是否有的地方已经步过现代而进入后现代？是否有的地方还未达到现代化，也即对于他们来说，现代<strong><em>仍是将来时</em></strong>？</p>
+<blockquote>
+<p>(Page 21) The edict also restricted contact with Japan’s neighbours, at least in principle (if not in practice) <strong><em>limiting</em></strong> trade with China <strong><em>to</em></strong> passage through the island chain of the Ryûkyû Kingdom (present-day Okinawa) and with Korea to the tiny island domain of Tsushima.</p>
+<p>（第 19 页）法令同时限制了与日本近邻的接触，至少在原则上（即便不是在事实上）<strong><em>限制</em></strong>经琉球王国（今冲绳）列岛与中国进行的贸易以及在狭小的对马岛领域与朝鲜进行的贸易。</p>
+</blockquote>
+<p>limit A to B 是把 A 限制在 B 的范围内，这里是说日本限制与中朝的贸易往来，与中国只能在琉球王国列岛的水道上开展贸易，与朝鲜则只能在对马岛。翻译的意思好像是限制这些地区的贸易，其实是限制<strong>只能</strong>在这些地区贸易。</p>
+<blockquote>
+<p>(Page 32) For Sorai, no matter what the chivalrous merits of the 47 <em>rônin</em>, their actions <strong><em>betrayed</em></strong> an anachronistic sense of loyalty to one’s daimyo rather than to the laws of the land.</p>
+<p>（第 29 页）在徂徕看来，无论47浪士拥有何种侠义价值，他们的行为都是<strong><em>背叛</em></strong>了一种过时的、对于某个大名的忠诚，而不是背叛了日本这片土地上的法令。</p>
+</blockquote>
+<p>betray 是有背叛的意思，但在这里的意思是“<strong><em>流露出</em></strong>”（betray 的原义是把秘密<strong><em>泄露</em></strong>给敌人）。例：His words were calm, but his voice betrayed his very real concern and anxiety. 他的话很平静，但他的声音却透露出十分真切的担忧和焦虑。</p>
+<p>前文刚说 47 浪士为自己的大名复仇，怎么到这里成了背叛忠诚了，翻译真是没头没脑的。rather than (loyalty) to the laws 的 to 也被翻译吃了，跟背叛法令有什么关系？？？</p>
+<blockquote>
+<p>(Page 35) Whilst his intention may have been to build a national consensus, which was certainly important in the face of the threat, the effect was rather to suggest that the<em>bakufu</em> lacked the necessary <strong><em>powers of leadership</em></strong> at this critical moment.</p>
+<p>（第 32 页）阿部的出发点可能是要建立一种国家共识，这在面临威胁之时固然很重要，但就结果而言，却更像是意味着幕府在紧要关头缺乏<strong><em>统领所需的权限</em></strong>。</p>
+</blockquote>
+<p>powers 显然是 ability 的意思，powers of leadership = 领导能力，怎么会是权限…</p>
+<blockquote>
+<p>(Page 40) Emperor Meiji processed triumphantly from the ancient capital of Kyoto to Edo in 1868, and within a year his temporary palace in <strong><em>the eastern city</em></strong> was declared the new Imperial Palace.</p>
+<p>（第 36 页）1868 年，明治天皇以胜利的姿态从古都京都迁至江户，不出一年，他就将<strong><em>东边的</em></strong>临时行宫定为新皇居。</p>
+</blockquote>
+<p>英语原文里 the eastern city 就是指 Edo，这是很明确的，中文翻译成“东边的”则好像没那么清楚是指江户了，不过问题不大。这种换名指代是英语写作很常见的，如果从头到尾都用 Edo 未免有些乏味，可以偶尔换称之 the eastern city（这座东边的城市）。如果写中国，一直用 China 也是很无聊的，可以换称之 the sleeping giant（沉睡的巨人），出自拿破仑对中国的评价，当然这是要用在表现中国潜力的语境下。此外还有把微软称为 the software giant，把 IBM 称为 the Big Blue 等，这些是比较公认的外号，也可以自己起外号，只要指代清楚就行。</p>
+<blockquote>
+<p>(Page 43) The <strong><em>effective</em></strong> concentration of power in the hands of a relatively small group of tozama daimyo represented a radical shift in the domestic balance of power, and it was met with serious resistance in some areas.</p>
+<p>（第 38 页）权力<strong><em>有效地</em></strong>集中在相对较小的外样大名集团手中，这显示了日本国内实力均衡的根本变化，并在一些地方遭到了严重抵触。</p>
+</blockquote>
+<p>effective 的确有“有效”的意思，但是这里意思是“实际效果上的”“事实上的”，和“理论上的”“名义上的”相对。比如有一个组织的领袖是 A，后来 B 篡权，把 A 架空了，虽然 A 名头上还是领袖，但其实真正管事的是 B 了，那么 B 就叫 the effective leader. 书里的意思大概是权力理论上是在别人（大众）手里，但事实上说话算数的只是一小部分外样大名。</p>
+<blockquote>
+<p>(Page 46) This particular command had two serious <strong><em>implications</em></strong> for the new regime: […]</p>
+<p>（第 41 页）这样一条命令对新政权有两点重大的<strong><em>暗示</em></strong>：[…]</p>
+</blockquote>
+<p>implications: 暗示；<strong><em>影响；后果</em></strong></p>
+<h3 id="references">References</h3>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p><a href="https://www.zhihu.com/question/35318893" target="_blank" rel="external">知乎：为什么称可逆矩阵为“非奇异”？</a><a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2019/04/23/ciscn-2019-bbvvmm-writeup/" data-toggle="tooltip" data-placement="top" title="2019 第十二届全国大学生信息安全竞赛初赛 bbvvmm 解题报告（writeup）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/01/09/x86-instructions-notes/" data-toggle="tooltip" data-placement="top" title="x86 指令笔记">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          2020 “第五空间”智能安全大赛初赛两道 RE 解题报告（writeup） - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2020/06/25/5space-2020-re-writeup/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                        
+                    </div>
+                    <h1>2020 “第五空间”智能安全大赛初赛两道 RE 解题报告（writeup）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2020-06-25 | 
+                        <span id="/2020/06/25/5space-2020-re-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="x0.-nop-127pt">0x0. nop-127pt</h3>
+<p>这题主要考察的是 Linux 下的反调试技巧。</p>
+<p>先运行观察下行为，提示输入 flag，随便输入后程序退出。</p>
+<p>拖进 IDA 看代码，<code>main</code> 函数一上来进入 <code>sub_804865B</code>，这是第一处反调试。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcTc6.png">
+
+</div>
+<p>Linux 下，程序无调试器运行时，环境变量_会是程序自身路径，有调试器时，这个环境变量会被调试器改变，可以据此区分程序是否被调试。</p>
+<p>回到 <code>main</code>，把下图两条指令 <code>nop</code> 掉，去掉这个反调试。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBc4hR.png">
+
+</div>
+<p>接着，程序提示输入 flag，将其作为整数存入全局变量 <code>dword_804A038</code>。在块 <code>loc_80486E7</code> 和 <code>loc_80486F5</code> 中，将其值加 1 并存回。</p>
+<p>块 <code>loc_80486F5</code> 中调用函数 <code>sub_804857B</code>，这是第二处反调试。函数中，首先布置好系统调用所需的参数和调用号。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBco1x.png">
+
+</div>
+<p>然后跳到 <code>loc_80485A0</code> 进行系统调用。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcI91.png">
+
+</div>
+<p>查表知 Linux x86 的系统调用号 0x20 是 <code>ptrace</code>，这个系统调用以 C 语言写出相当于 <code>ptrace(0,0,1,0);</code> 这是个典型的反调试。在上图中，根据 <code>ptrace</code> 的返回值决定是否进入错误的分支。将 <code>jl short loc_80485AE</code> 这条指令 <code>nop</code> 掉，去掉这个反调试。</p>
+<p>回到 <code>main</code>，在块 <code>loc_804870D</code> 和 <code>loc_8048701</code> 中，再次将全局变量 <code>dword_804A038</code> 加 1 并存回。接着调用 <code>sub_80485C4</code>，在此函数中布置系统调用号 0x14，然后跳到 <code>loc_80485F8</code> 进行系统调用，相当于 C 语言 <code>getpid();</code>，作用是获取当前进程 PID。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBchN9.png">
+
+</div>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcbnO.png">
+
+</div>
+<p>同时 <code>loc_80485F8</code> 还布置了下一个系统调用号 0x40，接着，跳到 <code>loc_804860B</code> 进行系统调用，相当于 C 语言 <code>getppid();</code>，作用是获取父进程 PID。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcqBD.png">
+
+</div>
+<p>同时 <code>loc_804860B</code> 还布置了下一个系统调用号 0x93，接着，跳到 <code>loc_804861E</code> 进行系统调用，参数是刚才获取的当前进程 PID，相当于 C 语言 <code>getsid(getpid());</code>，作用是获取当前进程 SID。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcLHe.png">
+
+</div>
+<p>上图将 <code>getsid(getpid())</code> 与 <code>getppid()</code> 比较，不相等则进入错误分支。将 <code>jnz short loc_8048634</code> 这条指令 <code>nop</code> 掉，去掉这个反调试。</p>
+<p>回到 <code>main</code>，在 <code>loc_8048727</code> 和 <code>loc_804871B</code> 将全局变量 <code>dword_804A038</code> 加上 0xCCCCCCCC 并存回。接着调用 <code>sub_80485C4</code>，即刚才的第二处反调试，因为已经处理，所以不管它，接着往下看。</p>
+<p>在 <code>loc_804873B</code> 中将全局变量 <code>dword_804A038</code> 加 1 并存回，调用 <code>sub_8048753</code>。此函数中又调用 <code>sub_8048691</code>，进入查看。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcXAH.png">
+
+</div>
+<p><code>sub_8048691</code> 的功能是把 <code>eax</code> 所指向的内存地址存储的字节替换为 0x90（即 <code>nop</code> 指令）。前面操作全局变量 <code>dword_804A038</code> 时以 <code>eax</code> 为中介，所以 <code>eax</code> 里现在存的就是 <code>dword_804A038</code> 的值。但是这个函数有什么意义呢？现在还不清楚，先接着往后看。</p>
+<p>回到 <code>sub_8048753</code>，将 <code>eax</code> 加 1 后再次调用 <code>sub_8048691</code>。所以，这一块代码应该是把内存某个位置连续的两个字节 <code>nop</code> 掉了。</p>
+<p>接着，程序直接跳入了错误分支，与此同时 IDA 中可以看到正确分支就在附近，且如果不经过 0x8048765 处的 <code>jmp</code>，就可以进入正确分支。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcz9I.png">
+
+</div>
+<p>这时就明白了上面 <code>sub_8048691</code> 的功能，它给了我们 <code>nop</code> 掉 0x8048765 的 <code>jmp</code> 的能力，这个 <code>jmp</code> 正好占两字节。</p>
+<p>到此，程序就分析完了。流程整理如下（不考虑反调试）：</p>
+<ol style="list-style-type: decimal">
+<li><p>输入 flag，为一个整数</p></li>
+<li><p>将 flag+1</p></li>
+<li><p>将 flag+1</p></li>
+<li><p>将 flag+0xCCCCCCCC</p></li>
+<li><p>将 flag+1</p></li>
+<li><p>将 flag 所指向的内存地址连续的两字节 <code>nop</code> 掉</p></li>
+</ol>
+<p>我们希望把 0x8048765 的 <code>jmp</code> 替换为 <code>nop</code>，所以可以列出方程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flag+0xCCCCCCCF==0x8048765</div></pre></td></tr></table></figure>
+<p>注意是对 32 位整数运算，所以结果要对 0x1 0000 0000 取模。解得 flag 为 0x3B37BA96 ，即十进制 993507990。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcv4A.png">
+
+</div>
+<p>最后按 flag 格式，提交 <span class="math display">\[
+flag\{993507990\}
+\]</span></p>
+<h3 id="x1.-逆向-rev-232pt">0x1. 逆向-rev-232pt</h3>
+<p>涉及指令 gadget 的题，本来这种技术在 pwn 里很常见，现在搬到了 re 里…</p>
+<p>先看 <code>main</code>，很简单，要求两个参数，然后 <code>sub_400D19</code> 验证第二个参数，返回值为 1 则正确。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBcjNd.png">
+
+</div>
+<p>重点看 <code>sub_400D19</code>，只有三条指令，将变量 <code>data</code> 的地址传送给 <code>rsp</code>，然后返回到这个地址。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBgS3t.png">
+
+</div>
+<p>显然 <code>data</code> 是代码了，进去看。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBgpgP.png">
+
+</div>
+<p>这里有许多指针，每个都指向一个 gadget，依次执行这些 gadget 进行运算，最后产生结果。</p>
+<p>因为指令被打散成 gadget，分析起来很麻烦，再加上这种进行一堆运算，最后根据返回值进入正确或错误分支的题一般可以尝试下走捷径，所以先偷懒试下符号执行。</p>
+<p>IDA 里看到正确分支在 0x400481，编写 angr 脚本如下。之所以知道 flag 是 21 位，是因为换题目之前的旧题里透露了 flag 位数，定长一点也行，angr 一样能解出来。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBgiDS.png">
+
+</div>
+<p>运行，等几秒就得到 flag 了。</p>
+<div class="figure">
+<img src="https://s1.ax1x.com/2020/06/25/NBg9jf.png">
+
+</div>
+<h3 id="x2.-总结">0x2. 总结</h3>
+<p>太菜了，twice 那题栈溢出都没做出来… 另外等一个 rev 正经解法的 writeup。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2020/08/17/linear-algebra-done-right-ch3-problem-solutions/" data-toggle="tooltip" data-placement="top" title="《线性代数应该这样学》第 3 章习题选做（草稿）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2019/05/28/qwb-2019-ctf-writeup/" data-toggle="tooltip" data-placement="top" title="2019 第三届强网杯解题报告（writeup）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

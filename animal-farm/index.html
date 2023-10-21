@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Animal Farm - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/animal-farm/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/tag-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Animal Farm</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">Some pieces of beef, and some vegetables too.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <h1 id="动物农场">动物农场</h1>
+<p>George Orwell</p>
+<h2 id="第一章">第一章</h2>
+<p>晚上了，<span class="proper-noun">庄园农场</span>的<span class="proper-noun">Jones 先生</span>已经把鸡舍锁好，但他喝得烂醉如泥，忘了关上鸡舍的小门。他踉踉跄跄地走过庭院，手中提灯的光环左摇右晃。到后门，他踢掉靴子，又从后厨房的酒桶里最后倒了一杯啤酒喝，这才爬上床，床上的<span class="proper-noun">Jones 夫人</span>已经在打呼噜了。</p>
+<p>卧室的灯一熄，一间间农舍上下开始躁动不安、发出扑剌剌的动静。这天白天，消息就四处传开，说<span class="proper-noun">old Major</span>，就是那只获奖的中白公猪，昨晚做了个奇怪的梦，他想向其他动物传达这个梦。动物们一致同意，等<span class="proper-noun">Jones 先生</span>不碍事的时候，马上在大谷仓里集合。<span class="proper-noun">Old Major</span>（大家一直这么叫他，虽然对外展出时他的名字是<span class="proper-noun">Willingdon Beauty</span>）在农场里德高望重，大家都十分愿意少睡一小时，听听他要讲些什么。</p>
+<p>大谷仓的一边，一块高起的平台上，<span class="proper-noun">Major</span>已经在他的稻草床上安坐，就在横梁悬着的灯下方。他今年十二岁，近来有些发胖，但看起来仍是君王般的雄伟，他外表英明而仁慈，尽管他的獠牙从未剪断。不久其他动物陆续到来，各以自己的方式安顿好。先来了三只狗，<span class="proper-noun">Bluebell</span>、<span class="proper-noun">Jessie</span>和<span class="proper-noun">Pincher</span>。然后是猪，他们挨着台前面、垫着稻草坐了下来。母鸡在窗沿上蹲下，鸽子扑棱着翅膀飞上椽子，牛和绵羊在猪后边趴下，倒嚼起食物来。两匹拉车马，<span class="proper-noun">Boxer</span>和<span class="proper-noun">Clover</span>，一齐慢慢走进来，每次落下那大毛蹄子都要小心翼翼，以免有小动物盖在稻草下，踩伤了他们。<span class="proper-noun">Clover</span>是一匹健壮而慈爱的母马，她接近中年，生了第四胎小马后体形一直没有完全恢复。<span class="proper-noun">Boxer</span>是一匹巨畜，将近 18 手<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>那么高，有两匹普通马加起来那么壮。沿着鼻梁的一道白条让他看起来有些蠢，而实际上他也不是一等一的聪明，但他性格稳当、工作的力气巨大，大家都尊敬他。在马儿之后来的是<span class="proper-noun">Muriel</span>，一只白山羊，和<span class="proper-noun">Benjamin</span>，一头驴。<span class="proper-noun">Benjamin</span>是农场里最老的动物，脾气也最坏。他不怎么说话，一说话往往是些风凉话——比如，他说上帝给了他尾巴，好赶走苍蝇，可他宁愿没有尾巴，也没有苍蝇。农场里的动物，只他一个从不笑。问他为什么不笑，他说看不出有什么可笑。然而，尽管不公开承认，他对<span class="proper-noun">Boxer</span>却是爱戴的；他俩星期天常常一起度过，在果园另一边的小牧场上肩并肩吃草，一句话也不说。</p>
+<p>两匹马刚趴下，一窝丢了妈妈的小鸭子鱼贯而入，他们弱弱地啾啾叫着，左逛逛、右逛逛，寻找着不会被踩到的栖息处。<span class="proper-noun">Clover</span>用硕大的前腿给他们围起一道墙，小鸭子在里边安了窝，很快睡着了。演说开始前的最后时分，那只给<span class="proper-noun">Jones 先生</span>拉双轮车的白色母马<span class="proper-noun">Mollie</span>才进来，她漂亮却没脑子，踩着小碎步、扭扭捏捏，嘴里还嚼着一块方糖。她在前方附近挑了一个位置，就开始甩弄自己的白鬃毛，想炫耀绑在上面的红丝带。最迟来的是猫，她像往常一样环顾四周，寻找最暖和的地方，终于挤进了<span class="proper-noun">Boxer</span>和<span class="proper-noun">Clover</span>中间；<span class="proper-noun">Major</span>演讲时，从头到尾，她就在那发出满意的咕噜咕噜声，一个字也没有听进去。</p>
+<p>所有动物都到场了，只有<span class="proper-noun">Moses</span>，那只驯养的渡鸦，还没来，他正在后门后面的架上睡觉。<span class="proper-noun">Major</span>见他们都已安顿好、聚精会神地等着了，于是清了清嗓子，开始讲话：</p>
+<p>“同志们，你们都听说了我昨晚做的奇怪的梦。但我想等会儿再提这个梦。我有别的事要先说。同志们，我觉得我陪伴你们的时间所剩不多，只有个把月了，在死前，我感到有责任把我所获得的智慧传给你们。我这一生活得很长，每每独自在猪栏里时，我都有大量的时间思考，我自认为可以说是懂得了活在这世上的本质，并且理解得不比任何活着的动物差。就这点，我希望和你们谈谈。</p>
+<p>“那么，同志们，我们活着的本质是什么呢？咱们面对现实吧：我们的一生痛苦、劳累而又短暂。先是出生，然后给我们的食物勉强够维持一口气，再然后，只要一息尚存，我们就被逼劳作，榨干最后一点力气；一旦我们的用处走到尽头，就要被无情、残忍地屠宰。<span class="proper-noun">英格兰</span>的动物，只要过了一周岁，就没有一个体会得到何谓快乐、何谓休闲。<span class="proper-noun">英格兰</span>的动物，没有一个是自由的。动物的一生就是痛苦和奴役：这就是直白的真相。</p>
+<p>“可是，这就是自然规律吗？是因为我们这片土地太贫瘠，无法给栖居其上的动物提供舒适的生活吗？不是的，同志们，万万不是！<span class="proper-noun">英格兰</span>土壤肥沃、气候宜人，有能力提供充沛的食物，给远超现在数量的动物。单单是我们这个农场，就能养活十来匹马、二十头牛、几百只羊——而且他们都能过得舒舒服服、体体面面，快要超过我们现在的想象。那我们为什么还处于如此困苦的条件中呢？因为我们几乎全部的劳动果实，都被人类窃取了。同志们，这就是所有问题的答案。用一个字概括就是——人。人是我们唯一真正的敌人。只要从生活中除掉人，饥饿和劳苦的根源就永远消灭了。</p>
+<p>“人是唯一只消费不生产的生物。他们不产奶，他们不下蛋，他们拉犁力气又太小，他们捉兔子跑得又太慢。然而他们却是所有动物的主宰。他们让动物劳作，他们以最少的分量回馈给动物，让动物刚好饿不死，其余的分量就留给自己。我们的劳动耕耘了土地，我们的粪便肥沃了土地，可我们中的每一个动物所拥有的，不过自己身上一张皮罢了。我面前的这群牛，你们过去的一年产了几千加仑的奶？而这本该哺育健壮的小牛的奶，又到了哪里去？每一滴牛奶，都流进我们敌人的喉咙里了。还有这群鸡，你们过去的一年下了多少蛋？又有几颗蛋最终孵化成了小鸡？没能孵化的那些都进了市场，给<span class="proper-noun">Jones</span>和他的手下带来钞票了。还有你，<span class="proper-noun">Clover</span>，你生的四匹小马，本该是你晚年的依靠和享受，现在他们都去了哪？他们一岁大就给卖掉了——你再也见不到了。你四次生育，又在田里劳作，得到的回报除了凑合的食物和一间马厩之外，还有什么呢？</p>
+<p>“就算我们过着痛苦的一生，也不允许我们活到善终。我自己没什么好抱怨的，因为我还算幸运儿。我今年十二岁，生了超过四百只崽。这就是一头猪原本的正常的生活。但到头来，没有动物能逃过残忍的屠刀。坐在我面前的这群小猪，不出一年，你们就会在砧板上嚎叫着送命。这样的恐怖我们都要面临——牛、猪、鸡、羊、所有动物都要。马和狗也没有好下场。你，<span class="proper-noun">Boxer</span>，等到你大块儿的肌肉失去力量的那一天，<span class="proper-noun">Jones</span>就会把你送到屠夫那里，割断喉咙，煮了给猎狐狗吃。而狗呢，等到他们老了、没牙了，<span class="proper-noun">Jones</span>就给他们脖子上绑上砖块，投进最近的池塘里溺死。</p>
+<p>“那么，现在事情还不清楚吗，同志们？咱们一生中遭的罪都源自人类的暴虐啊！只要摆脱了人，劳动果实就归我们自己了。几乎只消一夜，我们就能变得富裕而自由。那我们要做什么呢？无疑，要夜以继日、全身心地投入到推翻人类的事业中去！同志们，这就是我要向你们传达的精神：反抗起来！我不知道这场反抗什么时候到来，可能一周后，也可能一百年后，但我清楚知道，就像我看脚下的稻草一样清晰，正义迟早会得到伸张。同志们，在你们短暂的余生中，着眼于此吧！还有，最重要的是，要把我的精神传给后来的动物，这样子孙后代就会继承这场斗争，直至取得胜利。</p>
+<p>“记住，同志们，你们的决心决不能动摇。决不让任何人讲的道理把你们引向歧途。不要听他们说什么人和动物有共同利益，什么一方的富强就是另一方的富强。都是假话。人不为别的生物的利益服务，只为自己。咱们动物之间，在斗争中要全面团结，全面搞好同志关系。所有的人都是敌人。所有的动物都是同志。”</p>
+<p>这时，发出了巨大的嘈杂声。<span class="proper-noun">Major</span>讲话的过程中，四只大老鼠从洞里爬了出来，坐在后腿上听讲。突然间狗看到了他们，他们迅速冲回老鼠洞，这才保住了性命。<span class="proper-noun">Major</span>举起前蹄，示意大家安静。</p>
+<p>“同志们，”他说道，“这里有一点必须弄清楚。像老鼠和兔子这样的野生生物，是我们的朋友还是仇敌呢？咱们投票吧。我现在向大会提问：老鼠是同志吗？”</p>
+<p>投票马上举行，经压倒性多数同意，老鼠是同志。只有四位不同意，三只狗和一只猫，后来发现猫给是和不是都投了票。<span class="proper-noun">Major</span>接着说道：</p>
+<p>“我还有一些话要讲。我只是要重申，永远牢记你们的责任，把人和人的一切生活习惯视为仇敌。凡是两条腿走路的都是敌人。凡是四条腿走路的，或者有翅膀的，都是朋友。还要记住，在与人类的抗争中，决不能变成他们的模样。就算是战胜了他们，也不要沾染他们的恶习。动物决不能住在人住的房子里、不能睡在床上、不能穿衣服、不能喝酒、不能抽烟、不能碰钱、也不能经商。人的习惯都是罪恶的。还有，最重要的是，动物决不能对自己的同胞施以暴虐。无论弱还是强、聪明还是迟钝，我们都是兄弟。任何动物决不能杀其他动物。所有动物都平等。</p>
+<p>“现在，同志们，我要给你们讲讲昨晚的梦了。我无法向你们描绘这个梦。这个梦里是人类消失以后，地球的模样。不过，它让我想起了一件遗忘已久的东西。多年前，我还是一头小猪的时候，我母亲和其他母猪常常哼唱一首老歌，她们只知道曲调和头三个词。我很小的时候会这个调子，但它已经淡出我的记忆很久很久了。然而，昨晚这首调子在梦里回到了我的脑海。不仅如此，连歌词都回想起来了——那歌词，我确信是很久以前的动物传唱过，但已经遗忘了好几代的。我现在就把这首歌唱给你们听，同志们。我老了，声音也哑了，但是我教会了你们调子，你们自己可以把它唱得更好。这首歌叫做<span class="wavy-book-mark">英格兰之畜</span>。”</p>
+<p><span class="proper-noun">Old Major</span>清了清嗓子，开始歌唱。如他所说，他的声音沙哑，但他唱得够好了，这是一首煽动的曲调，介于<span class="wavy-book-mark">Clementine</span>和<span class="wavy-book-mark">La Cucaracha</span>之间。歌词唱道：<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p><span class="proper-noun">英格兰</span>之畜，<span class="proper-noun">爱尔兰</span>之畜，<br>
+每一种气候里、每一片土地上的牲畜啊，<br>
+聆听我的美好音讯<br>
+诉说那金色未来吧。<br>
+(Beasts of England, beasts of Ireland,<br>
+Beasts of every land and clime,<br>
+Hearken to my joyful tidings<br>
+Of the golden future time.)</p>
+<p>这天迟早要到来，<br>
+暴虐的人类要被推翻，<br>
+<span class="proper-noun">英格兰</span>丰收的田野<br>
+只会由牲畜们踩踏撒欢。<br>
+(Soon or late the day is coming,<br>
+Tyrant Man shall be o’erthrown,<br>
+And the fruitful fields of England<br>
+Shall be trod by beasts alone.)</p>
+<p>铁环要从我们鼻上消失，<br>
+挽具要从我们背上消灭，<br>
+嚼子和马刺要永远蚀锈，<br>
+残忍的鞭子不再噼啪作孽。<br>
+(Rings shall vanish from our noses,<br>
+And the harness from our back,<br>
+Bit and spur shall rust forever,<br>
+Cruel whips no more shall crack.)</p>
+<p>物产丰饶超乎想象，<br>
+小麦和大麦、燕麦和干草，<br>
+三叶草、豆子和甜菜<br>
+到那天都会归我们了。<br>
+(Riches more than mind can picture,<br>
+Wheat and barley, oats and hay,<br>
+Clover, beans, and mangel-wurzels<br>
+Shall be ours upon that day.)</p>
+<p>明亮会是<span class="proper-noun">英格兰</span>的田野闪耀，<br>
+纯净更是<span class="proper-noun">英格兰</span>的水，<br>
+甜美最是<span class="proper-noun">英格兰</span>的微风吹拂<br>
+到我们获得自由的那天齐汇。<br>
+(Bright will shine the fields of England,<br>
+Purer shall its waters be,<br>
+Sweeter yet shall blow its breezes<br>
+On the day that sets us free.)</p>
+<p>为了那天我们必须劳动，<br>
+就算活不到那天破晓；<br>
+牛和马儿、鹅和火鸡，<br>
+都得为了自由而苦劳。<br>
+(For that day we all must labour,<br>
+Though we die before it break;<br>
+Cows and horses, geese and turkeys,<br>
+All must toil for freedom’s sake.)</p>
+<p><span class="proper-noun">英格兰</span>之畜，<span class="proper-noun">爱尔兰</span>之畜，<br>
+每一种气候里、每一片土地上的牲畜啊，<br>
+聆听音讯、口耳相传<br>
+诉说那金色未来吧。<br>
+(Beasts of England, beasts of Ireland,<br>
+Beasts of every land and clime,<br>
+Hearken well and spread my tidings<br>
+Of the golden future time.)</p>
+<p>唱颂这首歌让动物们陷入了无边的亢奋之中。<span class="proper-noun">Major</span>差不多唱完时，他们已经开始自己唱了。就是最笨的动物也听会了曲调和几句词，而聪明的，像是猪狗，则不出几分钟就记下了整首歌。接着，在试唱了几次后，整个农场整齐划一地爆发起了<span class="wavy-book-mark">英格兰之畜</span>的歌声。牛低声哞哞，狗高声呜呜，羊咩咩，马萧萧，鸭嘎嘎。他们对这首歌感到十分愉悦，从头到尾一连整整唱了五遍，要不是给打断了，他们或许能唱上一晚。</p>
+<p>不幸的是，这喧哗吵醒了<span class="proper-noun">Jones 先生</span>，他从床上跳了起来，想确认是不是院子里来了狐狸。他抓起了一直放在卧室角落的枪，朝黑暗中放了一连发 6 号鸟弹。弹丸射进了谷仓的墙里，会议匆忙结束。所有动物逃回了自己休息的地方。飞禽跳上了架子，走兽安定在稻草里，整个农场不久就进入了梦乡。</p>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>1 手约等于 10.16 cm，手是衡量马匹高度的旧单位。 ——译注<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>这首歌词是按照英语诗的诗律写就，其格律为四步扬抑格（trochaic tetrameter），每一节的韵脚都是 ABCB 形式。译者能力所限，只能勉强把韵脚反映在译文中，无法兼顾格律，故附原文以供参考。 ——译注<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+
+
+                <!-- 如果开启评论功能 -->
+                
+                    <hr>
+
+                    
+
+                    
+
+                    
+                    <!-- Valine 评论框 start -->
+                    <div class="comment" id="comment"></div>
+                    <!-- Valine 评论框 end -->
+                    
+
+                    
+
+                    
+                    
+                    
+                    <!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+                    <!--Leancloud 操作库:-->
+                    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+                    <!--Valine 的核心代码库-->
+                    <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+                    <script>
+                        var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+                        var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+                        new Valine({
+                            el: '#comment',
+                            appId: valine_id,
+                            appKey: valine_key,
+                            notify: true,
+                            visitor: true,
+                            placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!', // 留言框占位提示文字
+                        });
+                    </script>
+                    <!-- Valine 公共JS代码 end -->
+                    
+
+
+
+
+                
+
+            </div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+
+                        
+                            <img src="///sdn.geekzu.org/avatar/43d1ed590896218a6bff5275a61adcf8?size=400px" />
+                        
+
+                        
+                            <p>是忍受残酷命运的箭袭弹击，
+                            
+                                <br>还是拿起武器对抗消灭那困难的汪洋，谁更高尚？
+                            
+                            </p>
+                        
+
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                                <li>
+                                    <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+
+                            
+
+                            
+
+                            
+                                <li>
+                                    <a target="_blank"  href="https://github.com/hx1997">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                            
+                            
+                            
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- Friends Blog -->
+                
+            </div>
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          x86 的 CPU 工作模式与内存模型 - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2022/02/18/intel-x86-memory-model/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                    </div>
+                    <h1>x86 的 CPU 工作模式与内存模型</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2022-02-18 | 
+                        <span id="/2022/02/18/intel-x86-memory-model/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>从本科的操作系统课开始，我就一直无法把这门课所讲的段页式内存管理和 Windows 的内存管理对应上。这门课的教材把段页式内存管理作为分段内存和分页内存的一种折中方案来教学，并强调因为这种折中在分段和分页之间取长补短，所以成为现代操作系统主要的内存管理方式。然而，事实上现在的 32 /64 位 Windows/Linux 都弱化了分段机制，基本等同于只有分页机制，这是我无法将它们与段页式内存管理对应起来的原因之一。这篇文章总结一下最近学到的关于 x86 上 CPU 工作模式和内存模型的知识，这些知识大致解决了我之前的疑惑。</p>
+<h3 id="三种地址空间">三种地址空间</h3>
+<p>在 x86 的体系结构下有三种内存地址空间：<strong>逻辑地址空间</strong>（又叫<strong>虚拟地址空间</strong>）、<strong>线性地址空间</strong>、<strong>物理地址空间</strong>。这些空间中的地址转换过程如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">逻辑地址（虚拟地址） ===段表===&gt; 线性地址 ===页表===&gt; 物理地址</div></pre></td></tr></table></figure>
+<p>也就是说 x86 确实是支持段页式内存管理的。为了后文说明方便，现在回顾一下分段机制的地址翻译过程（省去越界检查）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">   逻辑地址</div><div class="line">--------------</div><div class="line">|段号|段内偏移|----------------</div><div class="line">--------------                |</div><div class="line">   |                          |</div><div class="line">   |        段表              |</div><div class="line">   |   --------------         ↓</div><div class="line">   |   |段号0|段基址0|        ⊕--------&gt; 线性地址/物理地址</div><div class="line">   |   --------------         ↑</div><div class="line">   |   |.....|......|         |</div><div class="line">   |   --------------         |</div><div class="line">   ---&gt;|段号n|段基址n|----------</div><div class="line">       --------------</div><div class="line">       |.....|......|</div></pre></td></tr></table></figure>
+<p>分页机制的地址翻译完全类似，只是各个“段”字改成“页”字。</p>
+<h3 id="cpu-工作模式">CPU 工作模式</h3>
+<p>x86 有<s>两</s>种 CPU 工作模式：<strong>实模式</strong>和<strong>保护模式</strong>。（2022/9/18 勘误：80386 开始，x86 有三种工作模式，还有一种用于向后兼容的<strong>虚拟 8086 模式</strong>；x64 更是有四种模式，加了一种<strong>长模式</strong><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>）。实模式由老式机器和操作系统使用，保护模式由现在的所有新机器和操作系统使用，一个例外是刚开机时默认进入的是实模式，等操作系统做好准备才会切换至保护模式。</p>
+<p>在实模式下，程序使用的所有逻辑地址被看作与真实的物理地址有某种直接对应关系，程序可由逻辑地址自行计算出物理地址。在保护模式下，逻辑地址需要经过段表的转换才能变为物理地址，这一过程必须经由操作系统完成。此外，保护模式还增加了段特权级的概念，低特权段的代码无法访问高特权段的数据和代码。</p>
+<h3 id="内存模型">内存模型</h3>
+<p>这里只讲两种内存模型：<strong>平坦模型</strong>和<strong>分段模型</strong>。</p>
+<p>所谓平坦模型，就是把整个内存地址空间看作一维的不划分的一个大数组，因此又叫<strong>线性模型</strong>。分段模型则是把地址看作二维的：段地址+段内偏移。</p>
+<h3 id="x86-的实现细节">x86 的实现细节</h3>
+<h4 id="时代">8086 时代</h4>
+<p>在 8086 机的时代，保护模式尚未出现，因此所有机器都工作于实模式。8086 的逻辑地址分为两部分：段地址和段内偏移，一般用冒号隔开，一个逻辑地址就记作 <code>段地址:段内偏移</code>。也就是说，8086 的内存模型是分段模型。x86 有一组专门存放段地址的段寄存器。</p>
+<p>8086（实模式）的逻辑地址到物理地址转换很简单，如下公式所示：</p>
+<p><span class="math display">\[
+physical\ address = (segment \ll 4) + offset.
+\]</span></p>
+<p>其中，<code>physical address</code> 是物理地址，<code>segment</code> 是段寄存器中的段地址，左移四位成为段基址，再和段内偏移 <code>offset</code> 相加。</p>
+<p>为什么要搞一个稍显复杂的方案，为什么要左移四位呢？因为当时 8086 是 16 位机，通用寄存器和段寄存器都只有 16 位，但它却有 20 根地址线，以便能寻址 <span class="math inline">\(2 ^{20} = 1MiB\)</span> 的内存。那一个寄存器根本放不下 20 位的内存地址，就只能用两个寄存器分别放段地址和偏移咯，16 位的段地址左移四位不就成了 20 位的段基址嘛。</p>
+<h4 id="位时代">32/64 位时代</h4>
+<p>进入 32<s>/64</s> 位时代以后，大部分机器主要工作于保护模式（2022/9/18 勘误：64 位机主要工作于新增的长模式<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>）。这种模式下，x86 要求操作系统维护一个段表，称为<ruby><strong>全局描述符表</strong><rt><strong>GDT</strong></rt></ruby>。事实上段表只是 GDT 的一部分，里面还有其他信息，但在本文里我们暂且将二者视为同义词。</p>
+<p>保护模式中的逻辑地址到物理地址转换不再适用实模式的公式，而必须查 GDT，查表的过程见上文“三种地址空间”一节。段寄存器中也不再直接存放段地址，而是存放<strong>段选择子值</strong>。段选择子值分为三部分：GDT 内的索引（段号）、表指示符、请求权级。段号很好理解，是几就对应 GDT 里第几项；表指示符表示应该查哪张表：<ruby>本地描述符表<rt>LDT</rt></ruby>、<ruby>全局描述符表<rt>GDT</rt></ruby>还是<ruby>中断描述符表<rt>IDT</rt></ruby>，实际使用中只有后两个在用，本文里只考虑 GDT；请求权级就是之前说的保护模式新增的概念。事实上 32/64 位机的段寄存器是 <s>48 位的，段选择子值占高 16 位，剩下的 32 位</s>记录关于段的其他信息（比如段基址，这部分信息从 GDT 表项中得到），对程序员一般不可见（2022/9/18 勘误：不可见部分的长度随 x86 的更新换代会有所不同，但至少 Pentium Pro 上是 80 位<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>，网上的其他资料也基本说是 80 位<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>，x64 的情况暂不清楚）。总之，段寄存器和段选择子值的结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">段寄存器</div><div class="line">|段选择子值|段基址等其他信息|</div><div class="line">  占 16 位 |   占 32 位</div><div class="line"></div><div class="line">段选择子值</div><div class="line">|  段号  |表指示符|请求权级|</div><div class="line">占 13 位 |占 1 位 |占 2 位</div></pre></td></tr></table></figure>
+<p>到这里，似乎 x86 都在用分段模型，平坦模型去哪了？一开始不是说 Windows/Linux 都弱化了分段吗？答案是 Windows/Linux 用了点小技巧，把分段模型转换成了平坦模型。这个技巧就是：把段基址全部设为 0，而段长覆盖整个 32 位（4GiB）线性地址空间（之所以是线性地址空间，是因为分段完之后还有分页，分段的地址转换只是把逻辑地址转成了线性地址，还要进一步查页表才转成物理地址）。也就是说，所有段都重叠在一起，而范围是整个线性地址空间，这样就等效于没有分段，整个内存是一个整体了。</p>
+<h3 id="各-cpu操作系统的比较">各 CPU/操作系统的比较</h3>
+<table>
+<thead>
+<tr class="header">
+<th>CPU/操作系统</th>
+<th>CPU 工作模式</th>
+<th>内存模型</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>8086</td>
+<td>实模式</td>
+<td>分段模型</td>
+</tr>
+<tr class="even">
+<td>Windows 3.1</td>
+<td>保护模式</td>
+<td>分段模型</td>
+</tr>
+<tr class="odd">
+<td>&gt; Windows 3.1/现在的 Linux</td>
+<td>保护模式</td>
+<td>平坦模型</td>
+</tr>
+</tbody>
+</table>
+<h3 id="参考链接">参考链接</h3>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://zhuanlan.zhihu.com/p/69334474<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>https://zhuanlan.zhihu.com/p/69334474<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>http://www.rcollins.org/ddj/Aug98/Aug98.html<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>http://www.qfrost.com/WindowsKernel/Windows%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0_1/<a href="#fnref4">↩</a></p></li>
+</ol>
+</div>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2022/04/22/escaping-sandboxie-classic-5-55-13/" data-toggle="tooltip" data-placement="top" title="Escaping Sandboxie Classic 5.55.13">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2021/07/24/william-stallings-and-tang-shuofei/" data-toggle="tooltip" data-placement="top" title="计组教材的梦幻联动">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

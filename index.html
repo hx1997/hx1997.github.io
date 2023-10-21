@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Goulash</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">Some pieces of beef, and some vegetables too.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/2023/10/22/using-seccomp-bpf-on-openharmony/">
+        <h2 class="post-title">
+            OpenHarmony（Linux 内核）上成功使用 Seccomp-BPF
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            记录一下，成功在 OpenHarmony 上编译跑通了基于 Seccomp-BPF 的系统调用追踪程序。
+
+
+Seccomp-BPF 在 OpenHarmony 的运行效果
+
+虽然并没什么好意外的，毕竟也是 Linux 内核…… 不过这份代码从安卓移植过来十分顺利，几乎只需要把 android/log.h 和 jni.h 删掉就行，当然也有代码本身就比较简单的原因吧。代码因为和公司......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2023-10-22
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2023/01/18/how-to-use-bluetooth-on-aosp-13-emulator/">
+        <h2 class="post-title">
+            安卓（AOSP）13 源码编译及模拟器使用蓝牙踩坑记
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            为了编译 AOSP，特地跑去给笔记本升级了内存条、移动硬盘，还买了个 U 盘，好在钱没白花，最后是编译成功了==
+最开始想着用 WSL2 编译然后拿生成的镜像给 Windows 上的 AVD 模拟器跑，结果模拟器部分踩了一堆天坑，到最后也没法解决，可能也是太菜了。其实解决了前面各种坑后日志可以看到模拟器已经成功跑起安卓内核并且运行 init 进程了，说明已经进入到用户态，奈何那个 surf......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2023-01-18
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2022/04/22/escaping-sandboxie-classic-5-55-13/">
+        <h2 class="post-title">
+            Escaping Sandboxie Classic 5.55.13
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            What’s Up?
+I discovered a vulnerability in Sandboxie Classic &lt;= 5.55.13 (and Plus &lt;= 1.0.13 with default settings) that allowed an attacker to escape the sandbox and execute arbitrary code.......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2022-04-22
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2022/02/18/intel-x86-memory-model/">
+        <h2 class="post-title">
+            x86 的 CPU 工作模式与内存模型
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            从本科的操作系统课开始，我就一直无法把这门课所讲的段页式内存管理和 Windows 的内存管理对应上。这门课的教材把段页式内存管理作为分段内存和分页内存的一种折中方案来教学，并强调因为这种折中在分段和分页之间取长补短，所以成为现代操作系统主要的内存管理方式。然而，事实上现在的 32 /64 位 Windows/Linux 都弱化了分段机制，基本等同于只有分页机制，这是我无法将它们与段页式内存......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2022-02-18
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2021/07/24/william-stallings-and-tang-shuofei/">
+        <h2 class="post-title">
+            计组教材的梦幻联动
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            这话得从 William Stallings 的《计算机组成与体系结构：性能设计》（Computer Organization and Architecture: Designing for Performance）说起。今天看这本书的时候，读到这段话，辨析计算机组成与体系结构这两个术语：
+
+For example, it is an architectural design issue......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2021-07-24
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2021/07/17/keeping-a-sense-of-proportion/">
+        <h2 class="post-title">
+            读书的详略
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            一直以来我都是个爱“咬文嚼字”的人，这点其实从之前的博文《〈VSI：现代日本〉翻译杂谈》和《对无灵主语的一点观察》都可以看出端倪。在阅读时咬文嚼字有好也有坏，好处就不提了，写这篇文章是因为这种习惯有其坏处。
+最近意识到我读书特别慢，一天可能只能读个两三页，最多读十页，相比之下，常常听说有人“一下午读完一本书”云云。当然，这首先跟书的类型有很大关系，读通俗小说和读数学教材的速度必然是不同的。......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2021-07-17
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2021/07/14/new-domain-and-avatar-cdn-mirror/">
+        <h2 class="post-title">
+            启用新域名及更换侧栏头像 CDN
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            买了个自定义域名，现在可以通过 https://g0ul4sh.top/ 访问博客了。
+另外头像 CDN 换了个国内镜像，Gravatar 在国内不稳定。
+早就想做这两件事了，一直懒得要死。还有两件要做的事，立个 flag，看看这次拖到什么时候做，哈哈哈
+
+更换评论系统，现在用的 Valine 太拉了，没有自带的新评论提醒，第三方的又麻烦
+更换图床，现在用 loli.net，访问有......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2021-07-14
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2021/05/16/ciscn-2021-writeup/">
+        <h2 class="post-title">
+            2021 第十四届全国大学生信息安全竞赛初赛两道逆向解题报告（writeup）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            又只做了两道水题，太久没打了，啥都不会了qaq
+0x0. glass - Reverse
+拿到一个 apk 文件，先反编译。
+
+
+
+
+经过checkFlag函数检查，对就输出right!这个函数是 native 函数，在 libnative-lib.so 文件里，用 7z 提取出来拖进 IDA。
+
+
+
+
+checkFlag函数就是这样，v3是用户输入，检查长度为 39......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2021-05-16
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2020/08/24/2020-qwb-writeup/">
+        <h2 class="post-title">
+            2020 第四届强网杯解题报告（writeup）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            0x0. 前言
+只做出两道水题，还是记录一下吧。
+0x1. 强网先锋（Pwn） - babymessage - 52pt
+菜单选 1 输入 name，选 2 输入 message。message 的长度由栈上变量 v1 决定，与 256 做有符号比较，大于的话长度设为 256，然后用此长度调用 leave_message。
+
+
+
+
+
+
+
+
+第一次循环，v1（不是 le......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2020-08-24
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2020/08/17/linear-algebra-done-right-ch3-problem-solutions/">
+        <h2 class="post-title">
+            《线性代数应该这样学》第 3 章习题选做（草稿）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            做题顺便试下 Mathpix。书是第 2 版，不同版本习题可能不同。
+（以后不随便挖坑了… 如果不一次把文章写完过后就会忘记思路==）
+3.1
+
+证明每个从一维向量空间到其自身的线性映射都是乘以某个标量. 准确地说，证明：如果 \(\dim V = 1,\,T \in \mathcal{L}(V,V)\)，那么有 \(a \in \mathbb{F}\) 使得对所有 \(\bolds......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2020-08-17
+    </p>
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+        <li class="next">
+            <a href="/page/2/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+                <!-- 如果开启评论功能 -->
+                
+
+            </div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+
+                        
+                            <img src="///sdn.geekzu.org/avatar/43d1ed590896218a6bff5275a61adcf8?size=400px" />
+                        
+
+                        
+                            <p>是忍受残酷命运的箭袭弹击，
+                            
+                                <br>还是拿起武器对抗消灭那困难的汪洋，谁更高尚？
+                            
+                            </p>
+                        
+
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                                <li>
+                                    <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+
+                            
+
+                            
+
+                            
+                                <li>
+                                    <a target="_blank"  href="https://github.com/hx1997">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                            
+                            
+                            
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- Friends Blog -->
+                
+            </div>
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

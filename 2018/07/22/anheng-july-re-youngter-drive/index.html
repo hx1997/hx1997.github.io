@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          安恒杯 7 月月赛逆向 Youngter-drive 解题报告（writeup） - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2018/07/22/anheng-july-re-youngter-drive/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#信息安全" title="信息安全">信息安全</a>
+                        
+                          <a class="tag" href="/tags/#CTF" title="CTF">CTF</a>
+                        
+                          <a class="tag" href="/tags/#Writeups" title="Writeups">Writeups</a>
+                        
+                    </div>
+                    <h1>安恒杯 7 月月赛逆向 Youngter-drive 解题报告（writeup）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2018-07-22 | 
+                        <span id="/2018/07/22/anheng-july-re-youngter-drive/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="x0.-前言">0x0. 前言</h3>
+<p>这次这道题 100 分，但是大家都说（并不）比上个月 500 分的题还难。其实我比赛时也没做出来，之后才做出来的，毕竟下午三点才开始做…</p>
+<h3 id="x1.-反调试">0x1. 反调试</h3>
+<p>题目文件在<a href="https://github.com/hx1997/CTF-writeups/raw/master/anheng-july-re-youngter-drive/Youngter-drive.exe" target="_blank" rel="external">这里</a>。</p>
+<p>查壳，是 UPX，直接用 <code>upx -d</code> 命令脱壳，结果运行不起来。发现是原文件需要 msvcr100d.dll 这个库，而且这是 Debug 版本的库，光装 VC++ 运行时是没有的，要装 Visual Studio，还必须是 2010 版… 网上下了个 msvcr100d.dll 放到同一目录下，原文件可以运行了，脱壳后的还是不行… 不管了，脱壳版用 IDA 静态分析，原文件用来运行测试吧。</p>
+<p>首先，程序有反调试，先解决掉这个。（反调试其实是分析到一半才发现的，这里为了写文章的逻辑，先说了，而且后面其实也不怎么用到 OD 调试…）</p>
+<p>反调试的表现是，用 OD 载入程序，还<strong>没进入主函数的逻辑</strong>，就打印出 <code>///////\nWARNING\n///////\n</code>，立马退出了。把脱壳文件拖进 IDA，按 Shift+F12 查看字符串，果然有这串：</p>
+<div class="figure">
+<img src="//i.loli.net/2019/05/03/5ccc2625c3b44.jpg" alt="IDA 查看警告字符串">
+<p class="caption">IDA 查看警告字符串</p>
+</div>
+<p>双击，然后按 Ctrl+X 看有哪些函数引用了这条字符串，有两个，先看靠前的那个。函数里有很多 <code>ollydbg.exe</code>、<code>ida.exe</code> 这样的字符串，还有 <code>CreateToolhelp32Snapshot</code> 之类的 API 调用，很明显是遍历系统进程，检测有没有调试工具在运行。再看靠后的那个，这个函数很有意思，学到了点东西，我把反汇编结果贴出来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">.text:004117AE                 mov     [ebp+var_8], 0</div><div class="line">.text:004117B5                 mov     eax, large fs:30h</div><div class="line">.text:004117BB                 db      3Eh</div><div class="line">.text:004117BB                 movzx   eax, byte ptr [eax+2]</div><div class="line">.text:004117C0                 mov     [ebp+var_8], eax</div><div class="line">.text:004117C3                 cmp     [ebp+var_8], 0</div><div class="line">.text:004117C7                 jz      short loc_4117F1</div><div class="line">.text:004117C9                 mov     esi, esp</div><div class="line">.text:004117CB                 push    offset aWarning_0 ; &quot;///////\nWARNING\n///////\n&quot;</div><div class="line">.text:004117D0                 call    ds:printf</div><div class="line">.text:004117D6                 add     esp, 4</div><div class="line">.text:004117D9                 cmp     esi, esp</div><div class="line">.text:004117DB                 call    sub_41116D</div><div class="line">.text:004117E0                 mov     esi, esp</div><div class="line">.text:004117E2                 push    0               ; Code</div><div class="line">.text:004117E4                 call    ds:exit</div></pre></td></tr></table></figure>
+<p>第二行把 <code>fs:30h</code> 传送到 eax，在 x86 Windows 上，fs 寄存器指向一个结构体，叫做 TIB（Thread Information Block，线程信息块）<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>。其偏移 0x30 处是 PEB（Process Environment Block，进程环境块）的地址<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>。所以第二行执行后，eax 里寄存的就是 PEB 结构体的地址。</p>
+<p>第四行把 eax+2 当作字节指针（即指向的数据是以字节为单位），其指向的那个字节的内容零扩展后传送到 eax，相当于 C 语言的 <code>eax = *((char *)(eax + 2));</code>。eax+2 就是 PEB+2，这个位置是一个叫做 <code>BeingDebugged</code> 的标志位，指示当前进程是否处于被调试状态<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>。</p>
+<p>第五行到第七行把 eax 的值存到局部变量里，然后和 0 比较，如果不等于 0 就继续往下执行 <code>004117C9</code> 处以及后面的指令，如果等于 0 就跳到 <code>loc_4117F1</code> 处（上面汇编代码未节选）执行。注意最后一行调用 <code>exit</code> 会让程序退出，所以只有 eax == 0 才能让程序继续运行，也就是 <code>BeingDebugged</code> 标志位要是 0，表示程序未被调试。</p>
+<p>要怎么绕过反调试呢？理论上可以在 OD 调试的时候动态修改判断逻辑，让程序绕过反调试继续运行，不过我还不会调试 TLS 回调，所以还是用 IDA patch 了。在这之前先搞清楚这两个反调试函数是怎么被调用的，在它们俩中任意一个的函数名上按 Ctrl+X，可以查到哪个函数是调用方，中间有一个只有一句 <code>jmp</code> 的过渡函数，再往回追查调用方就看到是一个名为 <code>TlsCallback_0_0</code> 的函数调用了反调试函数。看到这名字就知道是 TLS 回调函数，具体可以上网搜，这里不多说了，知道操作系统会调用这个函数就行了。</p>
+<p>现在要解决掉 TLS 回调，用 IDA 载入原文件，发现 TLS 回调函数没有被 UPX 加壳，可以直接 patch。最开始的想法是用 CFF Explorer 之类的 PE 文件工具把存储了 TLS 回调函数指针的 TLS 目录删掉，这样就用不着 IDA patch，结果发现还是会触发反调试，不是很懂。第二个想法是 <code>nop</code> 掉回调函数里所有的 <code>call</code> 指令，这样就不会调用反调试函数，结果 patch 后程序运行崩溃… 最后我的办法是把回调函数开头直接改成 <code>ret</code>，成功了。Patch 之后是这样的（最后一行是原本的函数结尾，现在函数一开始就结束了）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">UPX1:0041F176                 public TlsCallback_0</div><div class="line">UPX1:0041F176 TlsCallback_0   proc near               ; DATA XREF: UPX1:TlsCallbackso</div><div class="line">UPX1:0041F176                 retn    0Ch</div><div class="line">UPX1:0041F176 TlsCallback_0   endp</div><div class="line">UPX1:0041F176</div><div class="line">UPX1:0041F179 ; ---------------------------------------------------------------------------</div><div class="line">UPX1:0041F179                 mov     esi, (offset dword_411140+45E0h)</div><div class="line">UPX1:0041F17E                 cld</div><div class="line">UPX1:0041F17F</div><div class="line">UPX1:0041F17F loc_41F17F:                             ; CODE XREF: UPX1:0041F18Fj</div><div class="line">UPX1:0041F17F                 lodsd</div><div class="line">UPX1:0041F180                 test    eax, eax</div><div class="line">UPX1:0041F182                 jz      short loc_41F191</div><div class="line">UPX1:0041F184                 push    3</div><div class="line">UPX1:0041F186                 pop     ecx</div><div class="line">UPX1:0041F187</div><div class="line">UPX1:0041F187 loc_41F187:                             ; CODE XREF: UPX1:0041F18Bj</div><div class="line">UPX1:0041F187                 push    dword ptr [esp+10h]</div><div class="line">UPX1:0041F18B                 loop    loc_41F187</div><div class="line">UPX1:0041F18D                 call    eax</div><div class="line">UPX1:0041F18F                 jmp     short loc_41F17F</div><div class="line">UPX1:0041F191 ; ---------------------------------------------------------------------------</div><div class="line">UPX1:0041F191</div><div class="line">UPX1:0041F191 loc_41F191:                             ; CODE XREF: UPX1:0041F182j</div><div class="line">UPX1:0041F191                 pop     esi</div><div class="line">UPX1:0041F192                 retn    0Ch</div></pre></td></tr></table></figure>
+<h3 id="x2.-程序主体分析">0x2. 程序主体分析</h3>
+<p>运行程序观察行为，提示输入 flag，随便输入一串，程序退出了。在 IDA 里找字符串 <code>input flag:</code>，可以迅速定位到函数 <code>sub_411BD0</code>，按 F5 看伪代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub_411BD0</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">char</span> v1; <span class="comment">// [sp+Ch] [bp-C0h]@1</span></div><div class="line"></div><div class="line">  <span class="built_in">memset</span>(&amp;v1, <span class="number">0xCC</span>u, <span class="number">0xC0</span>u);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"1111111111111111111111111111111111111111111111111111111111111111111111111111111\n\n"</span>);</div><div class="line">  sub_41116D();</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"input flag:\n"</span>);</div><div class="line">  sub_41116D();</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%36s"</span>, &amp;Source);</div><div class="line">  sub_41116D();</div><div class="line">  <span class="keyword">return</span> sub_41116D();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第一句 printf 打印的东西很长，又没什么用，我省略了一些。可以看到这个函数就只是把输入的 flag 存到全局缓冲区 <code>Source</code> 里面，而且最多只存 36 个字符（还特意看了下大小，没有溢出）。<code>sub_41116D</code> 貌似是 C 运行时库里面检查堆栈平衡破坏的函数，不用管。</p>
+<p>没什么有趣的地方了，往上追溯调用方，来到 <code>sub_411C70</code>，这应该就是 <code>main</code> 函数了，因为再往上似乎是运行时库的领域了。按 F5 看伪代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub_411C70</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">char</span> v1; <span class="comment">// [sp+Ch] [bp-D8h]@1</span></div><div class="line">  HANDLE v2; <span class="comment">// [sp+D0h] [bp-14h]@1</span></div><div class="line">  HANDLE hObject; <span class="comment">// [sp+DCh] [bp-8h]@1</span></div><div class="line"></div><div class="line">  <span class="built_in">memset</span>(&amp;v1, <span class="number">0xCC</span>u, <span class="number">0xD8</span>u);</div><div class="line">  sub_4110FF();</div><div class="line">  CreateMutexW(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">  ::hObject = (HANDLE)sub_41116D();</div><div class="line">  j_strcpy(Dest, &amp;Source);</div><div class="line">  CreateThread(<span class="number">0</span>, <span class="number">0</span>, StartAddress, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">  hObject = (HANDLE)sub_41116D();</div><div class="line">  CreateThread(<span class="number">0</span>, <span class="number">0</span>, sub_41119F, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">  v2 = (HANDLE)sub_41116D();</div><div class="line">  CloseHandle(hObject);</div><div class="line">  sub_41116D();</div><div class="line">  CloseHandle(v2);</div><div class="line">  sub_41116D();</div><div class="line">  <span class="keyword">while</span> ( dword_418008 != <span class="number">-1</span> )</div><div class="line">    ;</div><div class="line">  sub_411190();</div><div class="line">  CloseHandle(::hObject);</div><div class="line">  sub_41116D();</div><div class="line">  <span class="keyword">return</span> sub_41116D();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>事情似乎变得有趣了，<code>CreateThread</code> API 会创建新线程，这道题涉及到多线程。<code>CreateMutex</code> 创建一个<a href="https://zh.wikipedia.org/wiki/%E4%BA%92%E6%96%A5%E9%94%81" target="_blank" rel="external">互斥体</a>，用于防止多线程中出现资源争用，即多个线程同时读写同一个资源的情况，所创建的互斥体的句柄会存到全局变量 <code>hObject</code> 中（注意前面的两个冒号表示是全局变量，而不是这个函数里同名的局部变量）。这里创建了两个线程，入口点分别位于函数 <code>StartAddress</code> 和 <code>sub_41119F</code>，且这两个函数都没有传入参数，看看 <code>StartAddress</code> 的伪代码（<code>sub_41119F</code> 的代码高度相似，只是没有 <code>sub_41112C</code> 的那句）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> <span class="number">__</span><span class="function">stdcall <span class="title">StartAddress_0</span><span class="params">(<span class="keyword">int</span> a1)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">char</span> v1; <span class="comment">// [sp+Ch] [bp-C0h]@1</span></div><div class="line"></div><div class="line">  <span class="built_in">memset</span>(&amp;v1, <span class="number">0xCC</span>u, <span class="number">0xC0</span>u);</div><div class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</div><div class="line">  &#123;</div><div class="line">    WaitForSingleObject(hObject, <span class="number">0xFFFFFFFF</span>);</div><div class="line">    sub_41116D();</div><div class="line">    <span class="keyword">if</span> ( dword_418008 &gt; <span class="number">-1</span> )</div><div class="line">    &#123;</div><div class="line">      sub_41112C(&amp;Source, dword_418008);</div><div class="line">      --dword_418008;</div><div class="line">      Sleep(<span class="number">0x64</span>u);</div><div class="line">      sub_41116D();</div><div class="line">    &#125;</div><div class="line">    ReleaseMutex(hObject);</div><div class="line">    sub_41116D();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>查 MSDN 知，可以用 <code>WaitForSingleObject</code> 等待互斥体的使用权（ownership）空闲出来，并获取使用权，然后再访问和其他线程共享的资源，访问完后，用 <code>ReleaseMutex</code> 释放使用权，给其他线程使用的机会<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>。通过比较两线程的函数，很容易知道所共享的资源就是全局变量 <code>dword_418008</code>，它的初值是 29。而这两个线程一前一后创建，理论上是 <code>StartAddress</code> 先获得使用权，后来的 <code>sub_41119F</code> 进入等待状态，前者执行一次循环后释放使用权，与此同时后者等待结束、获得使用权，进入循环，循环完后释放使用权，前者又获得使用权，如此循环往复。也就是说，两个线程的操作是交替进行的。但是由于操作系统对线程的调度取决于当时的环境，实际情况可能不同。</p>
+<p>那么调用的 <code>sub_41112C</code> 这个函数有什么用呢？既然传入了 <code>Source</code> 缓冲区的指针，也就是传入了输入的 flag，那肯定是要对 flag 进行某种变换，很大可能会把变换后的结果和某个预先设定的值比较，相等就提示 flag 输入正确。</p>
+<p>来到 <code>sub_411940</code>（<code>sub_41112C</code> 是过渡函数，直接 <code>jmp</code> 到这里），打算看伪代码，结果报错：</p>
+<blockquote>
+<p>Decompilation failure:</p>
+<p>411A03: positive sp value has been found</p>
+</blockquote>
+<p>网上搜了下，说是 IDA 识别出错，堆栈不平衡了。所谓堆栈平衡，就是说在函数开始和结束时，栈顶指针 SP 必须指向同一个地方，否则称为堆栈不平衡或堆栈平衡破坏。我们知道函数的局部变量是在栈上分配，所谓分配其实就是抬高栈顶，减少 SP 的值，划出一块内存空间给局部变量用。函数结束时，要回收分配的空间，也就是降低栈顶，增加 SP 的值。当时分配了多少空间，就应当回收多少，因此 SP 指向的地方应当是不变的。IDA 的做法是在函数开始时，假设 SP 为 0，函数中间可能会增减 SP，最后结束时 SP 应当回到 0，而这里 IDA 识别出现了错误，SP 大于 0，因此报错。这种情况下一般有两种办法：一是直接看汇编，不看伪代码了，IDA 的反汇编还是有保证的；二是手动修复 SP。我选择了后者。</p>
+<p>点 Options 菜单里第一项 General，在打开的对话框里勾选 Stack pointer，这样会在每一行汇编指令左边显示出该句执行前的 SP。拉到 <code>sub_411940</code> 的汇编底部，点击 SP 值异常的前面那一句，如下图，按 Alt+K：</p>
+<div class="figure">
+<img src="//i.loli.net/2019/05/03/5ccc2625ad2bd.jpg" alt="修复 SP 指针">
+<p class="caption">修复 SP 指针</p>
+</div>
+<p>在弹出的对话框里输入 <code>0x0</code>，确定，然后再点击下一句，同样按 Alt+K，输 <code>0x0</code>，确定。这样最后两句的 SP 都变成了 0，此时可以按 F5 看伪代码了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> <span class="number">__</span><span class="function">cdecl <span class="title">sub_411940</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">int</span> a2)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">char</span> v3; <span class="comment">// [sp+Ch] [bp-CCh]@1</span></div><div class="line">  <span class="keyword">char</span> v4; <span class="comment">// [sp+D3h] [bp-5h]@1</span></div><div class="line"></div><div class="line">  <span class="built_in">memset</span>(&amp;v3, <span class="number">0xCC</span>u, <span class="number">0xCC</span>u);</div><div class="line">  v4 = *(<span class="number">_B</span>YTE *)(a2 + a1);</div><div class="line">  <span class="keyword">if</span> ( (v4 &lt; <span class="string">'a'</span> || v4 &gt; <span class="string">'z'</span>) &amp;&amp; (v4 &lt; <span class="string">'A'</span> || v4 &gt; <span class="string">'Z'</span>) )</div><div class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">  <span class="keyword">if</span> ( v4 &lt; <span class="string">'a'</span> || v4 &gt; <span class="string">'z'</span> )</div><div class="line">    *(<span class="number">_B</span>YTE *)(a2 + a1) = off_418000[<span class="number">0</span>][*(<span class="number">_B</span>YTE *)(a2 + a1) - <span class="number">38</span>];</div><div class="line">  <span class="keyword">else</span></div><div class="line">    *(<span class="number">_B</span>YTE *)(a2 + a1) = off_418000[<span class="number">0</span>][*(<span class="number">_B</span>YTE *)(a2 + a1) - <span class="number">96</span>];</div><div class="line">  <span class="keyword">return</span> sub_41116D();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>参数 <code>a1</code> 是 <code>Source</code> 的指针，<code>a2</code> 是计数值 <code>dword_418008</code>，<code>*(_BYTE *)(a1 + a2)</code> 其实就是取输入 flag 里第 <code>a2 + 1</code> 个字符（的 ASCII 码）。计数值从 29 开始，线程循环每执行一次减一，减到 0 为止，这里有坑，并不是计数值每减一都会调用一次这个函数。前面说过，两个线程是<strong>交替执行</strong>的，<code>StartAddress</code> 会调用这个函数，然后计数值减一，但 <code>sub_41119F</code> 不会调用这个函数，直接把计数值减一。这意味着输入的 flag 里只有一半的字符会被变换，其余的一半不会变。这函数里先判断了下字符是不是字母再变换，大写字母变换成 <code>off_418000[0][*(_BYTE *)(a2 + a1) - 38]</code>，小写字母变换成 <code>off_418000[0][*(_BYTE *)(a2 + a1) - 96]</code>，其中 <code>off_418000[0]</code> 是一个字符串，内容是 <code>QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm</code>。需要注意的一点是，变换后的字符串末尾应该有结束符，也就是说，输入的 flag 应该比变换后的字符串多一个字符，因为多出来的那个字符经过变换会变成结束符。</p>
+<p>知道 flag 的变换规则后，我们可以回到 <code>main</code> 函数，看最后调用的 <code>sub_411190</code> 了。这也是个过渡函数，直接跳转到 <code>sub_411880</code>，再次遇到了 SP 指针错误的问题，用同样的方法修复，然后看伪代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub_411880</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">char</span> v1; <span class="comment">// [sp+Ch] [bp-CCh]@1</span></div><div class="line">  <span class="keyword">int</span> i; <span class="comment">// [sp+D0h] [bp-8h]@1</span></div><div class="line"></div><div class="line">  <span class="built_in">memset</span>(&amp;v1, <span class="number">0xCC</span>u, <span class="number">0xCC</span>u);</div><div class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; <span class="number">29</span>; ++i )</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">if</span> ( *(&amp;Source + i) != off_418004[i] )</div><div class="line">      <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"\nflag&#123;%s&#125;\n\n"</span>, Dest);</div><div class="line">  sub_41116D();</div><div class="line">  <span class="keyword">return</span> sub_41116D();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>很简单的逻辑，把变换后的字符串每一位和预设的 <code>off_418004</code> 字符串的每一位比较，全部相同就回显出 flag，表明你输入的 flag 正确。上述预设字符串的内容是 <code>TOiZiZtOrYaToUwPnToBsOaOapsyS</code>。到此程序的全部逻辑已经清楚，就是输入的 flag 经过变换后等于前面这串字符串的话，就是正确的 flag，我们只需要从这串字符串反推出正确 flag 就行了。写了段 C 程序来做这个工作，因为不知道哪个线程先执行，所以有两种可能，分别对应代码里 <code>i % 2 == 0</code> 或 <code>i % 2 == 1</code>，都试过后发现前者给出的 flag 明显是有意义的字符串，所以答案大概就是它了。C 程序如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">isalpha</span><span class="params">(<span class="keyword">char</span> a)</span> </span>&#123;</div><div class="line">	<span class="keyword">return</span> (a &gt;= <span class="string">'a'</span> &amp;&amp; a &lt;= <span class="string">'z'</span>) || (a &gt;= <span class="string">'A'</span> &amp;&amp; a &lt;= <span class="string">'Z'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">map</span><span class="params">(<span class="keyword">char</span> ch, <span class="keyword">char</span> *str)</span> </span>&#123;</div><div class="line">	<span class="keyword">char</span> buf[<span class="number">2</span>] = &#123;ch, <span class="number">0</span>&#125;;</div><div class="line">	<span class="keyword">return</span> (<span class="built_in">strstr</span>(str,buf) - str);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</div><div class="line">	<span class="keyword">char</span> str1[] = <span class="string">"TOiZiZtOrYaToUwPnToBsOaOapsyS"</span>;</div><div class="line">	<span class="keyword">char</span> str2[] = <span class="string">"QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">29</span>; i++) &#123;</div><div class="line">		<span class="comment">// threads run alternately; so only half of the input will be transformed.</span></div><div class="line">		<span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">			<span class="built_in">putchar</span>(str1[i]);</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (<span class="built_in">isalpha</span>(<span class="built_in">map</span>(str1[i], str2) + <span class="number">38</span>))</div><div class="line">			<span class="built_in">putchar</span>(<span class="built_in">map</span>(str1[i], str2) + <span class="number">38</span>);</div><div class="line">		<span class="keyword">else</span></div><div class="line">			<span class="built_in">putchar</span>(<span class="built_in">map</span>(str1[i], str2) + <span class="number">96</span>);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="comment">// find out the character that will be transformed into NULL byte.</span></div><div class="line">	<span class="keyword">if</span> (<span class="built_in">isalpha</span>(<span class="built_in">strlen</span>(str2) + <span class="number">38</span>))</div><div class="line">		<span class="built_in">putchar</span>(<span class="built_in">strlen</span>(str2) + <span class="number">38</span>);</div><div class="line">	<span class="keyword">else</span></div><div class="line">		<span class="built_in">putchar</span>(<span class="built_in">strlen</span>(str2) + <span class="number">96</span>);</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后 flag： <span class="math display">\[
+ThisisthreadofwindowshahaIsESZ
+\]</span> <img src="//i.loli.net/2019/05/03/5ccc26264d07c.jpg" alt="flag"></p>
+<p><strong>2018/7/25 注</strong>：看了官方讲解，说是这题有多解… flag 最后一位输啥字母都是对的，出题人设计的解是字母 E。</p>
+<h3 id="x3.-参考资料">0x3. 参考资料</h3>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>D. Yurichev, “缓冲区溢出的保护方法,” in <em>《逆向工程权威指南》</em>, Archer and 安天安全研究与应急处理中心, Trans. 北京：人民邮电出版社, 2017, pp. 236.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><a href="https://en.wikipedia.org/wiki/Win32_Thread_Information_Block" class="uri" target="_blank" rel="external">https://en.wikipedia.org/wiki/Win32_Thread_Information_Block</a><a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p><a href="https://docs.microsoft.com/zh-cn/windows/desktop/api/winternl/ns-winternl-_peb" class="uri" target="_blank" rel="external">https://docs.microsoft.com/zh-cn/windows/desktop/api/winternl/ns-winternl-_peb</a><a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p><a href="https://docs.microsoft.com/zh-cn/windows/desktop/Sync/using-mutex-objects" class="uri" target="_blank" rel="external">https://docs.microsoft.com/zh-cn/windows/desktop/Sync/using-mutex-objects</a><a href="#fnref4">↩</a></p></li>
+</ol>
+</div>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/10/16/ustc-hackergame-2018-writeup/" data-toggle="tooltip" data-placement="top" title="中科大第五届信息安全大赛部分解题报告（writeup）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/07/05/simple-web-server-c-implementation/" data-toggle="tooltip" data-placement="top" title="C 写的一个简单的 Web 服务器">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2023 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>
