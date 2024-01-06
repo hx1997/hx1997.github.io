@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Some pieces of beef, and some vegetables too.">
+    <meta name="keyword"  content="undefined">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          探究 OpenHarmony 中方舟运行时调用 ArkTS 方法的流程 - Goulash
+        
+    </title>
+
+    <link rel="canonical" href="https://hx1997.github.io/2024/01/07/delve-into-openharmony-arkts-method-calling/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-59747917-2', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Goulash</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">ABOUT</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('///s3.bmp.ovh/imgs/2021/12/786122cd6225bd96.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>探究 OpenHarmony 中方舟运行时调用 ArkTS 方法的流程</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by HX on
+                        2024-01-07 | 
+                        <span id="/2024/01/07/delve-into-openharmony-arkts-method-calling/" class="leancloud-visitors" data-flag-title="文章阅读量统计">
+                            <span class="pre-meta-item-text">👓 </span>
+                            <span class="leancloud-visitors-count"></span>
+                            <span class="post-meta-item-text"> views</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>也不是很全面或者深入的分析吧，只能算是探究过程记的一些笔记，大佬可以飘过~</p>
+<h2 id="工具和环境准备">工具和环境准备</h2>
+<p>分析方舟运行时用到的工具如下：</p>
+<ul>
+<li>OpenHarmony 手机：我用的一加 6T，刷入 <a href="https://www.bilibili.com/read/cv27956343/" target="_blank" rel="external">B 站大佬的 OpenHarmony 4.0 ROM</a>，要用物理机而不是模拟器主要是 <code>hdc</code>（鸿蒙版 <code>adb</code>）好像连不上模拟器，不知道是我操作不对还是确实不支持</li>
+<li>Source Insight 4：看源码用，搜索符号和交叉引用比较方便，需要付费自行解决，Gitee 看代码太痛苦了</li>
+<li>DevEco Studio：不用多说，折腾鸿蒙必备，记得装 SDK，按照<a href="https://github.com/hx1997/xHook-openharmony-linux" target="_blank" rel="external">这个仓库</a> README 的第二段话的指示设置好环境变量</li>
+<li>lldb：在 <code>%OHOS_SDK_HOME%\llvm\bin</code> 里有，而且是鸿蒙专供版哦（其实就是加了远程调试鸿蒙的支持）</li>
+<li>010Editor：搭配<a href="https://github.com/hx1997/ark-bytecode-010editor-template" target="_blank" rel="external">我写的模板</a>，用来解析 abc 文件</li>
+<li>IDA：逆向工具里永远的神</li>
+</ul>
+<h2 id="基本分析方法">基本分析方法</h2>
+<h3 id="静态分析读源码">静态分析（读源码）</h3>
+<ol style="list-style-type: decimal">
+<li>首先按照<a href="https://gitee.com/openharmony/docs/blob/HEAD/zh-cn/device-dev/get-code/sourcecode-acquire.md" target="_blank" rel="external">官方指南</a>下载 OpenHarmony 全量源码，注意选择和你的手机相同的系统版本分支</li>
+<li>将源码导入到 Source Insight，开始挑重点读（一般是动态分析遇到某个函数不懂的时候来看）</li>
+</ol>
+<p><strong>Tips</strong>: 虽然 Source Insight 可以搜索符号、追踪交叉引用，但是源码中不少符号是由宏展开或者干脆是其他语言所定义的，直接搜是搜不到的。我也不知道有没有更好的方法，这里只能给一些分析经验：</p>
+<ul>
+<li>类里字段的 getter 和 setter 可能会用 <code>ACCESSORS</code> 宏来统一定义，例如 <code>ACCESSORS(ConstantPool, CONSTANT_POOL_OFFSET, PROFILE_TYPE_INFO_OFFSET)</code> 展开后会定义 <code>GetConstantPool</code> 和 <code>SetConstantPool</code> 两个方法，但直接搜这两个符号搜不到，所以遇到 getter/setter 时找找类里有没有 <code>ACCESSORS</code></li>
+<li>某个函数跳不过去时，在右边 Project Symbols 窗格里搜一下，找找线索，如果是类成员函数，先找到类再分析</li>
+<li>在头文件里根据符号名猜某个符号最可能来自哪个头文件，然后在 Project Files 窗格里搜这个头文件进去看</li>
+<li>有些函数是 Ruby 语言定义的，后缀是 <code>.erb</code>，比如 <code>Disassembler::BytecodeInstructionToPandasmInstruction</code> 这个函数定义在 <code>bc_ins_to_pandasm_ins.cpp.erb</code> 中</li>
+</ul>
+<h3 id="动态分析调试">动态分析（调试）</h3>
+<ol style="list-style-type: decimal">
+<li>用 DevEco Studio 编写 OpenHarmony 应用，运行一次让它安装到手机上</li>
+<li>电脑上运行如下命令： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">hdc shell  # 进入手机 shell</div><div class="line">bm dump -a  # 列出所有安装的应用包名</div><div class="line">aa start -a &lt;Ability 名&gt; -b &lt;包名&gt; -D  # 调试模式启动应用，运行后手机上应该启动了应用，但停在初始化页面</div><div class="line">hdc file send &lt;电脑上 lldb-server 路径&gt; /data/local/tmp（DevEco Studio 里面调试应用就可以在日志里看到 lldb-server 在手机的位置，应该是调试过手机上就会有所以不用 send？不太记得了，反正我这在 /data/local/tmp 下）</div><div class="line">cd /data/local/tmp</div><div class="line">lldb-server platform --server --listen unix-abstract:///data/local/tmp/debug.sock &amp;</div></pre></td></tr></table></figure></li>
+</ol>
+<p>以上命令都在手机 shell 里执行，现在新起一个命令行窗口，在 shell 外运行如下命令： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd %OHOS_NDK_HOME%\llvm\bin</div><div class="line">lldb</div><div class="line">platform select remote-ohos  # 设置远程调试的系统为 OpenHarmony</div><div class="line">platform connect unix-abstract-connect:///data/local/tmp/debug.sock</div><div class="line">process attach -p &lt;处于调试模式的应用 PID&gt;</div></pre></td></tr></table></figure></p>
+<p>现在可以对自己感兴趣的地方下断点了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">br set -s &lt;so 名&gt; -n &lt;函数名&gt;  # 下断点</div><div class="line">br set --func-regex &lt;函数名正则/关键字&gt;</div><div class="line"></div><div class="line">image lookup -r -n &lt;函数名正则/关键字&gt;  # 找指定名的函数偏移</div><div class="line">br set -s &lt;so 名&gt; -a &lt;偏移&gt;</div><div class="line"></div><div class="line">c  # 下完断点恢复程序运行</div></pre></td></tr></table></figure>
+<p>然后在 DevEco Studio 中点击菜单 Run -&gt; Attach Debugger to Process，选择应用的进程确认，即可在 lldb 开始调试。</p>
+<p>一些常用调试命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">reg read x0  # 读寄存器</div><div class="line"></div><div class="line">x/16a 0xffffffff  # 读内存</div><div class="line">x/16a $x0</div><div class="line"></div><div class="line">bt  # 调用栈</div></pre></td></tr></table></figure>
+<h2 id="方法调用流程">方法调用流程</h2>
+<p>TODO</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2023/10/22/using-seccomp-bpf-on-openharmony/" data-toggle="tooltip" data-placement="top" title="OpenHarmony（Linux 内核）上成功使用 Seccomp-BPF">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+                
+                <!-- Valine 评论框 start -->
+                <div class="comment" id="comment"></div>
+                <!-- Valine 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Valine 公共JS代码 start (一个网页只需插入一次) -->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    var valine_id = 'SxcVY94eFyRKqKoNsjvUdVru-gzGzoHsz';
+    var valine_key =  'gtaegP4TT3CzPJH7bwy54kkV';
+    new Valine({
+        el: '#comment',
+        appId: valine_id,
+        appKey: valine_key,
+        notify: true,
+        visitor: true,
+        placeholder: '留下邮箱才能收到评论回复通知嗷', // 留言框占位提示文字
+    });
+</script>
+<!-- Valine 公共JS代码 end -->
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/zack-48">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/hx1997">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Goulash 2024 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="https://github.com/Kaijun">Kaijun</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.jsdelivr.net/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://hx1997.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="https://hx1997.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+
+</html>

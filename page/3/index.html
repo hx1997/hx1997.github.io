@@ -108,13 +108,6 @@
 
                         
                         <li>
-                            <a href="/links/">Links</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/archive/">ARCHIVES</a>
                         </li>
                         
@@ -122,14 +115,21 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/links/">Links</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -206,6 +206,31 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2018/07/22/anheng-july-re-youngter-drive/">
+        <h2 class="post-title">
+            安恒杯 7 月月赛逆向 Youngter-drive 解题报告（writeup）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            0x0. 前言
+这次这道题 100 分，但是大家都说（并不）比上个月 500 分的题还难。其实我比赛时也没做出来，之后才做出来的，毕竟下午三点才开始做…
+0x1. 反调试
+题目文件在这里。
+查壳，是 UPX，直接用 upx -d 命令脱壳，结果运行不起来。发现是原文件需要 msvcr100d.dll 这个库，而且这是 Debug 版本的库，光装 VC++ 运行时是没有的，要装 Vis......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by HX on
+        2018-07-22
+    </p>
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -429,28 +454,6 @@ Your Excellencies, UN Secretary General, President of the General Assembly, Exec
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2016/08/23/hello-world/">
-        <h2 class="post-title">
-            Hello World
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Q......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by HX on
-        2016-08-23
-    </p>
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -461,6 +464,10 @@ Q......
             <a href="/page/2/">&larr; Newer Posts</a>
         </li>
     
+    
+        <li class="next">
+            <a href="/page/4/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -581,7 +588,7 @@ Q......
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Goulash 2023 
+                    Copyright &copy; Goulash 2024 
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
