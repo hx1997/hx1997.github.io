@@ -108,14 +108,7 @@
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/tags/">TAGS</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -129,7 +122,14 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/archive/">ARCHIVES</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">TAGS</a>
                         </li>
                         
                     
@@ -190,6 +190,10 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                          <a class="tag" href="/tags/#OpenHarmony" title="OpenHarmony">OpenHarmony</a>
+                        
+                          <a class="tag" href="/tags/#移动安全" title="移动安全">移动安全</a>
+                        
                     </div>
                     <h1>探究 OpenHarmony 中方舟运行时调用 ArkTS 方法的流程</h1>
                     <h2 class="subheading"></h2>
@@ -240,7 +244,7 @@
 <ul>
 <li>类里字段的 getter 和 setter 可能会用 <code>ACCESSORS</code> 宏来统一定义，例如 <code>ACCESSORS(ConstantPool, CONSTANT_POOL_OFFSET, PROFILE_TYPE_INFO_OFFSET)</code> 展开后会定义 <code>GetConstantPool</code> 和 <code>SetConstantPool</code> 两个方法，但直接搜这两个符号搜不到，所以遇到 getter/setter 时找找类里有没有 <code>ACCESSORS</code></li>
 <li>某个函数跳不过去时，在右边 Project Symbols 窗格里搜一下，找找线索，如果是类成员函数，先找到类再分析</li>
-<li>在头文件里根据符号名猜某个符号最可能来自哪个头文件，然后在 Project Files 窗格里搜这个头文件进去看</li>
+<li>在所有 <code>#include</code> 里根据符号名猜某个符号最可能来自哪个头文件，然后在 Project Files 窗格里搜这个头文件进去看</li>
 <li>有些函数是 Ruby 语言定义的，后缀是 <code>.erb</code>，比如 <code>Disassembler::BytecodeInstructionToPandasmInstruction</code> 这个函数定义在 <code>bc_ins_to_pandasm_ins.cpp.erb</code> 中</li>
 </ul>
 <h3 id="动态分析调试">动态分析（调试）</h3>
