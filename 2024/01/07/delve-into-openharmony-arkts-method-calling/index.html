@@ -108,20 +108,6 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/links/">Links</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/archive/">ARCHIVES</a>
                         </li>
                         
@@ -129,7 +115,21 @@
 
                         
                         <li>
+                            <a href="/animal-farm/">Animal Farm</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/tags/">TAGS</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/links/">Links</a>
                         </li>
                         
                     
@@ -259,7 +259,14 @@
 <p>一些常用调试命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">reg read x0  # 读寄存器</div><div class="line"></div><div class="line">x/16a 0xffffffff  # 读内存</div><div class="line">x/16a $x0</div><div class="line"></div><div class="line">bt  # 调用栈</div></pre></td></tr></table></figure>
 <h2 id="方法调用流程">方法调用流程</h2>
-<p>TODO</p>
+<p><strong>关键流程：</strong> NAPI入口 JSNApi::Execute -&gt; ecmascript::JSPandaFileExecutor::ExecuteFromFile/Buffer -&gt; 判断jsPandaFile-&gt;IsModule(recordInfo)</p>
+<p>判断true：SourceTextModule::Evaluate -&gt; SourceTextModule::InnerModuleEvaluation -&gt; SourceTextModule::ModuleExecution -&gt; JSPandaFileExecutor::Execute（与false殊途同归） 判断false：JSPandaFileExecutor::Execute -&gt; EcmaContext::InvokeEcmaEntrypoint -&gt; 分三种情况</p>
+<p>情况1-CJS（猜测是classic JS？）：EcmaContext::CJSExecution -&gt; 如果非AOT则EcmaInterpreter::Execute 情况2-AOT：EcmaContext::InvokeEcmaAotEntrypoint 情况3-非上二者（猜测是ArkTS的解释执行？）：EcmaInterpreter::Execute -&gt; 分三种情况</p>
+<p>情况1-if (thread-&gt;IsAsmInterpreter())：InterpreterAssembly::Execute（实际测试解释执行走这里） 情况2-Native方法：EcmaInterpreter::ExecuteNative 情况3-非上二者：EcmaInterpreter::RunInternal</p>
+<p>InterpreterAssembly::Execute -&gt; 根据架构跳到对应的AsmInterpreterCall::AsmInterpreterEntry（这个函数在内存里位于匿名区域，aarch64在arkcompiler_runtime64_interpreter_call.cpp） -&gt; AsmInterpreterCall::AsmInterpEntryDispatch -&gt; 分三种情况</p>
+<p>情况1-functionType小于JSType::JS_FUNCTION_FIRST：认为不是callable，跳到固定函数抛出异常kungfu::RuntimeStubCSigns::ID_ThrowNotCallableException 情况2-functionType介于JSType::JS_FUNCTION_FIRST与JSType::JS_FUNCTION_LAST：认为是JS函数，跳到JSCallCommonEntry 情况3-functionType大于JSType::JS_FUNCTION_LAST：认为是native函数，跳到CallNativeEntry</p>
+<p><strong>如何得到Method对象：</strong> 在EcmaInterpreter::Execute里下断点，有Method *method = callTarget-&gt;GetCallTarget();这行</p>
+<p><strong>如何从Method对象得到方法名：</strong> Method -&gt; LiteralInfo里的MethodId字段（16-47位） -&gt; 根据ID在abc中反查名字，ID就是abc内的文件偏移</p>
 
 
                 <hr>
