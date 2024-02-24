@@ -101,7 +101,7 @@
 
                         
                         <li>
-                            <a href="/about/">ABOUT</a>
+                            <a href="/animal-farm/">Animal Farm</a>
                         </li>
                         
                     
@@ -115,14 +115,14 @@
 
                         
                         <li>
-                            <a href="/animal-farm/">Animal Farm</a>
+                            <a href="/archive/">ARCHIVES</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">ARCHIVES</a>
+                            <a href="/about/">ABOUT</a>
                         </li>
                         
                     
@@ -270,7 +270,7 @@
 <p>一路跟，最终会进到 AsmInterpreterCall::DispatchCall，最后的一句 br 正式跳入分发器，分发器汇编如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">ROM:0000000000045850 sub_45850</div><div class="line">ROM:0000000000045850</div><div class="line">ROM:0000000000045850 var_30          = -0x30</div><div class="line">ROM:0000000000045850 var_18          = -0x18</div><div class="line">ROM:0000000000045850 var_10          = -0x10</div><div class="line">ROM:0000000000045850 var_8           = -8</div><div class="line">ROM:0000000000045850</div><div class="line">ROM:0000000000045850                 SUB             SP, SP, #0x30</div><div class="line">ROM:0000000000045854                 STUR            X20, [X29,#-0x18]</div><div class="line">ROM:0000000000045858                 MOV             W9, #0xDB</div><div class="line">ROM:000000000004585C                 LDR             X8, [X19,#0xE38]</div><div class="line">ROM:0000000000045860                 MOV             X0, X19</div><div class="line">ROM:0000000000045864                 STP             X22, X23, [SP,#0x30+var_10]</div><div class="line">ROM:0000000000045868                 STR             X21, [SP,#0x30+var_18]</div><div class="line">ROM:000000000004586C                 STP             X9, XZR, [SP,#0x30+var_30]</div><div class="line">ROM:0000000000045870                 BLR             X8</div><div class="line">ROM:0000000000045874                 LDRB            W8, [X20]</div><div class="line">ROM:0000000000045878                 LDP             X21, X22, [SP,#0x30+var_18]</div><div class="line">ROM:000000000004587C                 ADD             X8, X19, X8,LSL#3</div><div class="line">ROM:0000000000045880                 LDR             X23, [SP,#0x30+var_8]</div><div class="line">ROM:0000000000045884                 LDR             X0, [X8,#0x1890]</div><div class="line">ROM:0000000000045888                 ADD             SP, SP, #0x30 ; &apos;0&apos;</div><div class="line">ROM:000000000004588C                 BR              X0</div></pre></td></tr></table></figure></p>
 <p>用IDA反编译 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="number">__</span><span class="function">int64 <span class="title">sub_45850</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">  <span class="number">__</span>int64 v0; <span class="comment">// x19</span></div><div class="line">  <span class="keyword">unsigned</span> <span class="number">__</span>int8 *v1; <span class="comment">// x20</span></div><div class="line">  <span class="number">__</span>int64 v2; <span class="comment">// x29</span></div><div class="line"></div><div class="line">  *(<span class="number">_</span>QWORD *)(v2 - <span class="number">24</span>) = v1;</div><div class="line">  (*(<span class="keyword">void</span> (<span class="number">__f</span>astcall **)(<span class="number">__</span>int64))(v0 + <span class="number">3640</span>))(v0);</div><div class="line">  <span class="keyword">return</span> (*(<span class="number">__</span>int64 (**)(<span class="keyword">void</span>))(v0 + <span class="number">8</span>i64 * *v1 + <span class="number">0x1890</span>))();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>最后一句中，<code>v0 + 0x1890</code> 就是 opcode handler 表的地址了，表中每个 handler 指针 8 字节，<code>*v1</code> 是当前 opcode。</p>
-<p>至于这些 handlers 的源码，则在 <code>arkcompiler\ets_runtime\ecmascript\interpreter\interpreter_assembly.cpp</code> 的各个 <code>Handle*</code> 方法中。</p>
+<p>至于这些 handlers 的源码，则在 <code>arkcompiler\ets_runtime\ecmascript\interpreter\interpreter-inl.h</code> 的各个 <code>HANDLE_OPCODE(*)</code> 代码块中。</p>
 
 
                 <hr>
